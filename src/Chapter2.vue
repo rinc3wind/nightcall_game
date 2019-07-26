@@ -83,7 +83,7 @@
             <p>Rozbehnes sa na prvu gorilu a mieris kopacku na brucho. Akonahle sa vsak tvoja biedna nozka dotkne jeho brusneho svalu tak padas na zem jak mech. Setky 4 gorily su na tebe a kopu ta hlava nehlava. Jak planeta opic, kamosko. Zrazu ta vypne. A si mrtvy. Skoda. Nabuduce rozmyslaj do pici. Sam a neozbrojeny ides proti 4 gorilam? More, akoze prepacime ti vsetko mozne. Ale toto ne.</p>
         </div>
         <div v-if="step == 2.42">
-            <p>Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvyjaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu, gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
+            <p>Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu, gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
 
             <div v-if="player.finished_chapters.indexOf(3) == -1" class="choice" @click="$emit('setChapter', 3); $emit('setStep', 0); player.finished_chapters.push(2)">Idem ocurat velky Bratislavsky mur.</div>
             <div v-if="player.finished_chapters.indexOf(4) == -1" class="choice" @click="$emit('setChapter', 4); $emit('setStep', 0); player.finished_chapters.push(2)">Idem do Arkadovej herne zajebat high score v Space Invaders.</div>
@@ -126,7 +126,7 @@
             <p><span class="choice" @click="$emit('setStep', 3.4); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">ANO</span> / <span class="choice" @click="$emit('setStep', 3.5); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">NIE</span></p>
         </div>
         <div v-if="step == 3.4">
-            <p>Zacne ti hrat v hlave hlavna tema z Red Dead Redemption 2. Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvyjaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu (jemne povedane), gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
+            <p>Zacne ti hrat v hlave hlavna tema z Red Dead Redemption 2. Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu (jemne povedane), gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
 
             <div v-if="player.finished_chapters.indexOf(3) != -1 && player.finished_chapters.indexOf(4) != -1">
                 <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
@@ -163,7 +163,7 @@
 
             <p>&quot;Kamosko, si si vybral zle miesto na prechadzku. Prave si vstupil do teritoria Skulaveho Sama. A kto raz vojde, do teritoria Skulaveho Sama. Zivy neodide. Dostanes na hubu {{ player.name }}.&quot;</p>
 
-            <p>Necakas na nic. Ziadne zavahanie. Si jak Judge Dredd. Vykrocis oproti Samovi. Pomaly a sebaisto. Bejzbalka v ruke. Nechapes, preco pred tebou neutekaju. Asi nehrali Hotline Miami. Ides rovno po Samovi. Gorily rozjebes neskor.</p>
+            <p>Necakas na nic. Ziadne zavahanie. Si jak Judge Dredd. Vykrocis oproti Samovi. Pomaly ale sebaisto. Bejzbalka v ruke. Nechapes, preco pred tebou neutekaju. Asi nehrali Hotline Miami. Ides rovno po Samovi. Gorily rozjebes neskor.</p>
 
             <div v-if="diceRoll(6) <= 3" class="choice" @click="$emit('setStep', 4.1)">Hod si 1d6.</div>
             <div v-else class="choice" @click="$emit('setStep', 4.2)">Hod si 1d6.</div>
@@ -185,7 +185,7 @@
 
             <p>&quot;Kamosko, si si vybral zle miesto na prechadzku. Prave si vstupil do teritoria Skulaveho Sama. A kto raz vojde, do teritoria Skulaveho Sama. Zivy neodide. Dostanes na hubu {{ player.name }}.&quot;</p>
 
-            <p>Necakas na nic. Ziadne zavahanie. Si jak Judge Dredd. Vykrocis oproti Samovi. Pomaly a sebaisto. Prak v ruke. Nechapes, preco pred tebou neutekaju. Asi nehrali Hotline Miami. Ides rovno po Samovi. Gorily rozjebes neskor.</p>
+            <p>Necakas na nic. Ziadne zavahanie. Si jak Judge Dredd. Vykrocis oproti Samovi. Pomaly ale sebaisto. Prak v ruke. Nechapes, preco pred tebou neutekaju. Asi nehrali Hotline Miami. Ides rovno po Samovi. Gorily rozjebes neskor.</p>
             <div v-if="diceRoll(6) <= 3" class="choice" @click="$emit('setStep', 5.1)">Hod si 1d6.</div>
             <div v-else class="choice" @click="$emit('setStep', 5.2)">Hod si 1d6.</div>
         </div>
