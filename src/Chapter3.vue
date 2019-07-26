@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="chapter3-container">
         <div v-if="step == 0">
             <p>Blizis sa k muru, kamosko. Zabocis na Dunajsku a slapes k Tescu. Namiesto Tesca vsak vidis K-Mart. Hned za K-Martom je obrovsky betonovy mur. Na jeho vrchu je natiahnuty ostnaty drot. Kazdych niekolko metrov je strazna veza. Zlozis BMXku a zaparkujes ju v jednej z bocnych uliciek. Tvoj ciel je jasny. Ocurat mur. Nebude to take lahke. Uz teraz sa citis jak Frodo, ked kluckoval cez Mordor.</p>
             <div v-if="player.states.indexOf('wallExamined') == -1" @click="$emit('setStep', 1); player.states.push('wallExamined')" class="choice">Rozhliadni sa po mure a zisti situaciu.</div>

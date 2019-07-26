@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="chapter5-container">
         <div v-if="step == 0">
             <p>18:17<br>Bratislava<br>Tvoj Barak</p>
 
@@ -148,9 +148,35 @@
             <p>Schmatnes syntak a bezis do auta. Syntak spokojne vo vacku. Tatko soferuje domov a ty mas pred sebou poslednu ulohu. Dostat sa do Re:Freshu na ten vyjebany Nightcall.</p>
         </div>
         <div v-if="step == 100">
-            <span v-if="audio_loaded == false" @click="test">START</span>
-            <span v-else @click="play">PLAY</span>
-            <div style="position: absolute;" :style="{ left: noteCode * 10 + 'px'  }">{{ note }}</div>
+            <div style="float: left">
+                <div v-if="loading && (mp3_loaded == false || midi_loaded == false)">
+                    LOADING...
+                </div>
+                <div v-else>
+                    <span v-if="mp3_loaded == false || midi_loaded == false" @click="load">START</span>
+                    <span v-else @click="play">PLAY</span>
+                </div>
+
+                <pre style="height: 155px;">
+                    {{ playground }}
+                </pre>
+
+                <pre>
+ _______________________________________
+|  | | | |  |  | | | | | |  |  | | | |  |
+|  | | | |  |  | | | | | |  |  | | | |  |
+|  | | | |  |  | | | | | |  |  | | | |  |
+|  |_| |_|  |  |_| |_| |_|  |  |_| |_|  |
+|   |   |   |   |   |   |   |   |   |   |
+| <span :class="{ 'key-pressed': keyPressed == 'a' }">A</span> | <span :class="{ 'key-pressed': keyPressed == 's' }">S</span> | <span :class="{ 'key-pressed': keyPressed == 'd' }">D</span> | <span :class="{ 'key-pressed': keyPressed == 'f' }">F</span> | <span :class="{ 'key-pressed': keyPressed == 'g' }">G</span> | <span :class="{ 'key-pressed': keyPressed == 'h' }">H</span> | <span :class="{ 'key-pressed': keyPressed == 'j' }">J</span> | <span :class="{ 'key-pressed': keyPressed == 'k' }">K</span> | <span :class="{ 'key-pressed': keyPressed == 'l' }">L</span> |   |
+|___|___|___|___|___|___|___|___|___|___|
+                </pre>
+                <div style="position: absolute;" :style="{ left: noteCode * 10 + 'px'  }">{{ noteCode }}</div>
+            </div>
+            <progress class="success-bar" :value="success" max="100"></progress>
+        </div>
+        <div v-if="step == 101">
+            FAIL
         </div>
     </div>
 </template>
@@ -159,49 +185,73 @@
     export default {
         props: ['player', 'step'],
         mounted() {
+            window.addEventListener('keyup', (e) => {
+                this.keyUp(e)
+            })
+            window.addEventListener('keydown', (e) => {
+                this.keyDown(e)
+            })
         },
         data() {
             return {
                 interval: null,
                 currentTime: 0,
                 sound: null,
-                audio_loaded: false,
+                mp3_loaded: false,
+                midi_loaded: false,
+                loading: false,
                 toneVisible: false,
                 note: null,
-                noteCode: null
+                noteCode: null,
+                keyPressed: null,
+                visibleNotes: [],
+                success: 100,
+                playground: `
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+  |   |    |  |   |   |   |   |   |   |
+`
             }
         },
         computed: {
         },
         methods: {
-            start() {
+            keyDown(e) {
+                this.keyPressed = e.key
+                if (this.visibleNotes.length > 0 && this.visibleNotes[0].toLowerCase() == this.keyPressed) {
+                    this.noteClear()
+                    console.log('HIT');
+
+                }
+            },
+            keyUp(e) {
+                this.keyPressed = null
+            },
+            load() {
+                this.loading = true
                 this.sound = new Howl({
                     src: ['mp3/nightcall.mp3']
                 })
                 this.sound.once('load', () => {
-                    this.audio_loaded = true
-                    // this.interval = setInterval(() => {
-                    //     this.currentTime = Math.floor(this.sound.seek() * 10) / 10
-
-                    //     if (this.midi[this.currentTime]) {
-                    //         this.toneVisible = true
-                    //         setTimeout(() => {
-                    //             this.toneVisible = false
-                    //         }, 200)
-                    //     }
-
-                    // }, 50)
+                    this.mp3_loaded = true
+                    console.log('mp3 loaded')
                 })
-            },
-            play() {
-                this.sound.play()
-            },
-            test() {
+
+                MIDI.Player.BPM = 91
                 var self = this
                 MIDI.loadPlugin({
-                    instruments: ['bass', 'synth_drum', 'acoustic_grand_piano'],
+                    //instruments: ['bass', 'synth_drum', 'acoustic_grand_piano'],
                     onsuccess: function() {
-                        MIDI.Player.loadFile('mp3/nightcall.mid', () => {
+                        MIDI.setVolume(0, 0);
+                        MIDI.Player.loadFile('mp3/nightcall_1track.mid', () => {
+                            self.midi_loaded = true
+                            console.log('midi loaded');
+
                             MIDI.Player.addListener(function(data) { // set it to your own function!
                                 var now = data.now; // where we are now
                                 var end = data.end; // time when song ends
@@ -211,21 +261,91 @@
                                 var velocity = data.velocity; // the velocity of the note
 
                                 if (channel == 0) {
-                                    self.note = MIDI.noteToKey[note]
-                                    self.noteCode = note
+                                    // self.note = MIDI.noteToKey[note]
+                                    // self.noteCode = note
+                                    if (message == 144) self.drawNote(note)
                                 }
                             });
-                            MIDI.Player.start()
                         })
                     }
                 })
+            },
+            drawNote(note) {
+                //var note = 60
+                var conversion = {
+                    60: { index: 3, char: 'A'},
+                    62: { index: 7, char: 'S'},
+                    64: { index: 12, char: 'D'},
+                    65: { index: 15, char: 'F'},
+                    67: { index: 19, char: 'G'},
+                    69: { index: 23, char: 'H'},
+                    71: { index: 27, char: 'J'},
+                    72: { index: 31, char: 'K'},
+                    74: { index: 35, char: 'L'}
+                }
+
+                this.visibleNotes.push(conversion[note].char)
+
+                var level = -1
+                var subInterval = 0
+                var interval = setInterval(() => {
+                    if (level != -1) this.replaceAt(conversion[note].index + 40 * level, '|')
+                    if (level > 6) {
+                        clearInterval(interval)
+                    }
+                    level++
+                    if (level < 8) this.replaceAt(conversion[note].index + 40 * level, conversion[note].char)
+                    else {
+                        if (conversion[note].char.toLowerCase() == this.visibleNotes[0].toLowerCase()) {
+                            this.noteClear()
+                            this.success = this.success - 5
+                        }
+                    }
+                }, 100)
+            },
+            noteClear() {
+                this.visibleNotes.shift()
+            },
+            replaceAt(index, replace) {
+                this.playground = this.playground.substring(0, index) + replace + this.playground.substring(index + 1);
+            },
+            play() {
+                this.sound.play()
+                setTimeout(() => {
+                    MIDI.Player.start()
+                // }, 11625)
+                }, 10725)
             }
         },
         watch:{
+            // CHECK FOR FAIL
+            success: function(value) {
+                //if (value < 1) this.$emit('setStep', 101)
+            }
         }
     }
 </script>
 
 <style>
-
+    .key-pressed {
+        background-color: white;
+        color: black;
+    }
+    #chapter5-container progress[value] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 300px;
+        height: 30px;
+        transform: rotate(270deg);
+        -webkit-transform: rotate(270deg); /*Webkit*/
+        -moz-transform: rotate(270deg); /*FireFox*/
+        position: absolute;
+        top: 270px;
+        left: 50%;
+    }
+    #chapter5-container progress[value]::-webkit-progress-bar {
+        background-color: black;
+        border: 2px solid;
+        border-color: yellowgreen;
+    }
 </style>
