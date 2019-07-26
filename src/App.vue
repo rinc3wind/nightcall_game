@@ -33,8 +33,12 @@
 
             <div v-if="player.inventory.length > 0" class="inventory">
                 <b>Tvoj inventar</b><br><br>
-                <div v-for="item in player.inventory" :key="item">
-                    {{ item }}
+                <div class="inventory-item" v-for="item in player.inventory" :key="item">
+                    <img class="inventory-item-image" v-if="item=='walkman'" src="icons/walkman.jpg">
+                    <img class="inventory-item-image" v-if="item=='cigarety & zapalovac'" src="icons/cigi.jpg">
+                    <img class="inventory-item-image" v-if="item=='slanina'" src="icons/bacon.jpg">
+                    <img class="inventory-item-image" v-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
+                    <span class="inventory-item-text">{{ item }}</span>
                 </div>
             </div>
 
@@ -367,5 +371,19 @@
     .disabled {
         color: grey;
         cursor: not-allowed;
+    }
+    .inventory-item {
+        display: block;
+        width: 100%;
+        height: 30px;
+        margin-bottom: 5px;
+    }
+    .inventory-item-image {
+        float: left;
+    }
+    .inventory-item-text {
+        float: left;
+        padding-top: 7px;
+        padding-left: 9px;
     }
 </style>
