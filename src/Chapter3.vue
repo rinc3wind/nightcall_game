@@ -1,0 +1,259 @@
+<template>
+    <div>
+        <div v-if="step == 0">
+            <p>Blizis sa k muru, kamosko. Zabocis na Dunajsku a slapes k Tescu. Namiesto Tesca vsak vidis K-Mart. Hned za K-Martom je obrovsky betonovy mur. Na jeho vrchu je natiahnuty ostnaty drot. Kazdych niekolko metrov je strazna veza. Zlozis BMXku a zaparkujes ju v jednej z bocnych uliciek. Tvoj ciel je jasny. Ocurat mur. Nebude to take lahke. Uz teraz sa citis jak Frodo, ked kluckoval cez Mordor.</p>
+            <div v-if="player.states.indexOf('wallExamined') == -1" @click="$emit('setStep', 1); player.states.push('wallExamined')" class="choice">Rozhliadni sa po mure a zisti situaciu.</div>
+            <div v-else @click="$emit('setStep', 1)" class="choice">Rozhliadni sa po mure a zisti situaciu.</div>
+            <div v-if="player.inventory.indexOf('kartonova krabica') != -1" @click="$emit('setStep', 2.1)" class="choice">Prihovor sa k bezdomovcovi, ktory stoji opodial.</div>
+            <div v-else @click="$emit('setStep', 2)" class="choice">Prihovor sa k bezdomovcovi, ktory stoji opodial.</div>
+            <div v-if="player.inventory.indexOf('prak') != -1" @click="$emit('setStep', 3)" class="choice">Vyber prak a skus vystrelit na vojakov na mure.</div>
+        </div>
+        <div v-if="step == 1">
+            <p>Mur je hnusna betonova 5 metrova opacha. Kazdy niekolko metrov je strazna veza a vojenska policia. Ocurat ho nebude najjednoduchsie. Budes potrebovat nieco, do coho sa skryjes a hlavne, nechce sa ti zatial curat. To budes musiet tiez nejako zriesit.</p>
+            <span v-if="player.inventory.indexOf('kartonova krabica') == -1" @click="$emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+            <span v-else @click="$emit('setStep', 5)" class="choice">{{ lang.continue }}</span>
+        </div>
+        <div v-if="step == 2">
+            <p>Prihovoris sa k bezdomovcovi, ktory sedi v tureckom sede na chodniku. Vyzera jak vyfetovana verzia Brana Mojseja.</p>
+            <p>&quot;Dobry den ujo, co to tu je jaky mur?&quot;, spytas sa ho.</p>
+
+            <p>Otoci sa na teba. &quot;Nie jestem wujem. Jestem Cyberpunker Dzeremi.&quot;</p>
+
+            <p>&quot;Ehm. Dobre. Tak co to tu je jaky mur Cyberpunker Dzeremi?&quot;</p>
+
+            <p>Potesi sa, ze si mu povedal jeho pravym menom. &quot;Bez normalnego, Bratislavsky mur. USA i Sowieci nie wiedzieli, co zrobic z Bratyslawa. Kiedy Hitler uciekl tutaj pod koniec II. wojny i uczynil ja miastem III. rosnac. Wiec podzielili Bratyslawe z tymi murosami. Z drugiej strony nie maja nic do stracenia, wszyscy musza zacytowac te marksistyczne koktajle i nie maja gry ani gier wideo. Jestesmy po dobrej stronie. Ciesz sie wiec i nie pytaj mnie o glupote.&quot;</p>
+
+            <p>Odflusne si na zem, zapali si cigu, vytiahne z vacku Lynx od Atari a zacne drtit.</p>
+
+            <p>&quot;Dzeremi. Vsimol som si, ze tam vedla seba mas taku fajnovu velku kartonovu krabicu. Mohol by som si ju pozicat?&quot;</p>
+
+            <p>&quot;Co dajesz mi do wymiany?&quot;</p>
+
+            <div v-for="item in player.inventory" :key="item" @click="$emit('setStep', 4); $emit('removeItem', item); $emit('pickupItem', { item: 'kartonova krabica' })" class="choice">{{ item }}</div>
+        </div>
+        <div v-if="step == 2.1">
+            <p>Dzeremi ta ignoruje.</p>
+            <span @click="$emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+        </div>
+        <div v-if="step == 3">
+            <p>Nevies preco. Ale napadne ti vybrat prak a vystrelit suter na vojakov na mure. Vyberes ho z ruksaku. Nachystas kamen. Namieris. A skor ako stihnes vobec vystrelit lezis na betone a z hlavy ti vyteka krv. Schytal si gulku do oka kamo. Toto nebol tvoj najmudrejsi napad. Si mrtvy.</p>
+        </div>
+        <div v-if="step == 4">
+            <p>&quot;Paradicka. Moze byc plaski. Na pewno go uzyje. Na. Wez pudelko.</p>
+            <span v-if="player.states.indexOf('wallExamined') != -1" @click="$emit('setStep', 5)" class="choice">{{ lang.continue }}</span>
+            <span v-else @click="$emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+        </div>
+        <div v-if="step == 5">
+            <p>Vydealoval si od Cyber Dzeremiho kartonovu krabicu. Plan je jasny. Presneakujes sa nejako v nej k muru. Najprv musis vyriesit to, ze sa ti vobec nechce curat. Musis vypit vela tekutin. <span v-if="player.inventory.indexOf('flaska coca coly') != -1">Ta jedna pol-litrovka coly ti nebude stacit. </span>Potrebujes aspon 2 litre tekutin. Mozno by sa dalo daco zohnat v <span class="choice" @click="$emit('note', 'K-Mart vyzera celkom lakavo. Velke logo je osadene na vrchu budovy. Pred vchodom je velky tlsty cernoch co predava Nota-Bene (ano, evidentne aj teraz funguje Nota-Bene, good for them).')">K-Marte</span>? Nemas vsak ziadne peniaze. Budes musiet pitie ujebat.</p>
+
+            <div @click="$emit('setStep', 6); $emit('pickupItem', {item: '70 halierov'})" class="choice">Skusis sa popozerat pred vchodom. Ci nenajdes na zemi nejake drobne.</div>
+            <div @click="$emit('setStep', 7)" class="choice">Ides do K-Martu, na &quot;nakup&quot;.</div>
+        </div>
+        <div v-if="step == 6">
+            <p>Chodis dobrych 10-15 minut okolo. Pricupeny na zemi jak curak. Podari sa ti nazgrlit az 70 halierov. Za to si kupis asi akurat tak zapalky. Mozno sa este zidu.</p>
+            <span @click="$emit('setStep', 7)" class="choice">{{ lang.continue }}</span>
+        </div>
+        <div v-if="step == 7">
+            <p>Vojdes dnu. Si v obrovskom pekne spravenom obchodaku, o ktorom mohli ludia v tvojej minulosti (socialisticke cesko-slovensko) len snivat. Hned ti padnu oci na regal, kde je asi 300 druhov rozlicnych corn-flejkov. Nemozes sa vsak nechat odklonit od svojho cielu. Potrebujes najst pitie, kamosko.</p>
+
+            <p>Ides najst ulicku s napojmi.</p>
+
+            <p>Netrva ti to ani tak dlho a za par minut narazis na obrovsky regal s rozlicnymi napojmi. Chcel si len 2 litre. Vsetko je vsak minimalne v 3 litrovych flaskach. Pici, sak to ani neunesies. Co si vyberes?</p>
+
+            <div @click="$emit('setStep', 8); $emit('pickupItem', {item: '3 litrova Nightcall Cola'})" class="choice">Specialnu verziu Nightcall Coca Coly s velkym telefonom a fialovym pepesom na obale.</div>
+            <div @click="$emit('setStep', 8); $emit('pickupItem', {item: '3 litrova Arcade Watch zbrnda'})" class="choice">Zelenu zbrdnu co sa vola Stokarina of Time, v pravom dolnom rohu je logo nejakeho Arcade Watch.</div>
+            <div @click="$emit('setStep', 8); $emit('pickupItem', {item: '3 litrova priesvitna Kobra Gang kokotina'})" class="choice">Fajnovucku flasu v tvare nejakeho hada, svieti na nej velke logo Kobra Gang, nevies sice co to je za sockarov, ale vyzera to cool. Vo vnutri je priesvitna bublinkova tekutina.</div>
+        </div>
+        <div v-if="step == 8">
+            <p>S napojom v ruke kracas k pokladni. Rozmyslas, ako sa cez nu dostanes bez zaplatenia. Vtedy ta vsak napadne, ze vyskusas ci funguje krabica a pokusis sa preplizit. Mozno si ta nikto nevsimne. Sak tu aj tak robia sami chuji.</p>
+            <span @click="$emit('setStep', 9)" class="choice">{{ lang.continue }}</span>
+        </div>
+        <div v-if="step == 9">
+            <p>Dobre kamo. Idem ti scul vysvetlit ako funguje toto plizenie. Vyberes z vacku krabicu, Zlozis ju. Jebnes ju na seba a ides sa preplizit okolo obtlstlej pokladnicky. Uvidis bar, ktory sa bude postupne naplnat ako sa budes blizit okolo svojho cielu. Musis ho naplnit do plna samozrejme. Pocas toho, ako sa budes blizit, nastane sem tam moment, ze tlsta pokladnicka Alzbeta zacne nieco vetrit. Vtedy obrazovka blikne a musis rychle klavesu pustit. Ak to stihnes vcas. Podari sa ti preplizit. Ak nie, kukne skaredo na teba, ty sa zlaknes a musis ist od zaciatku.</p>
+            <span @click="startGame(1, 900, 11)" class="choice">Pome na to.</span>
+        </div>
+
+        <div v-if="step == 10">
+            <progress :class="{moving: isKeyDown, danger: danger}" :value="progress" max="100"></progress>
+            <span v-if="danger == false" :class="{moving: isKeyDown}" class="arrowKey" style="font-size: 50px;">→</span>
+            <span v-else style="font-size: 50px;">{{ randomArrow.text }}</span>
+
+            <div v-if="flashVisible" :style="{ 'background-color': flashColor }" class="flash"></div>
+        </div>
+
+        <div v-if="step == 11">
+            <p>Dal si to, kamosko. Jak Solid Snake. 3 litrovy napoj v ruke, stojis vonku pred K-Martom.</p>
+            <span @click="$emit('setStep', 12)" class="choice">{{ lang.continue }}</span>
+        </div>
+
+        <div v-if="step == 12">
+            <p>Nastal ten moment, kamosko. Vypijes nasupu tvoj lahodny troj litrovy mok. Odgrgnes si jak tvoja mama po obede a ides na to. Uz citis jak sa ti mocovody chystaju. Zajebes na seba krabicu a game begins. Musis sa preplizit cez vojakov a rychle ocurat mur.</p>
+            <span @click="startGame(0.2, 450, 13)" class="choice">Pome na to.</span>
+        </div>
+
+        <div v-if="step == 13">
+            <p>Dal si to. Stojis pred murom. Stahujes nohavice a curas. Sweet release. Moc naraza na mur a odraza sa na tvoje tenisky. Neriesis. Konecne si to dal. Vycural si na mur velku cicinu. Jak umelec z VSVU. Dalsia uloha splnena. Nahodis zase na seba krabicu a preplizis sa naspat.</p>
+
+            <div v-if="player.finished_chapters.indexOf(2) != -1 && player.finished_chapters.indexOf(4) != -1">
+                <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
+                <span @click="$emit('setChapter', 5); $emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+            </div>
+            <div v-else>
+                <p>&quot;Uloha splnena, kam sa vydas teraz, kamosko?&quot;</p>
+                <div v-if="player.finished_chapters.indexOf(2) == -1" class="choice" @click="$emit('setChapter', 2); $emit('setStep', 0); player.finished_chapters.push(3)">Idem najst skulaveho Sama a zbit ho.</div>
+
+                <div v-if="player.finished_chapters.indexOf(4) == -1" class="choice" @click="$emit('setChapter', 4); $emit('setStep', 0); player.finished_chapters.push(3)">Idem do Arkadovej herne zajebat high score v Space Invaders.</div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        props: ['player', 'step'],
+        data() {
+            return {
+                flashVisible: false,
+                danger: false,
+                flashColor: null,
+                speed: 0.5, // 0.2
+                reactionTime: 900, // 450
+                continueTo: 11,
+                progress: 0,
+                interval: null,
+                isKeyDown: false,
+                arrows: [
+                    {
+                        text: '↓',
+                        value: 'ArrowDown'
+                    },
+                    {
+                        text: '↑',
+                        value: 'ArrowUp'
+                    },
+                    {
+                        text: '←',
+                        value: 'ArrowLeft'
+                    }
+                ],
+                randomArrow: null
+            }
+        },
+        mounted() {
+            window.addEventListener('keyup', (e) => {
+                this.keyUp(e)
+            })
+            window.addEventListener('keydown', (e) => {
+                this.keyDown(e)
+            })
+            this.randomArrow = this.arrows[Math.floor(Math.random() * 3)]
+        },
+        methods: {
+            startGame(speed, reactionTime, continueTo) {
+                this.$emit('setStep', 10)
+                this.speed = speed
+                this.reactionTime = reactionTime
+                this.continueTo = continueTo
+                this.progress = 0
+                this.$emit('setDisabled', {
+                    new: true,
+                    save: true,
+                    load: true
+                })
+            },
+            keyUp() {
+                this.isKeyDown = false
+                clearInterval(this.interval)
+                this.interval = null
+            },
+            keyDown(e) {
+                if (this.interval == null && e.key == 'ArrowRight') {
+                    this.isKeyDown = true
+                    this.interval = setInterval(() => {
+                        this.progress = this.progress + this.speed
+
+                        var random = Math.floor(Math.random() * (40))
+                        if (random == 5) this.flash()
+
+                        if (this.progress >= 100) {
+                            this.$emit('setStep', this.continueTo)
+                            this.$emit('setDisabled', {
+                                new: false,
+                                save: false,
+                                load: false
+                            })
+                        }
+                    }, 100)
+                } else if (e.key == this.randomArrow.value) {
+                    this.danger = false
+                }
+            },
+            flash() {
+                this.flashColor = 'white'
+                this.flashVisible = true
+                this.danger = true
+                this.randomArrow = this.arrows[Math.floor(Math.random() * 3)]
+                setTimeout(() => {
+                    this.flashVisible = false
+                }, 180)
+
+                var flashDuration = Math.floor(Math.random() * (500)) + this.reactionTime
+                setTimeout(() => {
+                    this.flashColor = 'yellowgreen'
+                    this.flashVisible = true
+                    //if (this.isKeyDown == true) {
+                    if (this.danger == true || this.isKeyDown == true) {
+                        if (this.player.cheats_enabled != true) this.progress = 0
+                    }
+                    setTimeout(() => {
+                        this.flashVisible = false
+                        this.danger = false
+                    }, 180)
+                }, flashDuration)
+            }
+        }
+    }
+</script>
+
+<style>
+    progress[value] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 100px;
+    }
+    progress[value]::-webkit-progress-bar {
+        background-color: black;
+        border: 2px solid;
+        border-color: yellowgreen;
+    }
+    progress[value]::-webkit-progress-value {
+        background-color: yellowgreen;
+        opacity: 0.6;
+    }
+
+    progress.moving[value]::-webkit-progress-value {
+        background-color: yellowgreen;
+        opacity: 1;
+    }
+    progress.danger[value]::-webkit-progress-value {
+        background-color: white;
+        opacity: 1;
+    }
+    .arrowKey.moving {
+        opacity: 1;
+    }
+    .arrowKey {
+        opacity: 0.6;
+    }
+    .flash {
+        background-color: yellowgreen;
+        position: absolute;
+        opacity: 0.7;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+
