@@ -68,6 +68,64 @@
                     sp: 6,
                     ac: 2,
                     inventory: []
+                },
+                floor1: [
+                    "############",
+                    "##.S..B#####",
+                    "##.S..B####",
+                    "##.....####",
+                    "##.S....D##",
+                    "#####..####",
+                    "#####V.####",
+                    "#####..####",
+                    "##....S...+",
+                    "##.S....#W+",
+                    "##.S....#W#",
+                    "#######.###",
+                    "##B......S#",
+                    "##B......S#",
+                    "##B......S#",
+                    "##B......S#",
+                    "###########"
+                ],
+                floor2: [
+                    "##########################",
+                    "#W#W######################",
+                    "#...........###BBBBBBBB###",
+                    "##S########.###........###",
+                    "#SSS#######.###.......S###",
+                    "###########.###.......S###",
+                        "#####.###........###",
+                        "+...............S###",
+                        "########.........###",
+                                "#S.......S###",
+                                "#.........###",
+                                "#S.......S###",
+                                "#.........###",
+                                "#.........###",
+                            "#####.........###",
+                            "#......SSSSSSS###",
+                            "#....SSSSSSSSS###",
+                            "############@####"
+                ],
+                mapCharToType: {
+                    '#': 'wall',
+                    '.': 'floor',
+                    '+': 'door',
+                    'S': 'table',
+                    'B': 'bar',
+                    'W': 'wc',
+                    'V': 'vyhadzovaci',
+                    'D': 'locked_door'
+                },
+                entityCharToType: {
+                    'Z': 'zombie'
+                },
+                keyBindings: {
+                    up: ['UP_ARROW', 'K', 'W'],
+                    down: ['DOWN_ARROW', 'J', 'S'],
+                    left: ['LEFT_ARROW', 'H', 'A'],
+                    right: ['RIGHT_ARROW', 'L', 'D'],
                 }
             }
         },
@@ -85,6 +143,17 @@
                 this.char.sp = this.char.synth_power * 3
                 this.char.ac = this.char.dexterity
             },
+            loadFloor(floor) {
+                this.game.map.loadTilesFromArrayString(floor, this.mapCharToType, 'floor');
+                this.game.entityManager.loadFromArrayString(floor, this.entityCharToType);
+
+                var game = this.game
+                game.setMapSize(game.map.width, game.map.height);
+                game.input.addBindings(this.keyBindings);
+                game.player.x = 6;
+                game.player.y = 15;
+                game.renderer.resize(30, 20);
+            },
             diceRoll(sides) {
                 return Math.floor(Math.random() * sides) + 1
             }
@@ -100,83 +169,15 @@
             this.game = new RL.Game();
             var game = this.game
 
-            // var mapData = [
-            //     "#####################",
-            //     "#.........#.........#",
-            //     "#....Z....#....##...#",
-            //     "#.........+....##...#",
-            //     "#.........#.........#",
-            //     "#.#..#..#.#.........#",
-            //     "#.........#...####+##",
-            //     "#.........#...#.....#",
-            //     "#.........#...#.....#",
-            //     "#.........#...#.....#",
-            //     "#####################"
-            // ];
-            var mapData = [
-                "############",
-                "##.S..B#####",
-                "##.S..B####",
-                "##.....####",
-                "##.S....D##",
-                "#####..####",
-                "#####V.####",
-                "#####..####",
-                "##....S...+",
-                "##.S....#W+",
-                "##.S....#W#",
-                "#######.###",
-                "##B......S#",
-                "##B......S#",
-                "##B......S#",
-                "##B......S#",
-                "###########"
-            ];
-
-            var mapCharToType = {
-                '#': 'wall',
-                '.': 'floor',
-                '+': 'door',
-                'S': 'table',
-                'B': 'bar',
-                'W': 'wc',
-                'V': 'vyhadzovaci',
-                'D': 'locked_door'
-            };
-
-            var entityCharToType = {
-                'Z': 'zombie'
-            };
-
-            var keyBindings = {
-                up: ['UP_ARROW', 'K', 'W'],
-                down: ['DOWN_ARROW', 'J', 'S'],
-                left: ['LEFT_ARROW', 'H', 'A'],
-                right: ['RIGHT_ARROW', 'L', 'D'],
-            };
-
-            game.map.loadTilesFromArrayString(mapData, mapCharToType, 'floor');
-            game.entityManager.loadFromArrayString(mapData, entityCharToType);
-
+            this.loadFloor(this.floor1)
             // add some lights
             // game.lighting.set(3, 7, 255, 0, 0);
             // game.lighting.set(7, 7, 0, 0, 255);
-
-            // generate and assign a map object (repaces empty default)
-            game.setMapSize(game.map.width, game.map.height);
-
-            // add input keybindings
-            game.input.addBindings(keyBindings);
-
-            // or just add by entity type
-            //game.entityManager.add(5, 9, 'zombie');
-
-            // set player starting position
-            game.player.x = 6;
-            game.player.y = 15;
-
-            // make the view a little smaller
-            game.renderer.resize(30, 20);
+            // game.setMapSize(game.map.width, game.map.height);
+            // game.input.addBindings(this.keyBindings);
+            // game.player.x = 6;
+            // game.player.y = 15;
+            // game.renderer.resize(30, 20);
 
             // get existing DOM elements
             var mapContainerEl = document.getElementById('example-map-container');
@@ -208,7 +209,6 @@
             game.console.log('The game starts.');
             // start the game
             game.start();
-
         }
     }
 </script>
