@@ -69,45 +69,52 @@
                     ac: 2,
                     inventory: []
                 },
-                floor1: [
-                    "############",
-                    "##.S..B#####",
-                    "##.S..B####",
-                    "##.....####",
-                    "##.S....D##",
-                    "#####..####",
-                    "#####V.####",
-                    "#####..####",
-                    "##....S...+",
-                    "##.S....#W+",
-                    "##.S....#W#",
-                    "#######.###",
-                    "##B......S#",
-                    "##B......S#",
-                    "##B......S#",
-                    "##B......S#",
-                    "###########"
-                ],
-                floor2: [
-                    "##########################",
-                    "#W#W######################",
-                    "#...........###BBBBBBBB###",
-                    "##S########.###........###",
-                    "#SSS#######.###.......S###",
-                    "###########.###.......S###",
-                        "#####.###........###",
-                        "+...............S###",
-                        "########.........###",
-                                "#S.......S###",
-                                "#.........###",
-                                "#S.......S###",
-                                "#.........###",
-                                "#.........###",
-                            "#####.........###",
-                            "#......SSSSSSS###",
-                            "#....SSSSSSSSS###",
-                            "############@####"
-                ],
+                floor1: {
+                    start: { x: 6, y: 15 },
+                    layout: [
+                        "############",
+                        "##.S..B#####",
+                        "##.S..B#####",
+                        "##.....#####",
+                        "##.S....D###",
+                        "#####..#####",
+                        "#####V.#####",
+                        "#####..#####",
+                        "##....S....+",
+                        "##.S...#####",
+                        "##.S.....W##",
+                        "##.S.....W##",
+                        "#######.####",
+                        "##B......S##",
+                        "##B......S##",
+                        "##B......S##",
+                        "##B......S##",
+                        "############"
+                    ],
+                },
+                floor2: {
+                    start: { x: 0, y: 7 },
+                    layout: [
+                        "##########################",
+                        "#W#W######################",
+                        "#...........###BBBBBBBB###",
+                        "##S########.###........###",
+                        "#SSS#######.###.......S###",
+                        "###########.###.......S###",
+                        "###########.###........###",
+                        "+.....................S###",
+                        "##############.........###",
+                        "##############S.......S###",
+                        "##############.........###",
+                        "##############S.......S###",
+                        "##############.........###",
+                        "##############.........###",
+                        "##############.........###",
+                        "##########......SSSSSSS###",
+                        "##########....SSSSSSSSS###",
+                        "##########################"
+                    ]
+                },
                 mapCharToType: {
                     '#': 'wall',
                     '.': 'floor',
@@ -144,15 +151,37 @@
                 this.char.ac = this.char.dexterity
             },
             loadFloor(floor) {
-                this.game.map.loadTilesFromArrayString(floor, this.mapCharToType, 'floor');
-                this.game.entityManager.loadFromArrayString(floor, this.entityCharToType);
-
                 var game = this.game
+                game.map.loadTilesFromArrayString(floor.layout, this.mapCharToType, 'floor');
+                game.entityManager.loadFromArrayString(floor.layout, this.entityCharToType);
                 game.setMapSize(game.map.width, game.map.height);
                 game.input.addBindings(this.keyBindings);
-                game.player.x = 6;
-                game.player.y = 15;
+                game.player.x = floor.start.x;
+                game.player.y = floor.start.y;
                 game.renderer.resize(30, 20);
+                game.renderer.layers = [
+                    new RL.RendererLayer(game, 'map', {
+                        draw: false,
+                        mergeWithPrevLayer: false
+                    }),
+                    new RL.RendererLayer(game, 'entity', {
+                        draw: false,
+                        mergeWithPrevLayer: true
+                    }),
+                    new RL.RendererLayer(game, 'lighting', {
+                        draw: true,
+                        mergeWithPrevLayer: false
+                    }),
+                    new RL.RendererLayer(game, 'fov', {
+                        draw: true,
+                        mergeWithPrevLayer: false
+                    }),
+                ];
+                var mapContainerEl = document.getElementById('example-map-container');
+                var consoleContainerEl = document.getElementById('example-console-container');
+                mapContainerEl.appendChild(this.game.renderer.canvas);
+                consoleContainerEl.appendChild(this.game.console.el);
+                this.game.start();
             },
             diceRoll(sides) {
                 return Math.floor(Math.random() * sides) + 1
@@ -165,50 +194,9 @@
             bus.$on('start_combat', () => {
                 this.$emit('setStep', 2)
             })
-            // create the game instance
+
             this.game = new RL.Game();
-            var game = this.game
-
             this.loadFloor(this.floor1)
-            // add some lights
-            // game.lighting.set(3, 7, 255, 0, 0);
-            // game.lighting.set(7, 7, 0, 0, 255);
-            // game.setMapSize(game.map.width, game.map.height);
-            // game.input.addBindings(this.keyBindings);
-            // game.player.x = 6;
-            // game.player.y = 15;
-            // game.renderer.resize(30, 20);
-
-            // get existing DOM elements
-            var mapContainerEl = document.getElementById('example-map-container');
-            var consoleContainerEl = document.getElementById('example-console-container');
-
-            // append elements created by the game to the DOM
-            mapContainerEl.appendChild(game.renderer.canvas);
-            consoleContainerEl.appendChild(game.console.el);
-
-            game.renderer.layers = [
-                new RL.RendererLayer(game, 'map', {
-                    draw: false,
-                    mergeWithPrevLayer: false
-                }),
-                new RL.RendererLayer(game, 'entity', {
-                    draw: false,
-                    mergeWithPrevLayer: true
-                }),
-                new RL.RendererLayer(game, 'lighting', {
-                    draw: true,
-                    mergeWithPrevLayer: false
-                }),
-                new RL.RendererLayer(game, 'fov', {
-                    draw: true,
-                    mergeWithPrevLayer: false
-                }),
-            ];
-
-            game.console.log('The game starts.');
-            // start the game
-            game.start();
         }
     }
 </script>
