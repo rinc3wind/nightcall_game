@@ -223,11 +223,19 @@
         methods: {
             keyDown(e) {
                 this.keyPressed = e.key
-                if (this.visibleNotes.length > 0 && this.visibleNotes[0].toLowerCase() == this.keyPressed) {
-                    this.noteClear()
-                    console.log('HIT');
 
-                }
+                var now = MIDI.Player.currentTime
+                this.visibleNotes.forEach(note => {
+                    if (note.timeSignature < now && note.char.toLowerCase() == this.keyPressed) {
+                        console.log('HIT');
+                        this.noteClear()
+                    }
+                })
+
+                // if (this.visibleNotes.length > 0 && this.visibleNotes[0].toLowerCase() == this.keyPressed) {
+                //     this.noteClear()
+                //     console.log('HIT');
+                // }
             },
             keyUp(e) {
                 this.keyPressed = null
@@ -263,42 +271,56 @@
                                 if (channel == 0) {
                                     // self.note = MIDI.noteToKey[note]
                                     // self.noteCode = note
-                                    if (message == 144) self.drawNote(note)
+                                    if (message == 144) self.drawNote(note, now)
                                 }
                             });
                         })
                     }
                 })
             },
-            drawNote(note) {
+            drawNote(note, timeSignature) {
                 //var note = 60
+                // var conversion = {
+                //     60: { index: 3, char: 'A'},
+                //     62: { index: 7, char: 'S'},
+                //     64: { index: 12, char: 'D'},
+                //     65: { index: 15, char: 'F'},
+                //     67: { index: 19, char: 'G'},
+                //     69: { index: 23, char: 'H'},
+                //     71: { index: 27, char: 'J'},
+                //     72: { index: 31, char: 'K'},
+                //     74: { index: 35, char: 'L'}
+                // }
                 var conversion = {
                     60: { index: 3, char: 'A'},
                     62: { index: 7, char: 'S'},
                     64: { index: 12, char: 'D'},
                     65: { index: 15, char: 'F'},
-                    67: { index: 19, char: 'G'},
-                    69: { index: 23, char: 'H'},
-                    71: { index: 27, char: 'J'},
-                    72: { index: 31, char: 'K'},
-                    74: { index: 35, char: 'L'}
+
+                    67: { index: 3, char: 'A'},
+                    69: { index: 7, char: 'S'},
+                    71: { index: 12, char: 'D'},
+                    72: { index: 15, char: 'F'}
                 }
 
-                this.visibleNotes.push(conversion[note].char)
+                this.visibleNotes.push({
+                    char: conversion[note].char,
+                    timeSignature: timeSignature
+                })
 
                 var level = -1
                 var subInterval = 0
                 var interval = setInterval(() => {
                     if (level != -1) this.replaceAt(conversion[note].index + 40 * level, '|')
-                    if (level > 6) {
+                    if (level >= 7) {
                         clearInterval(interval)
                     }
                     level++
-                    if (level < 8) this.replaceAt(conversion[note].index + 40 * level, conversion[note].char)
+                    if (level <= 7) this.replaceAt(conversion[note].index + 40 * level, conversion[note].char)
                     else {
-                        if (conversion[note].char.toLowerCase() == this.visibleNotes[0].toLowerCase()) {
+                        if (conversion[note].char.toLowerCase() == this.visibleNotes[0].char.toLowerCase()) {
                             this.noteClear()
-                            this.success = this.success - 5
+                            this.success = this.success - 1
                         }
                     }
                 }, 100)
