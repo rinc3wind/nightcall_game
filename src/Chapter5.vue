@@ -27,7 +27,7 @@
             </div>
             <div v-else>
                 <p>Nahodis outfit a ides dole za rodicmi. Mama sa na teba usmeje.</p>
-                <p>&quot;No, jaky si fesak.&quot; <br>&quot;Pome.&quot;, prida sa tatko a poda ti do ruky kahance a zapalky.</p>
+                <p>&quot;No, jaky si fesak.&quot; <br>&quot;Pome,&quot;, prida sa tatko a poda ti do ruky kahance a zapalky.</p>
                 <p>Vyjdete von pred barak. Nasadnete do auta. Tatko nastartuje, zaflekuje jak Knight Rider a upaluje na Dubravsky cintorin.</p>
                 <span @click="$emit('setStep', 2)" class="choice">{{ lang.continue }}</span>
             </div>

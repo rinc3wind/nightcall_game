@@ -38,6 +38,21 @@
                     <img class="inventory-item-image" v-if="item=='cigarety & zapalovac'" src="icons/cigi.jpg">
                     <img class="inventory-item-image" v-if="item=='slanina'" src="icons/bacon.jpg">
                     <img class="inventory-item-image" v-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
+                    <img class="inventory-item-image" v-if="item=='3 litrova Arcade Watch zbrnda'" src="icons/aw_pitie.jpg">
+                    <img class="inventory-item-image" v-if="item=='bejzbolka'" src="icons/bejsbolka.jpg">
+                    <img class="inventory-item-image" v-if="item==''" src="icons/borovicka.jpg">
+                    <img class="inventory-item-image" v-if="item=='70 halierov'" src="icons/centy.jpg">
+                    <img class="inventory-item-image" v-if="item=='ocurana cigareta'" src="icons/ciga4.jpg">
+                    <img class="inventory-item-image" v-if="item=='flaska coca coly'" src="icons/cola.jpg">
+                    <img class="inventory-item-image" v-if="item=='sojovy jogurt'" src="icons/jogurt.jpg">
+                    <img class="inventory-item-image" v-if="item=='3 litrova priesvitna Kobra Gang kokotina'" src="icons/kobra_pitie.jpg">
+                    <img class="inventory-item-image" v-if="item=='kartonova krabica'" src="icons/krabica.jpg">
+                    <img class="inventory-item-image" v-if="item=='mapa'" src="icons/mapa.jpg">
+                    <img class="inventory-item-image" v-if="item=='3 litrova Nightcall Cola'" src="icons/nc_pitie.jpg">
+                    <img class="inventory-item-image" v-if="item=='parok'" src="icons/parek.jpg">
+                    <img class="inventory-item-image" v-if="item=='prak'" src="icons/prak.jpg">
+                    <img class="inventory-item-image" v-if="item=='sekera'" src="icons/sekera.jpg">
+                    <img class="inventory-item-image" v-if="item=='flasa vodky'" src="icons/vodka.jpg">
                     <span class="inventory-item-text">{{ item }}</span>
                 </div>
             </div>
