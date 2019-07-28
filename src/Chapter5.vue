@@ -136,7 +136,7 @@
         </div>
         <div v-if="step == 16">
             <p>&quot;Fuha! To bolo {{ player.name }}. Paradicka. Dobre sa mi tu s tebu dzemuje, ale cas nas tlaci. Tusim ta negdo hlada.&quot;</p>
-            <p>Pocujes z vonku hlas tvoj tatka.</p>
+            <p>Pocujes z vonku hlas tvojho tatka.</p>
             <p>&quot;{{ player.name }}! {{ player.name }}! Kde si? Do kostola urcite neisiel, nevymyslaj. Co by tam robil?&quot;</p>
             <p>&quot;Tatko! Som v kostole, idem von!&quot;</p>
             <span @click="$emit('setStep', 17); $emit('pickupItem', {item: 'Arturia JUP-8 V'})" class="choice">{{ lang.continue }}</span>
@@ -146,6 +146,7 @@
             <p>V hlave zacujes slova:</p>
             <p>Bud stastna nepriznana. Vek sluzi omsu za nas. Maj co si tajne zelas. Ja viem...</p>
             <p>Schmatnes syntak a bezis do auta. Syntak spokojne vo vacku. Tatko soferuje domov a ty mas pred sebou poslednu ulohu. Dostat sa do Re:Freshu na ten vyjebany Nightcall.</p>
+            <div @click="$emit('setChapter', 6); $emit('setStep', 0)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 100">
             <div style="float: left">
@@ -154,7 +155,7 @@
                 </div>
                 <div v-else>
                     <span v-if="mp3_loaded == false || midi_loaded == false" @click="load">START</span>
-                    <span v-else @click="play">PLAY</span>
+                    <span v-else @click="play" class="choice">PLAY</span>
                 </div>
 
                 <pre style="height: 155px;">
@@ -175,9 +176,6 @@
             </div>
             <progress class="success-bar" :value="success" max="100"></progress>
         </div>
-        <div v-if="step == 101">
-            FAIL
-        </div>
     </div>
 </template>
 
@@ -191,6 +189,7 @@
             window.addEventListener('keydown', (e) => {
                 this.keyDown(e)
             })
+            this.load()
         },
         data() {
             return {
@@ -231,19 +230,20 @@
                         this.noteClear()
                     }
                 })
-
-                // if (this.visibleNotes.length > 0 && this.visibleNotes[0].toLowerCase() == this.keyPressed) {
-                //     this.noteClear()
-                //     console.log('HIT');
-                // }
             },
             keyUp(e) {
                 this.keyPressed = null
             },
             load() {
+                var self = this
                 this.loading = true
                 this.sound = new Howl({
-                    src: ['mp3/nightcall.mp3']
+                    src: ['mp3/nightcall.mp3'],
+                    onend: function() {
+                        self.$emit('setStep', 16)
+                        self.sound.stop()
+                        MIDI.Player.stop()
+                    }
                 })
                 this.sound.once('load', () => {
                     this.mp3_loaded = true
@@ -260,18 +260,9 @@
                             self.midi_loaded = true
                             console.log('midi loaded');
 
-                            MIDI.Player.addListener(function(data) { // set it to your own function!
-                                var now = data.now; // where we are now
-                                var end = data.end; // time when song ends
-                                var channel = data.channel; // channel note is playing on
-                                var message = data.message; // 128 is noteOff, 144 is noteOn
-                                var note = data.note; // the note
-                                var velocity = data.velocity; // the velocity of the note
-
-                                if (channel == 0) {
-                                    // self.note = MIDI.noteToKey[note]
-                                    // self.noteCode = note
-                                    if (message == 144) self.drawNote(note, now)
+                            MIDI.Player.addListener(function(data) {
+                                if (data.channel == 0) {
+                                    if (data.message == 144) self.drawNote(data.note, data.now)
                                 }
                             });
                         })
@@ -320,7 +311,8 @@
                     else {
                         if (conversion[note].char.toLowerCase() == this.visibleNotes[0].char.toLowerCase()) {
                             this.noteClear()
-                            this.success = this.success - 1
+                            // this.success = this.success - 1.5
+                            this.success = this.success
                         }
                     }
                 }, 100)
@@ -335,14 +327,22 @@
                 this.sound.play()
                 setTimeout(() => {
                     MIDI.Player.start()
-                // }, 11625)
                 }, 10725)
             }
         },
         watch:{
             // CHECK FOR FAIL
             success: function(value) {
-                //if (value < 1) this.$emit('setStep', 101)
+                if (value < 1) {
+                    this.sound.stop()
+                    MIDI.Player.stop()
+                    this.success = 100
+                    clearInterval(this.interval)
+                    this.interval = null
+                    this.toneVisible = false
+                    this.visibleNotes = []
+                    this.$emit('setStep', 15)
+                }
             }
         }
     }
