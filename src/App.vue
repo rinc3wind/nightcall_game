@@ -29,6 +29,9 @@
                 <div @click="chapter = 6; step = 1" class="setting">
                     RPG
                 </div>
+                <div @click="chapter = 6; step = 2" class="setting">
+                    COMBAT
+                </div>
             </div>
 
             <div v-if="player.inventory.length > 0" class="inventory">

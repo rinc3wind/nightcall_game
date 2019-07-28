@@ -311,8 +311,8 @@
                     else {
                         if (conversion[note].char.toLowerCase() == this.visibleNotes[0].char.toLowerCase()) {
                             this.noteClear()
-                            // this.success = this.success - 1.5
-                            this.success = this.success
+                            this.success = this.success - 1.5
+                            //this.success = this.success
                         }
                     }
                 }, 100)

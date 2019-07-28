@@ -46,15 +46,20 @@
             <div id="example-console-container" class="game-container"></div>
         </div>
         <div v-if="step == 2">
-            COMBAT
-            <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
+            <combat :char="char" :enemies_prop="enemies">
+            </combat>
         </div>
     </div>
 </template>
 
 <script>
+    import Combat from './Combat.vue'
+
     export default {
         props: ['player', 'step'],
+        components: {
+            'combat': Combat
+        },
         data() {
             return {
                 game: null,
@@ -67,8 +72,10 @@
                     hp: 6,
                     sp: 6,
                     ac: 2,
-                    inventory: []
+                    inventory: [],
+                    weapon: {}
                 },
+                enemies: [],
                 floor1: {
                     start: { x: 6, y: 15 },
                     layout: [
@@ -191,6 +198,28 @@
         mounted() {
             this.char.name = this.player.name
             this.char.inventory = this.player.inventory
+
+            if (this.player.inventory.indexOf('sekera') != -1) {
+                this.char.weapon = {
+                    name: 'sekera',
+                    dmg: 8
+                }
+            } else if (this.player.inventory.indexOf('bejzbolka') != -1) {
+                this.char.weapon = {
+                    name: 'bejzbolka',
+                    dmg: 6
+                }
+            } else if (this.player.inventory.indexOf('prak') != -1) {
+                this.char.weapon = {
+                    name: 'prak',
+                    dmg: 6
+                }
+            } else {
+                this.char.weapon = {
+                    name: 'unarmed',
+                    dmg: 4
+                }
+            }
 
             bus.$on('start_combat', () => {
                 this.$emit('setStep', 2)
