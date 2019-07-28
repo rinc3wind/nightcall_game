@@ -40,7 +40,7 @@
                     <img class="inventory-item-image" v-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
                     <img class="inventory-item-image" v-if="item=='3 litrova Arcade Watch zbrnda'" src="icons/aw_pitie.jpg">
                     <img class="inventory-item-image" v-if="item=='bejzbolka'" src="icons/bejsbolka.jpg">
-                    <img class="inventory-item-image" v-if="item==''" src="icons/borovicka.jpg">
+                    <img class="inventory-item-image" v-if="item=='borovicka'" src="icons/borovicka.jpg">
                     <img class="inventory-item-image" v-if="item=='70 halierov'" src="icons/centy.jpg">
                     <img class="inventory-item-image" v-if="item=='ocurana cigareta'" src="icons/ciga4.jpg">
                     <img class="inventory-item-image" v-if="item=='flaska coca coly'" src="icons/cola.jpg">

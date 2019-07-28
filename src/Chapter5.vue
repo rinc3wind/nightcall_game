@@ -45,9 +45,9 @@
 
             <p>Vytiahnes z vrecka kahance a zapalky, nech ich mozes babke zapalit. Do ake kreativneho vzoru ich zlozis?</p>
 
-            <div @click="$emit('setStep', 3)" class="choice">Velka cicina predsa.</div>
-            <div @click="$emit('setStep', 3)" class="choice">Pentagram kamo.</div>
-            <div @click="$emit('setStep', 3)" class="choice">Velke B ako Babka. Alebo Blade Runner.</div>
+            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'})" class="choice">Velka cicina predsa.</div>
+            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'})" class="choice">Pentagram kamo.</div>
+            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'})" class="choice">Velke B ako Babka. Alebo Blade Runner.</div>
         </div>
         <div v-if="step == 3">
             <p>Zlozis kahance jak pan umelec a systematicky zapalis kazdu sviecku.</p>

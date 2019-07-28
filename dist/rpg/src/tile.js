@@ -242,6 +242,17 @@
             passable: false,
             blocksLos: true
         },
+        exit: {
+            name: 'exit',
+            char: '▶',
+            color: 'white',
+            bgColor: '#222',
+            passable: false,
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('exit', { floor: 2 })
+            }
+        },
         door: {
             name: 'Door',
             char: '+',
