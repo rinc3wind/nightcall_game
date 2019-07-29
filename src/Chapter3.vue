@@ -70,15 +70,17 @@
         </div>
         <div v-if="step == 9">
             <p>Dobre kamo. Idem ti scul vysvetlit ako funguje toto plizenie. Vyberes z vacku krabicu, Zlozis ju. Jebnes ju na seba a ides sa preplizit okolo obtlstlej pokladnicky. Uvidis bar, ktory sa bude postupne naplnat ako sa budes blizit okolo svojho cielu. Musis ho naplnit do plna samozrejme. Pocas toho, ako sa budes blizit, nastane sem tam moment, ze tlsta pokladnicka Alzbeta zacne nieco vetrit. Vtedy obrazovka blikne a musis rychle klavesu pustit. Ak to stihnes vcas. Podari sa ti preplizit. Ak nie, kukne skaredo na teba, ty sa zlaknes a musis ist od zaciatku.</p>
-            <span @click="startGame(1, 900, 11)" class="choice">Pome na to.</span>
+            <span @click="$emit('setStep', 10.1)" class="choice">Pome na to.</span>
         </div>
 
-        <div v-if="step == 10">
-            <progress :class="{moving: isKeyDown, danger: danger}" :value="progress" max="100"></progress>
-            <span v-if="danger == false" :class="{moving: isKeyDown}" class="arrowKey" style="font-size: 50px;">→</span>
-            <span v-else style="font-size: 50px;">{{ randomArrow.text }}</span>
+        <div v-if="step == 10.1">
+            <sneaking-game :player="player" :speed="1" :reactionTime="1100" @win="$emit('setStep', 11)">
+            </sneaking-game>
+        </div>
 
-            <div v-if="flashVisible" :style="{ 'background-color': flashColor }" class="flash"></div>
+        <div v-if="step == 10.2">
+            <sneaking-game :player="player" :speed="0.35" :reactionTime="500" @win="$emit('setStep', 13)">
+            </sneaking-game>
         </div>
 
         <div v-if="step == 11">
@@ -88,7 +90,7 @@
 
         <div v-if="step == 12">
             <p>Nastal ten moment, kamosko. Vypijes nasupu tvoj lahodny troj litrovy mok. Odgrgnes si jak tvoja mama po obede a ides na to. Uz citis jak sa ti mocovody chystaju. Zajebes na seba krabicu a game begins. Musis sa preplizit cez vojakov a rychle ocurat mur.</p>
-            <span @click="startGame(0.2, 450, 13)" class="choice">Pome na to.</span>
+            <span @click="$emit('setStep', 10.2)" class="choice">Pome na to.</span>
         </div>
 
         <div v-if="step == 13">
@@ -109,108 +111,20 @@
 </template>
 
 <script>
+    import SneakingGame from './SneakingGame.vue'
+
     export default {
         props: ['player', 'step'],
+        components: {
+            'sneaking-game': SneakingGame
+        },
         data() {
             return {
-                flashVisible: false,
-                danger: false,
-                flashColor: null,
-                speed: 0.5, // 0.2
-                reactionTime: 900, // 450
-                continueTo: 11,
-                progress: 0,
-                interval: null,
-                isKeyDown: false,
-                arrows: [
-                    {
-                        text: '↓',
-                        value: 'ArrowDown'
-                    },
-                    {
-                        text: '↑',
-                        value: 'ArrowUp'
-                    },
-                    {
-                        text: '←',
-                        value: 'ArrowLeft'
-                    }
-                ],
-                randomArrow: null
             }
         },
         mounted() {
-            window.addEventListener('keyup', (e) => {
-                this.keyUp(e)
-            })
-            window.addEventListener('keydown', (e) => {
-                this.keyDown(e)
-            })
-            this.randomArrow = this.arrows[Math.floor(Math.random() * 3)]
         },
         methods: {
-            startGame(speed, reactionTime, continueTo) {
-                this.$emit('setStep', 10)
-                this.speed = speed
-                this.reactionTime = reactionTime
-                this.continueTo = continueTo
-                this.progress = 0
-                this.$emit('setDisabled', {
-                    new: true,
-                    save: true,
-                    load: true
-                })
-            },
-            keyUp() {
-                this.isKeyDown = false
-                clearInterval(this.interval)
-                this.interval = null
-            },
-            keyDown(e) {
-                if (this.interval == null && e.key == 'ArrowRight') {
-                    this.isKeyDown = true
-                    this.interval = setInterval(() => {
-                        this.progress = this.progress + this.speed
-
-                        var random = Math.floor(Math.random() * (40))
-                        if (random == 5) this.flash()
-
-                        if (this.progress >= 100) {
-                            this.$emit('setStep', this.continueTo)
-                            this.$emit('setDisabled', {
-                                new: false,
-                                save: false,
-                                load: false
-                            })
-                        }
-                    }, 100)
-                } else if (e.key == this.randomArrow.value) {
-                    this.danger = false
-                }
-            },
-            flash() {
-                this.flashColor = 'white'
-                this.flashVisible = true
-                this.danger = true
-                this.randomArrow = this.arrows[Math.floor(Math.random() * 3)]
-                setTimeout(() => {
-                    this.flashVisible = false
-                }, 180)
-
-                var flashDuration = Math.floor(Math.random() * (500)) + this.reactionTime
-                setTimeout(() => {
-                    this.flashColor = 'yellowgreen'
-                    this.flashVisible = true
-                    //if (this.isKeyDown == true) {
-                    if (this.danger == true || this.isKeyDown == true) {
-                        if (this.player.cheats_enabled != true) this.progress = 0
-                    }
-                    setTimeout(() => {
-                        this.flashVisible = false
-                        this.danger = false
-                    }, 180)
-                }, flashDuration)
-            }
         }
     }
 </script>

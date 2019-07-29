@@ -1,7 +1,33 @@
 <template>
     <div>
         <div v-show="step == 0">
+            <p>Hned po prichode domov si vybehol do izby. Musis pockat kym sa doma ukludni situacia, aby si sa vedel vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
 
+            <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven, sa mozes posledny krat citit jak Solid Snake.</p>
+            <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
+        </div>
+        <div v-if="step == 1">
+            <sneaking-game @win="$emit('setStep', 3)" @fail="$emit('setStep', 2)" :player="player" :speed="0.65" :reactionTime="700">
+            </sneaking-game>
+        </div>
+        <div v-show="step == 2">
+            <p>Vyjebes sa po schodoch jak po flaske borovicky. Toto nebolo moc smooth. Pre istotu nachvilu zalezies naspat do izby a nacuvas. Vzduch je cisty, nikoho si nezobudil. Ides to vyskusat znova.</p>
+            <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
+        </div>
+        <div v-show="step == 3">
+            <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. Nastavis si opat walkmana. A pustis SONG. Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes na Ventursku do Re:Freshu. Citis sa jak Luke Skywalker ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
+
+            <p>Vies, ze Nightcall bez teba nema zmysel.</p>
+            <div @click="$emit('setStep', 4)" class="choice">{{ lang.continue }}</div>
+        </div>
+        <div v-show="step == 4">
+            <p>Prichadzas na Ventursku. Kluckujes na bajku cez davy ozratych Britskych turistov, sprostuckych futbalovych chuliganov a vychrtle trafo pipky s civavami pod pazuchami. Skoro to najebes do asi 2.5 metroveho bez-krkeho typka s asi najhorsimi kerkami co si kedy videl. Cez jeho pravy biceps ma obrovsku karikaturu fejsu nejakej starej zenskej, hore nad nou je comic sansovy napis &quot;Manka&quot;. Len tak tak stihnes stocit bajk a missnes Manku asi o 2 centimetre.</p>
+
+            <p>Zaflekujes pred Re:Freshom, hodis bajk na zem a vstupis dnu.</p>
+
+            <div @click="$emit('setStep', 100)" class="choice">{{ lang.continue }}</div>
+        </div>
+        <div v-show="step == 100">
             <div>
                 <span>Strength: </span>
                 <span>{{ char.strength }}</span>
@@ -39,13 +65,13 @@
                 <span>{{ char.ac }}</span>
             </div>
 
-            <div v-if="char.xp == 0" @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
+            <div v-if="char.xp == 0" @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
         </div>
-        <div v-show="step == 1">
+        <div v-show="step == 101">
             <div id="example-map-container" class="game-container"></div>
             <div id="example-console-container" class="game-container"></div>
         </div>
-        <div v-if="step == 2">
+        <div v-if="step == 102">
             <combat :char="char" :enemies_prop="enemies">
             </combat>
         </div>
@@ -54,11 +80,13 @@
 
 <script>
     import Combat from './Combat.vue'
+    import SneakingGame from './SneakingGame.vue'
 
     export default {
         props: ['player', 'step'],
         components: {
-            'combat': Combat
+            'combat': Combat,
+            'sneaking-game': SneakingGame
         },
         data() {
             return {
@@ -222,7 +250,7 @@
             }
 
             bus.$on('start_combat', () => {
-                this.$emit('setStep', 2)
+                this.$emit('setStep', 102)
             })
 
             bus.$on('exit', (exit) => {
