@@ -169,7 +169,7 @@
 |  | | | |  |  | | | | | |  |  | | | |  |
 |  |_| |_|  |  |_| |_| |_|  |  |_| |_|  |
 |   |   |   |   |   |   |   |   |   |   |
-| <span :class="{ 'key-pressed': keyPressed == 'a' }">A</span> | <span :class="{ 'key-pressed': keyPressed == 's' }">S</span> | <span :class="{ 'key-pressed': keyPressed == 'd' }">D</span> | <span :class="{ 'key-pressed': keyPressed == 'f' }">F</span> | <span :class="{ 'key-pressed': keyPressed == 'g' }">G</span> | <span :class="{ 'key-pressed': keyPressed == 'h' }">H</span> | <span :class="{ 'key-pressed': keyPressed == 'j' }">J</span> | <span :class="{ 'key-pressed': keyPressed == 'k' }">K</span> | <span :class="{ 'key-pressed': keyPressed == 'l' }">L</span> |   |
+| <span :class="{ 'key-pressed': keyPressed == 'a' }">A</span> | <span :class="{ 'key-pressed': keyPressed == 's' }">S</span> | <span :class="{ 'key-pressed': keyPressed == 'd' }">D</span> | <span :class="{ 'key-pressed': keyPressed == 'f' }">F</span> |   |   |   |   |   |   |
 |___|___|___|___|___|___|___|___|___|___|
                 </pre>
                 <div style="position: absolute; font-size: 30px;" >HITS: {{ numberOfHits }}</div>
@@ -230,6 +230,7 @@
                     var note = this.visibleNotes[index]
                     if (note.timeSignature <= now && note.char.toLowerCase() == this.keyPressed) {
                         this.numberOfHits++
+                        this.sound.volume(1)
                         this.noteClear(note.timeSignature)
                         break
                     }
@@ -318,6 +319,7 @@
                             if (note.timeSignature == timeSignature) {
                                 this.noteClear(note.timeSignature)
                                 this.success = this.success - 1.5
+                                this.sound.volume(0.2)
                             }
                         })
                     }
