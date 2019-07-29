@@ -255,11 +255,11 @@
                 this.loading = true
                 this.sound = new Howl({
                     src: ['mp3/nightcall.mp3'],
-                    // onend: function() {
-                    //     self.$emit('setStep', 16)
-                    //     self.sound.stop()
-                    //     MIDI.Player.stop()
-                    // }
+                    onend: function() {
+                        self.$emit('setStep', 16)
+                        self.sound.stop()
+                        MIDI.Player.stop()
+                    }
                 })
                 this.sound.once('load', () => {
                     this.mp3_loaded = true
