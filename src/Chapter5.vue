@@ -225,27 +225,15 @@
                 this.keyPressed = e.key
                 this.visibleNotes.forEach(visibleNote => {
                 })
-
                 var now = MIDI.Player.currentTime
-
                 for (let index = 0; index < this.visibleNotes.length; index++) {
-
                     var note = this.visibleNotes[index]
-
                     if (note.timeSignature <= now && note.char.toLowerCase() == this.keyPressed) {
                         this.numberOfHits++
                         this.noteClear(note.timeSignature)
                         break
                     }
                 }
-
-                // this.visibleNotes.forEach(note => {
-                //     if (note.timeSignature <= now && note.char.toLowerCase() == this.keyPressed) {
-                //         console.log('HIT');
-                //         this.numberOfHits++
-                //         this.noteClear(note.timeSignature)
-                //     }
-                // })
             },
             keyUp(e) {
                 this.keyPressed = null
