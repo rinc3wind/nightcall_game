@@ -1,38 +1,47 @@
 <template>
     <div>
-        <div id="combat-char">
-            <div style="margin-bottom: 20px;"><b>{{ char.name }}</b></div>
+        <div class="container">
+            <div class="column-center">
 
-            <div style="margin-bottom: 20px;">WEAPON: {{ char.weapon.name }}</div>
-
-            <div>HP: {{ char.hp }}</div>
-            <progress class="combat-player-hp" :value="char.hp" :max="char.strength * 3"></progress>
-
-            <div>SP: {{ char.sp }}</div>
-            <progress class="combat-player-hp" :value="char.sp" :max="char.synth_power * 3"></progress>
-        </div>
-
-        <div id="combat-enemy" v-for="enemy in enemies" :key="enemy.name" @click="chooseEnemy(enemy)">
-            <div>{{ enemy.name }}</div>
-            <div>HP: {{ enemy.hp }}</div>
-            <progress class="combat-player-hp" :value="enemy.hp" :max="enemy.max_hp"></progress>
-        </div>
-
-        <div id="combat-actions">
-            <div class="choice" @click="attack">
-                ATTACK
             </div>
-            <div class="choice">
-                SYNTH POWER
+            <div class="column-left">
+                <div id="combat-char">
+                    <div style="margin-bottom: 20px;"><b>{{ char.name }}</b></div>
+
+                    <div style="margin-bottom: 20px;">WEAPON: {{ char.weapon.name }}</div>
+
+                    <div>HP: {{ char.hp }}</div>
+                    <progress class="combat-player-hp" :value="char.hp" :max="char.strength * 3"></progress>
+
+                    <div>SP: {{ char.sp }}</div>
+                    <progress class="combat-player-hp" :value="char.sp" :max="char.synth_power * 3"></progress>
+                </div>
+
+                <div id="combat-actions">
+                    <div class="choice" @click="attack">
+                        ATTACK
+                    </div>
+                    <div class="choice">
+                        SYNTH POWER
+                    </div>
+                    <div class="choice">
+                        ITEM
+                    </div>
+                </div>
             </div>
-            <div class="choice">
-                ITEM
+            <div class="column-right">
+                <div id="combat-enemy" v-for="enemy in enemies" :key="enemy.name" @click="chooseEnemy(enemy)">
+                    <div>{{ enemy.name }}</div>
+                    <div>HP: {{ enemy.hp }}</div>
+                    <progress class="combat-player-hp" :value="enemy.hp" :max="enemy.max_hp"></progress>
+                </div>
             </div>
         </div>
 
         <div id="combat-console">
             {{ combat_log }}
         </div>
+
     </div>
 </template>
 
@@ -172,14 +181,12 @@
 
 <style>
     #combat-char {
-        float: left;
         border: solid 1px;
         padding: 15px;
     }
 
     #combat-enemy {
-        float: right;
-        margin-right: 30px;
+        margin-bottom: 20px;
         border: solid 1px;
         padding: 15px;
         cursor: pointer;
@@ -189,8 +196,7 @@
     }
 
     #combat-actions {
-        float: left;
-        margin-top: 250px;
+        margin-top: 20px;
         border: solid 1px;
         padding: 15px;
     }
@@ -199,7 +205,25 @@
         margin-bottom: 20px;
     }
     #combat-console {
-        position: absolute;
-        bottom: 40px;
+        width: 100%;
+        float: left;
+        margin-top: 20px;
+        border: solid 1px;
+        padding: 15px;
+    }
+
+    .column-left {
+        float: left;
+        width: 33.333%;
+    }
+
+    .column-right {
+        float: right;
+        width: 33.333%;
+    }
+
+    .column-center {
+        display: inline-block;
+        width: 33.333%;
     }
 </style>

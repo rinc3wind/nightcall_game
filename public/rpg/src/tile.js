@@ -265,7 +265,7 @@
                     this.passable = true;
                     this.blocksLos = false;
                     this.char = " ";
-                    this.game.console.log('You open the <strong>' + this.name + '</strong>.');
+                    //this.game.console.log('You open the <strong>' + this.name + '</strong>.');
                     return true;
                 }
                 return false;

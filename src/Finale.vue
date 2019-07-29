@@ -165,10 +165,10 @@
                     'Z': 'zombie'
                 },
                 keyBindings: {
-                    up: ['UP_ARROW', 'K', 'W'],
-                    down: ['DOWN_ARROW', 'J', 'S'],
-                    left: ['LEFT_ARROW', 'H', 'A'],
-                    right: ['RIGHT_ARROW', 'L', 'D'],
+                    up: ['UP_ARROW'],
+                    down: ['DOWN_ARROW'],
+                    left: ['LEFT_ARROW'],
+                    right: ['RIGHT_ARROW']
                 }
             }
         },

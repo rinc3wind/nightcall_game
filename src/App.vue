@@ -27,7 +27,7 @@
                 <div @click="chapter = 5; step = 100" class="setting">
                     SynthPowa
                 </div>
-                <div @click="chapter = 6; step = 100" class="setting">
+                <div @click="chapter = 6; step = 101" class="setting">
                     RPG
                 </div>
                 <div @click="chapter = 6; step = 102" class="setting">
