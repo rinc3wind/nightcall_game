@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <div class="overlay"></div>
         <div>
             <audio id="audio_player" controls loop style="display: none;">
                 <source src="./assets/untitled.mp3" type="audio/mpeg">
@@ -26,10 +27,10 @@
                 <div @click="chapter = 5; step = 100" class="setting">
                     SynthPowa
                 </div>
-                <div @click="chapter = 6; step = 1" class="setting">
+                <div @click="chapter = 6; step = 100" class="setting">
                     RPG
                 </div>
-                <div @click="chapter = 6; step = 2" class="setting">
+                <div @click="chapter = 6; step = 102" class="setting">
                     COMBAT
                 </div>
             </div>
@@ -307,6 +308,19 @@
 
     body {
         background: black;
+    }
+
+    .overlay {
+        background-image: url("/grain.jpg");
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -10;
+        opacity: 0.4;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 
     #app {
