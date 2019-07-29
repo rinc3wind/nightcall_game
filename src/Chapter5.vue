@@ -201,7 +201,6 @@
                 mp3_loaded: false,
                 midi_loaded: false,
                 loading: false,
-                //toneVisible: false,
                 note: null,
                 noteCode: null,
                 keyPressed: null,
@@ -363,8 +362,8 @@
                     this.success = 100
                     clearInterval(this.interval)
                     this.interval = null
-                    //this.toneVisible = false
                     this.visibleNotes = []
+                    this.numberOfHits = 0
                     this.$emit('setStep', 15)
                 }
             }
