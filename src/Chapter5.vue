@@ -155,7 +155,7 @@
                 </div>
                 <div v-else>
                     <span v-if="mp3_loaded == false || midi_loaded == false" @click="load">START</span>
-                    <span v-else @click="play" class="choice">PLAY</span>
+                    <span v-else :style="{'visibility': playing ? 'hidden' : 'visible'}" @click="play" class="choice">PLAY</span>
                 </div>
 
                 <pre style="height: 155px;">
@@ -172,7 +172,7 @@
 | <span :class="{ 'key-pressed': keyPressed == 'a' }">A</span> | <span :class="{ 'key-pressed': keyPressed == 's' }">S</span> | <span :class="{ 'key-pressed': keyPressed == 'd' }">D</span> | <span :class="{ 'key-pressed': keyPressed == 'f' }">F</span> | <span :class="{ 'key-pressed': keyPressed == 'g' }">G</span> | <span :class="{ 'key-pressed': keyPressed == 'h' }">H</span> | <span :class="{ 'key-pressed': keyPressed == 'j' }">J</span> | <span :class="{ 'key-pressed': keyPressed == 'k' }">K</span> | <span :class="{ 'key-pressed': keyPressed == 'l' }">L</span> |   |
 |___|___|___|___|___|___|___|___|___|___|
                 </pre>
-                <div style="position: absolute;" :style="{ left: noteCode * 10 + 'px'  }">{{ noteCode }}</div>
+                <div style="position: absolute; font-size: 30px;" >HITS: {{ numberOfHits }}</div>
             </div>
             <progress class="success-bar" :value="success" max="100"></progress>
         </div>
@@ -194,12 +194,14 @@
         data() {
             return {
                 interval: null,
+                numberOfHits: 0,
+                playing: false,
                 currentTime: 0,
                 sound: null,
                 mp3_loaded: false,
                 midi_loaded: false,
                 loading: false,
-                toneVisible: false,
+                //toneVisible: false,
                 note: null,
                 noteCode: null,
                 keyPressed: null,
@@ -222,14 +224,29 @@
         methods: {
             keyDown(e) {
                 this.keyPressed = e.key
+                this.visibleNotes.forEach(visibleNote => {
+                })
 
                 var now = MIDI.Player.currentTime
-                this.visibleNotes.forEach(note => {
-                    if (note.timeSignature < now && note.char.toLowerCase() == this.keyPressed) {
-                        console.log('HIT');
-                        this.noteClear()
+
+                for (let index = 0; index < this.visibleNotes.length; index++) {
+
+                    var note = this.visibleNotes[index]
+
+                    if (note.timeSignature <= now && note.char.toLowerCase() == this.keyPressed) {
+                        this.numberOfHits++
+                        this.noteClear(note.timeSignature)
+                        break
                     }
-                })
+                }
+
+                // this.visibleNotes.forEach(note => {
+                //     if (note.timeSignature <= now && note.char.toLowerCase() == this.keyPressed) {
+                //         console.log('HIT');
+                //         this.numberOfHits++
+                //         this.noteClear(note.timeSignature)
+                //     }
+                // })
             },
             keyUp(e) {
                 this.keyPressed = null
@@ -239,11 +256,11 @@
                 this.loading = true
                 this.sound = new Howl({
                     src: ['mp3/nightcall.mp3'],
-                    onend: function() {
-                        self.$emit('setStep', 16)
-                        self.sound.stop()
-                        MIDI.Player.stop()
-                    }
+                    // onend: function() {
+                    //     self.$emit('setStep', 16)
+                    //     self.sound.stop()
+                    //     MIDI.Player.stop()
+                    // }
                 })
                 this.sound.once('load', () => {
                     this.mp3_loaded = true
@@ -251,6 +268,7 @@
                 })
 
                 MIDI.Player.BPM = 91
+                //MIDI.Player.BPM = 17
                 var self = this
                 MIDI.loadPlugin({
                     //instruments: ['bass', 'synth_drum', 'acoustic_grand_piano'],
@@ -309,21 +327,26 @@
                     level++
                     if (level <= 7) this.replaceAt(conversion[note].index + 40 * level, conversion[note].char)
                     else {
-                        if (conversion[note].char.toLowerCase() == this.visibleNotes[0].char.toLowerCase()) {
-                            this.noteClear()
-                            this.success = this.success - 1.5
-                            //this.success = this.success
-                        }
+                        this.visibleNotes.forEach(note => {
+                            if (note.timeSignature == timeSignature) {
+                                this.noteClear(note.timeSignature)
+                                this.success = this.success - 1.5
+                            }
+                        })
                     }
+                // }, 700)
                 }, 100)
             },
-            noteClear() {
-                this.visibleNotes.shift()
+            noteClear(timeSignature) {
+                this.visibleNotes = this.visibleNotes.filter(note => {
+                    return note.timeSignature != timeSignature
+                })
             },
             replaceAt(index, replace) {
                 this.playground = this.playground.substring(0, index) + replace + this.playground.substring(index + 1);
             },
             play() {
+                this.playing = true
                 this.sound.play()
                 setTimeout(() => {
                     MIDI.Player.start()
@@ -334,12 +357,13 @@
             // CHECK FOR FAIL
             success: function(value) {
                 if (value < 1) {
+                    this.playing = false
                     this.sound.stop()
                     MIDI.Player.stop()
                     this.success = 100
                     clearInterval(this.interval)
                     this.interval = null
-                    this.toneVisible = false
+                    //this.toneVisible = false
                     this.visibleNotes = []
                     this.$emit('setStep', 15)
                 }

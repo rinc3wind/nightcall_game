@@ -311,7 +311,7 @@
     }
 
     .overlay {
-        background-image: url("/grain.jpg");
+        background-image: url("/projects/nightcall_game/images/grain.jpg");
         position: absolute;
         top: 0;
         left: 0;
@@ -356,6 +356,7 @@
 
     .inventory {
         position: absolute;
+        width: 300px;
         left: 10px;
     }
 
@@ -411,10 +412,10 @@
         margin-bottom: 5px;
     }
     .inventory-item-image {
-        float: left;
+        /* float: left; */
     }
     .inventory-item-text {
-        float: left;
+        /* float: left; */
         padding-top: 7px;
         padding-left: 9px;
     }
