@@ -149,7 +149,7 @@
             <div @click="$emit('setChapter', 6); $emit('setStep', 0)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 100">
-            <div style="float: left">
+            <div style="float: left; font-size: 23px;">
                 <div v-if="loading && (mp3_loaded == false || midi_loaded == false)">
                     LOADING...
                 </div>
@@ -158,7 +158,7 @@
                     <span v-else :style="{'visibility': playing ? 'hidden' : 'visible'}" @click="play" class="choice">PLAY</span>
                 </div>
 
-                <pre style="height: 155px;">
+                <pre style="height: 190px;">
                     {{ playground }}
                 </pre>
 
@@ -369,14 +369,14 @@
     #chapter5-container progress[value] {
         -webkit-appearance: none;
         appearance: none;
-        width: 300px;
+        width: 400px;
         height: 30px;
         transform: rotate(270deg);
         -webkit-transform: rotate(270deg); /*Webkit*/
         -moz-transform: rotate(270deg); /*FireFox*/
         position: absolute;
-        top: 270px;
-        left: 50%;
+        top: 317px;
+        left: 56%;
     }
     #chapter5-container progress[value]::-webkit-progress-bar {
         background-color: black;
