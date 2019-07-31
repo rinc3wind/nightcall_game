@@ -57,6 +57,12 @@
                     <img class="inventory-item-image" v-else-if="item=='prak'" src="icons/prak.jpg">
                     <img class="inventory-item-image" v-else-if="item=='sekera'" src="icons/sekera.jpg">
                     <img class="inventory-item-image" v-else-if="item=='flasa vodky'" src="icons/vodka.jpg">
+                    <img class="inventory-item-image" v-else-if="item=='Riflova bunda'" src="icons/riflovka1.jpg">
+                    <img class="inventory-item-image" v-else-if="item=='kahance'" src="icons/kahance.jpg">
+                    <img class="inventory-item-image" v-else-if="item=='zapalky'" src="icons/zapalky.jpg">
+                    <img class="inventory-item-image" v-else-if="item=='tricko Rush'" src="icons/tricko.jpg">
+                    <img class="inventory-item-image" v-else-if="item=='Jedi-ska roba'" src="icons/jedi_roba.jpg">
+
                     <img class="inventory-item-image" v-else src="icons/vodka.jpg">
                     <span class="inventory-item-text" :class="{ 'active-item': useItem }" @click="useItemAction(item)">{{ item }}</span>
                 </div>

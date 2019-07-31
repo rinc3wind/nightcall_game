@@ -155,11 +155,22 @@
                     enemy.hp = enemy.hp - damage
 
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
+
+                    if (enemy.hp <= 0) {
+                        this.add_log(enemy.name + ' je porazeny.')
+
+                        this.enemies = this.enemies.filter(enemyFromArray => {
+                            return enemyFromArray.name != enemy.name
+                        })
+                        if (this.enemies.length == 0) this.win()
+                    }
                     this.endTurn()
                 }
             },
             endTurn() {
                 this.enemies.forEach(enemy => {
+                    enemy.attacked = true
+
                     var hit_roll = this.diceRoll(10)
 
                     if (hit_roll > this.char.ac) {
@@ -167,10 +178,20 @@
                         this.char.hp = this.char.hp - damage
 
                         this.add_log('Dostal si supu od ' + enemy.name + ' za ' + damage + '.')
+
+                        if (this.char.hp <= 0) {
+                            this.fail()
+                        }
                     } else {
                         this.add_log(enemy.name + ' ta netrafil.')
                     }
                 })
+            },
+            win() {
+                this.add_log('WIN')
+            },
+            fail() {
+                this.add_log('FAIL')
             },
             add_log(string) {
                 this.combat_log.push({
