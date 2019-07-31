@@ -98,9 +98,12 @@
                     },
                     {
                         name: 'Thrivefool',
-                        hp: 80,
+                        hp: 8,
                         attack: [2, 7],
-                        skill: 'CYBER BOMBA' // na screene sa zjavi bomba a timer, ked vydrzi 5 kol tak dostanes 10 damage
+                        skill: 'CYBER BOMBA', // na screene sa zjavi bomba a timer, ked vydrzi 5 kol tak dostanes 10 damage
+                        onDeath: function() {
+                            this.parent.enemies = []
+                        }
                     },
                     {
                         name: 'Vektoroskop',
@@ -182,6 +185,7 @@
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
 
                     if (enemy.hp <= 0) {
+                        if (enemy.onDeath) enemy.onDeath()
                         this.add_log(enemy.name + ' je porazeny.')
 
                         this.enemies = this.enemies.filter(enemyFromArray => {
@@ -261,6 +265,7 @@
             },
             enemySkill(skill) {
                 if (skill == 'TIME HACK') {
+
                 } else if (skill == 'SYNTH BOLT') {
                     var damage = this.randomNumber(1, 10)
                     this.char.hp = this.char.hp - damage
@@ -291,6 +296,7 @@
                     if (enemy_name == enemy.name) {
                         var enemy_copy = JSON.parse(JSON.stringify(enemy))
                         if (enemy.everyTurn) enemy_copy.everyTurn = enemy.everyTurn
+                        if (enemy.onDeath) enemy_copy.onDeath = enemy.onDeath
                         enemy_copy.id = Math.floor(Math.random() * 1000000000)
                         enemy_copy.max_hp = enemy.hp
                         enemy_copy.attacked = false
