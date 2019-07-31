@@ -328,7 +328,7 @@
     }
 
     .overlay {
-        background-image: url("/projects/nightcall_game/images/grain.jpg");
+        background-image: url(assets/grain.jpg);
         position: absolute;
         top: 0;
         left: 0;
