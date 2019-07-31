@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="column-right">
-                <div id="combat-enemy" v-for="enemy in enemies" :key="enemy.name" @click="chooseEnemy(enemy)">
+                <div id="combat-enemy" v-for="enemy in enemies" :key="enemy.id" @click="chooseEnemy(enemy)">
                     <div>{{ enemy.name }}</div>
                     <div>HP: {{ enemy.hp }}</div>
                     <progress class="combat-player-hp" :value="enemy.hp" :max="enemy.max_hp"></progress>
@@ -56,24 +56,25 @@
                 char: {
                     ac:4,
                     dexterity:4,
-                    hp:12,
+                    hp:120,
                     inventory: [],
                     name:'grawlix',
                     sp:12,
-                    strength:4,
+                    strength:40,
                     synth_power:4,
                     weapon:{
                         name: 'sekera',
                         dmg: 8
                     }
                 },
-                enemies_prop: ['Computerboy', 'Synthmage'],
+                // enemies_prop: ['Computerboy', 'Synthmage'],
+                enemies_prop: ['Thrivefool'],
 
                 enemies: [],
                 enemy_list: [
                     {
                         name: 'Computerboy',
-                        hp: 5,
+                        hp: 50,
                         attack: [2, 9],
                         skill: 'TIME HACK' // computer boy ide dva krat za sebou
                     },
@@ -85,19 +86,19 @@
                     },
                     {
                         name: 'Grawlix',
-                        hp: 5,
+                        hp: 50,
                         attack: [4, 9],
-                        skill: 'CYBER THEFT' // random ujeb jeden item hracovi
+                        skill: 'SUMMON EVIL SYNTH' // prida Evil synth enemaca
                     },
                     {
                         name: 'Synthmage',
-                        hp: 4,
+                        hp: 40,
                         attack: [3, 10],
                         skill: 'SYNTH BOLT' // 1d10, nehadze sa na obranu a rovno ubere damage
                     },
                     {
                         name: 'Thrivefool',
-                        hp: 8,
+                        hp: 80,
                         attack: [2, 7],
                         skill: 'CYBER BOMBA' // na screene sa zjavi bomba a timer, ked vydrzi 5 kol tak dostanes 10 damage
                     },
@@ -130,6 +131,24 @@
                         hp: 3,
                         attack: [2, 9],
                         skill: 'NAOZAJ NEJSI NA GUESTLISTE' // schytas supu, 1d3;
+                    },
+                    {
+                        name: 'Evil synth',
+                        hp: 50,
+                        attack: [2, 6]
+                    },
+                    {
+                        name: 'Cyber bomba',
+                        hp: 3,
+                        immortal: true,
+                        everyTurn: function() {
+                            this.hp--
+                            if (this.hp == 0) {
+                                this.parent.char.hp -= 10
+                                this.parent.add_log('Cyber bomba vybuchla a dostal si 10 damage.')
+                                this.parent.removeEnemy(this.id)
+                            }
+                        }
                     }
                 ]
             }
@@ -144,14 +163,20 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             },
             attack() {
-                this.add_log('Vyber enemaca.')
-                this.choosing_enemy_to_attack = true
+                if (this.choosing_enemy_to_attack == false) {
+                    this.add_log('Vyber enemaca.')
+                    this.choosing_enemy_to_attack = true
+                }
             },
             chooseEnemy(enemy) {
                 if (this.choosing_enemy_to_attack == true) {
-                    var damage = this.diceRoll(8)
-
+                    if (enemy.immortal) {
+                        this.add_log('Na '+enemy.name+' sa neda zautocit.')
+                        return
+                    }
                     this.chosen_enemy = enemy
+
+                    var damage = this.diceRoll(8)
                     enemy.hp = enemy.hp - damage
 
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
@@ -164,28 +189,52 @@
                         })
                         if (this.enemies.length == 0) this.win()
                     }
-                    this.endTurn()
+                    if (this.enemies.length != 0) {
+                        setTimeout(() => {
+                            this.endTurn()
+                        }, 1000)
+                    }
                 }
             },
             endTurn() {
                 this.enemies.forEach(enemy => {
-                    enemy.attacked = true
+                    if (enemy.everyTurn) enemy.everyTurn()
+                })
 
-                    var hit_roll = this.diceRoll(10)
+                var ready_enemies = this.enemies.filter(enemy => {
+                    return enemy.attack && enemy.skill && enemy.attacked == false
+                })
+                if (ready_enemies.length == 0) {
+                    this.enemies.forEach(enemy => {
+                        enemy.attacked = false
+                    })
+                    ready_enemies = this.enemies
+                }
 
-                    if (hit_roll > this.char.ac) {
+                var enemy = ready_enemies[0]
+                enemy.attacked = true
+
+                if (this.diceRoll(100) <= 100 && enemy.skill) {   //  ABILITY
+                    this.add_log(enemy.name + ' pouzil schopnost ' + enemy.skill + '.')
+                    this.enemySkill(enemy.skill)
+
+                } else {                                          //  ATTACK
+                    if (this.diceRoll(10) > this.char.ac) {
                         var damage = this.randomNumber(enemy.attack[0], enemy.attack[1])
                         this.char.hp = this.char.hp - damage
-
                         this.add_log('Dostal si supu od ' + enemy.name + ' za ' + damage + '.')
-
-                        if (this.char.hp <= 0) {
-                            this.fail()
-                        }
                     } else {
                         this.add_log(enemy.name + ' ta netrafil.')
                     }
-                })
+                }
+
+                //  CHECK IF PLAYER DIES
+                if (this.char.hp <= 0) {
+                    this.fail()
+                }
+
+                this.choosing_enemy_to_attack = false
+                this.add_log('░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░')
             },
             win() {
                 this.add_log('WIN')
@@ -209,16 +258,56 @@
             },
             itemUsed(item) {
                 this.add_log('Predmet ' + item + ' pouzity.')
+            },
+            enemySkill(skill) {
+                if (skill == 'TIME HACK') {
+                } else if (skill == 'SYNTH BOLT') {
+                    var damage = this.randomNumber(1, 10)
+                    this.char.hp = this.char.hp - damage
+                    this.add_log('Schytas supu za ' + damage + '.')
+                } else if (skill == 'NICOTINE POISON') {
+
+                } else if (skill == 'CYBER BOMBA') {
+                    this.addEnemy('Cyber bomba')
+                } else if (skill == 'SUMMON EVIL SYNTH') {
+                    this.addEnemy('Evil synth')
+                } else if (skill == 'TV HYPNOSIS') {
+
+                } else if (skill == 'NIGHTCALL') {
+
+                } else if (skill == 'GRCKA') {
+                    this.char.hp = this.char.hp - 2
+                    this.add_log('Schytas supu za 2.')
+                } else if (skill == 'I WANT TO PLAY DND') {
+
+                } else if (skill == 'NAOZAJ NEJSI NA GUESTLISTE') {
+                    var damage = this.randomNumber(1, 3)
+                    this.char.hp = this.char.hp - damage
+                    this.add_log('Schytas supu za ' + damage + '.')
+                }
+            },
+            addEnemy(enemy_name) {
+                this.enemy_list.forEach(enemy => {
+                    if (enemy_name == enemy.name) {
+                        var enemy_copy = JSON.parse(JSON.stringify(enemy))
+                        if (enemy.everyTurn) enemy_copy.everyTurn = enemy.everyTurn
+                        enemy_copy.id = Math.floor(Math.random() * 1000000000)
+                        enemy_copy.max_hp = enemy.hp
+                        enemy_copy.attacked = false
+                        enemy_copy.parent = this
+                        this.enemies.push(enemy_copy)
+                    }
+                })
+            },
+            removeEnemy(id) {
+                this.enemies = this.enemies.filter(enemy => {
+                    return enemy.id != id
+                })
             }
         },
         mounted() {
-            this.enemy_list.forEach(enemy => {
-                this.enemies_prop.forEach(enemy_prop => {
-                    if (enemy_prop == enemy.name) {
-                        enemy.max_hp = enemy.hp
-                        this.enemies.push(enemy)
-                    }
-                })
+            this.enemies_prop.forEach(enemy_name => {
+                this.addEnemy(enemy_name)
             })
 
             bus.$on('App/useItem', (item) => {

@@ -272,4 +272,7 @@
     .stat_span:hover {
         color: white;
     }
+    canvas {
+        border: solid 2px;
+    }
 </style>
