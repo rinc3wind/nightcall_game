@@ -58,7 +58,7 @@
                     <img class="inventory-item-image" v-else-if="item=='sekera'" src="icons/sekera.jpg">
                     <img class="inventory-item-image" v-else-if="item=='flasa vodky'" src="icons/vodka.jpg">
                     <img class="inventory-item-image" v-else src="icons/vodka.jpg">
-                    <span class="inventory-item-text">{{ item }}</span>
+                    <span class="inventory-item-text" :class="{ 'active-item': useItem }" @click="useItemAction(item)">{{ item }}</span>
                 </div>
             </div>
 
@@ -214,7 +214,8 @@
                     save: false,
                     load: false,
                     new: false
-                }
+                },
+                useItem: false
             }
         },
         mounted() {
@@ -224,6 +225,9 @@
                 self.page_ready = true
                 document.querySelector('#app').style.display = 'block'
             }
+            bus.$on('Combat/useItem', () => {
+                this.useItem = true
+            })
         },
         methods: {
             pickupItem(data) {
@@ -296,6 +300,12 @@
             },
             setDisabled(items) {
                 this.disabled = items
+            },
+            useItemAction(item) {
+                if (this.useItem == true) {
+                    bus.$emit('App/useItem', item)
+                    this.useItem = false
+                }
             }
         }
     }
@@ -419,5 +429,12 @@
         /* float: left; */
         padding-top: 7px;
         padding-left: 9px;
+    }
+    .active-item {
+        cursor: pointer;
+    }
+    .active-item:hover {
+        background-color: white;
+        color: black;
     }
 </style>

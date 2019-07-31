@@ -24,7 +24,7 @@
                     <div class="choice">
                         SYNTH POWER
                     </div>
-                    <div class="choice">
+                    <div class="choice" @click="useItem">
                         ITEM
                     </div>
                 </div>
@@ -39,7 +39,7 @@
         </div>
 
         <div id="combat-console">
-            <div v-for="row in combat_log" :key="row">{{ row }}</div>
+            <div v-for="row in combat_log" :key="row.id">{{ row.text }}</div>
         </div>
 
     </div>
@@ -144,15 +144,17 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             },
             attack() {
-                //this.combat_log = 'Choose enemy to attack.'
-                this.add_log('Choose enemy to attack.')
+                this.add_log('Vyber enemaca.')
                 this.choosing_enemy_to_attack = true
             },
             chooseEnemy(enemy) {
                 if (this.choosing_enemy_to_attack == true) {
-                    this.chosen_enemy = enemy
                     var damage = this.diceRoll(8)
+
+                    this.chosen_enemy = enemy
                     enemy.hp = enemy.hp - damage
+
+                    this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
                     this.endTurn()
                 }
             },
@@ -163,15 +165,29 @@
                     if (hit_roll > this.char.ac) {
                         var damage = this.randomNumber(enemy.attack[0], enemy.attack[1])
                         this.char.hp = this.char.hp - damage
+
+                        this.add_log('Dostal si supu od ' + enemy.name + ' za ' + damage + '.')
+                    } else {
+                        this.add_log(enemy.name + ' ta netrafil.')
                     }
                 })
             },
             add_log(string) {
-                this.combat_log.push(string)
+                this.combat_log.push({
+                    id: this.combat_log.length,
+                    text: string
+                })
                 var container = this.$el.querySelector("#combat-console");
                 setTimeout(() => {
                     container.scrollTop = container.scrollHeight;
                 }, 50)
+            },
+            useItem() {
+                this.add_log('Vyber si predmet z inventaru.')
+                bus.$emit('Combat/useItem')
+            },
+            itemUsed(item) {
+                this.add_log('Predmet ' + item + ' pouzity.')
             }
         },
         mounted() {
@@ -182,6 +198,10 @@
                         this.enemies.push(enemy)
                     }
                 })
+            })
+
+            bus.$on('App/useItem', (item) => {
+                this.itemUsed(item)
             })
         }
     }
@@ -200,7 +220,7 @@
         cursor: pointer;
     }
     #combat-enemy:hover {
-        border-color: white;
+        outline: thick solid white;
     }
 
     #combat-actions {
