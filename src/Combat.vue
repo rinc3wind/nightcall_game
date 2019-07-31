@@ -39,7 +39,7 @@
         </div>
 
         <div id="combat-console">
-            {{ combat_log }}
+            <div v-for="row in combat_log" :key="row">{{ row }}</div>
         </div>
 
     </div>
@@ -50,7 +50,7 @@
         //props: ['char', 'enemies_prop'],
         data() {
             return {
-                combat_log: '',
+                combat_log: [],
                 choosing_enemy_to_attack: false,
                 chosen_enemy: {},
                 char: {
@@ -144,7 +144,8 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             },
             attack() {
-                this.combat_log = 'Choose enemy to attack.'
+                //this.combat_log = 'Choose enemy to attack.'
+                this.add_log('Choose enemy to attack.')
                 this.choosing_enemy_to_attack = true
             },
             chooseEnemy(enemy) {
@@ -164,6 +165,13 @@
                         this.char.hp = this.char.hp - damage
                     }
                 })
+            },
+            add_log(string) {
+                this.combat_log.push(string)
+                var container = this.$el.querySelector("#combat-console");
+                setTimeout(() => {
+                    container.scrollTop = container.scrollHeight;
+                }, 50)
             }
         },
         mounted() {
@@ -210,8 +218,10 @@
         margin-top: 20px;
         border: solid 1px;
         padding: 15px;
+        max-height: 150px;
+        overflow: auto;
+        scroll-behavior: smooth;
     }
-
     .column-left {
         float: left;
         width: 33.333%;
@@ -221,9 +231,28 @@
         float: right;
         width: 33.333%;
     }
-
     .column-center {
         display: inline-block;
         width: 33.333%;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+    width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+    background: black;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: greenyellow;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: green;
     }
 </style>
