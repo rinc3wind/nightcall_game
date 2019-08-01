@@ -426,6 +426,8 @@
     }
 
     #combat-actions {
+        position: relative;
+        z-index: 1000;
         margin-top: 20px;
         border: solid 1px;
         padding: 15px;

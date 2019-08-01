@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        <div class="overlay"></div>
         <div>
             <audio id="audio_player" controls loop style="display: none;">
                 <source src="./assets/untitled.mp3" type="audio/mpeg">
@@ -324,21 +323,12 @@
         src: url(assets/pixel.ttf);
     }
 
-    body {
-        background: black;
-    }
-
-    .overlay {
-        background-image: url(assets/grain.jpg);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -10;
-        opacity: 0.4;
+    html {
+        background: url(assets/grain.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
         background-size: cover;
-        background-repeat: no-repeat;
     }
 
     #app {

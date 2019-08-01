@@ -1,9 +1,9 @@
 <template>
     <div>
         <div v-show="step == 0">
-            <p>Hned po prichode domov si vybehol do izby. Musis pockat kym sa doma ukludni situacia, aby si sa vedel vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
+            <p>Hned po prichode domov si vybehol do izby. Musis pockat, kym sa doma ukludni situacia, aby si sa vedel vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
 
-            <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven, sa mozes posledny krat citit jak Solid Snake.</p>
+            <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven sa mozes posledny krat citit jak Solid Snake.</p>
             <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 1">
@@ -15,13 +15,13 @@
             <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 3">
-            <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. Nastavis si opat walkmana. A pustis SONG. Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes na Ventursku do Re:Freshu. Citis sa jak Luke Skywalker ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
+            <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. <span v-if="player.inventory.indexOf('walkman') != -1">Nastavis si opat walkmana. A pustis {{ player.song }}. </span>Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes na Ventursku do Re:Freshu. Citis sa jak Luke Skywalker, ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
 
             <p>Vies, ze Nightcall bez teba nema zmysel.</p>
             <div @click="$emit('setStep', 4)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 4">
-            <p>Prichadzas na Ventursku. Kluckujes na bajku cez davy ozratych Britskych turistov, sprostuckych futbalovych chuliganov a vychrtle trafo pipky s civavami pod pazuchami. Skoro to najebes do asi 2.5 metroveho bez-krkeho typka s asi najhorsimi kerkami co si kedy videl. Cez jeho pravy biceps ma obrovsku karikaturu fejsu nejakej starej zenskej, hore nad nou je comic sansovy napis &quot;Manka&quot;. Len tak tak stihnes stocit bajk a missnes Manku asi o 2 centimetre.</p>
+            <p>Prichadzas na Ventursku. Kluckujes na bajku cez davy ozratych britskych turistov, sprostuckych futbalovych chuliganov a vychrtle trafo pipky s civavami pod pazuchami. Skoro to najebes do asi 2.5 metroveho bezkrkeho typka s asi najhorsimi kerkami co si kedy videl. Cez jeho pravy biceps ma obrovsku karikaturu fejsu nejakej starej zenskej, hore nad nou je comic sansovy napis &quot;Manka&quot;. Len tak tak stihnes stocit bajk a missnes Manku asi o 2 centimetre.</p>
 
             <p>Zaflekujes pred Re:Freshom, hodis bajk na zem a vstupis dnu.</p>
 
