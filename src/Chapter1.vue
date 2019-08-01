@@ -35,13 +35,12 @@
                 </span>
                 a
             </span>
-            tlaceny plagat na Nightcall, ktory sa odohrava zajtra, v pravom hornom rohu vidis Re:Fresh Club,
+            tlaceny plagat na Nightcall, ktory sa odohrava dnes vecer, v pravom hornom rohu vidis Re:Fresh Club,
             Bratislava, 1987.<br>
 
             <br>
             Vsetky tvoje videoherne plagaty su prec. Zostal len The Thing od Carpentera a Star Wars. V rohu
-            miestnosti sa zjavil stary televizor a k nemu pripojene NESko. Na boku telky je velka samolepka
-            "Ivanov televizor, nechytat lebo dostanes bombu". Co to je telka akeho Ivana? Hm.<br>
+            miestnosti sa zjavil stary televizor a k nemu pripojene NESko. Na boku telky je velka <span class="choice" @click="$emit('note', 'Je to cisto biela samolepka, na ktorej je fixou naskrabane - Ivanov televizor, nechytat lebo dostanes bombu.')">samolepka</span>.<br>
             <br>
             Rozmyslas, co budes robit. Zavetris vsak velmi prijemnu vec. Slaninka a vajicka. Niekto robi dole
             ranajky. A ty slintas jak Cujo.<br>

@@ -9,7 +9,7 @@
             <div v-if="player.inventory.indexOf('prak') != -1" @click="$emit('setStep', 3)" class="choice">Vyber prak a skus vystrelit na vojakov na mure.</div>
         </div>
         <div v-if="step == 1">
-            <p>Mur je hnusna betonova 5 metrova opacha. Kazdy niekolko metrov je strazna veza a vojenska policia. Ocurat ho nebude najjednoduchsie. Budes potrebovat nieco, do coho sa skryjes a hlavne, nechce sa ti zatial curat. To budes musiet tiez nejako zriesit.</p>
+            <p>Mur je hnusna betonova 5 metrova opacha. Kazdych niekolko metrov je strazna veza a vojenska policia. Ocurat ho nebude najjednoduchsie. Budes potrebovat nieco, do coho sa skryjes a hlavne, nechce sa ti zatial curat. To budes musiet tiez nejako zriesit.</p>
             <span v-if="player.inventory.indexOf('kartonova krabica') == -1" @click="$emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
             <span v-else @click="$emit('setStep', 5)" class="choice">{{ lang.continue }}</span>
         </div>
@@ -69,7 +69,7 @@
             <span @click="$emit('setStep', 9)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 9">
-            <p>Dobre kamo. Idem ti scul vysvetlit ako funguje toto plizenie. Vyberes z vacku krabicu, Zlozis ju. Jebnes ju na seba a ides sa preplizit okolo obtlstlej pokladnicky. Uvidis bar, ktory sa bude postupne naplnat ako sa budes blizit okolo svojho cielu. Musis ho naplnit do plna samozrejme. Pocas toho, ako sa budes blizit, nastane sem tam moment, ze tlsta pokladnicka Alzbeta zacne nieco vetrit. Vtedy obrazovka blikne a musis rychle klavesu pustit. Ak to stihnes vcas. Podari sa ti preplizit. Ak nie, kukne skaredo na teba, ty sa zlaknes a musis ist od zaciatku.</p>
+            <p>Dobre kamo. Idem ti scul vysvetlit ako funguje toto plizenie. Vyberes z vacku krabicu, Zlozis ju. Jebnes ju na seba a ides sa preplizit okolo obtlstlej pokladnicky. Uvidis bar, ktory sa bude postupne naplnat ako sa budes blizit okolo svojho cielu. Musis ho naplnit do plna samozrejme. Pocas toho, ako sa budes plizit, nastane sem tam moment, ze tlsta pokladnicka Alzbeta zacne nieco vetrit. Vtedy obrazovka blikne a musis rychle klavesu pustit. Ak to stihnes vcas. Podari sa ti preplizit. Ak nie, kukne skaredo na teba, ty sa zlaknes a musis ist od zaciatku.</p>
             <span @click="$emit('setStep', 10.1)" class="choice">Pome na to.</span>
         </div>
 
@@ -85,7 +85,7 @@
 
         <div v-if="step == 11">
             <p>Dal si to, kamosko. Jak Solid Snake. 3 litrovy napoj v ruke, stojis vonku pred K-Martom.</p>
-            <span @click="$emit('setStep', 12)" class="choice">{{ lang.continue }}</span>
+            <span @click="$emit('setStep', 12); $emit('removeItem', '3 litrova Nightcall Cola'); $emit('removeItem', '3 litrova Arcade Watch zbrnda'); $emit('removeItem', '3 litrova priesvitna Kobra Gang kokotina');" class="choice">{{ lang.continue }}</span>
         </div>
 
         <div v-if="step == 12">

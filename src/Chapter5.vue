@@ -45,9 +45,9 @@
 
             <p>Vytiahnes z vrecka kahance a zapalky, nech ich mozes babke zapalit. Do ake kreativneho vzoru ich zlozis?</p>
 
-            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'})" class="choice">Velka cicina predsa.</div>
-            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'})" class="choice">Pentagram kamo.</div>
-            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'})" class="choice">Velke B ako Babka. Alebo Blade Runner.</div>
+            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'}); $emit('removeItem', 'kahance');" class="choice">Velka cicina predsa.</div>
+            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'}); $emit('removeItem', 'kahance');" class="choice">Pentagram kamo.</div>
+            <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'}); $emit('removeItem', 'kahance');" class="choice">Velke B ako Babka. Alebo Blade Runner.</div>
         </div>
         <div v-if="step == 3">
             <p>Zlozis kahance jak pan umelec a systematicky zapalis kazdu sviecku.</p>
@@ -103,8 +103,8 @@
         <div v-if="step == 10">
             <p>&quot;To velmi rad ocujem. Jediny problem je ten, ze nemam co pit. Zozen nejaku flasu a pojdeme si podzemuvat na organ.&quot;</p>
 
-            <div @click="$emit('setStep', 11)" class="choice">To je ale nahodicka, mam tu jednu taku malu flasku borovicky.</div>
-            <div v-if="player.inventory.indexOf('flasa vodky') != -1" @click="$emit('setStep', 12)" class="choice">To je ale nahodicka, mam tu jednu taku malu flasku borovicky a zaroven, kedze som gurman mam aj flasku vodky.</div>
+            <div @click="$emit('setStep', 11); $emit('removeItem', 'borovicka');" class="choice">To je ale nahodicka, mam tu jednu taku malu flasku borovicky.</div>
+            <div v-if="player.inventory.indexOf('flasa vodky') != -1" @click="$emit('setStep', 12); $emit('removeItem', 'borovicka'); $emit('removeItem', 'flasa vodky');" class="choice">To je ale nahodicka, mam tu jednu taku malu flasku borovicky a zaroven, kedze som gurman mam aj flasku vodky.</div>
         </div>
         <div v-if="step == 11">
             <p>&quot;Paradicka {{ player.name }}. Pome nutraj. Venku aj tak fuci jak hovado. Ukazem ci moj organ.&quot; Dufas, ze mysli hudobny nastroj a ides za nim dnu.</p>
