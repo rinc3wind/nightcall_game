@@ -205,7 +205,7 @@
                 pozmurkavaju. Stary obity pracovny stol stoji smutne na 4och kovovych nohach. Co teraz,
                 kamosko?</p>
             <div class="choice" @click="$emit('setStep', 11.1)">Idem sa hrat NESko</div>
-            <div class="choice" @click="$emit('setStep', 11.2); $emit('pickupItem', {item: 'mapa'})">Prehladam lepsie stol.</div>
+            <div class="choice" @click="$emit('setStep', 11.2)">Prehladam lepsie stol.</div>
         </div>
         <div v-if="step == 11.1">
             <p>Zapnes televizor, NESko a ides. Mas jeden jediny cartridge. Cheetahman II. Co to kurva je? Nikdy
@@ -235,14 +235,14 @@
             <p>Prezries si lepsie stol. V pravom dolnom rohu zbadas nozikom vyryty maly mobilny telefon. Jemne
                 po nom prejdes palcom. Stol zrazu zacne sycat a triast sa. Nadskakuje hore dole ako pri
                 zemetraseni v Hrnciarovciach v 95tom. Zrazu prestane skakat. Daco zahromzi a zo spodu sa vysunie
-                zasuvka, v ktorej najdes mapu. Rozbalis ju. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.
+                zasuvka, v ktorej najdes <span class="choice" @click="$emit('pickupItem', {item: 'mapa'}); $emit('note', 'Das si ju do vacku a rozbalis ju. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.')">mapu</span>.
             </p>
 
             <p>Arkadova herna &quot;U dojebaneho ovladaca&quot; <br>Detske ihrisko a s fixkou dopisana poznamka:
                 &quot;Dojebat skulaveho Sama&quot; <br>Re:Fresh Club <br>a Bratislavsky mur, ktory predeluje
                 Kamenne namestie</p>
 
-            <p>Mapu zmotas a pichnes si ju do vacku. Uz vies kam mas ist. Tvoja cesta je jasna. Citis sa jak
+            <p>Uz vies kam mas ist. Tvoja cesta je jasna. Citis sa jak
                 Rick Deckard. Skor ako vyrazis na toto dobrodruzstvo je treba si zbalit batoh. Co si
                 pribalis do ruksaku?</p>
 
