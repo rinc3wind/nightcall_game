@@ -193,6 +193,11 @@
                         mergeWithPrevLayer: false
                     }),
                 ];
+
+                instance.lighting.set(7, 16, 255, 252, 176);
+                instance.lighting.set(77, 3, 255, 0, 255);
+                instance.lighting.set(77, 14, 0, 208, 255);
+
                 var mapContainerEl = document.getElementById('map-floor1');
                 var consoleContainerEl = document.getElementById('console-container');
                 mapContainerEl.appendChild(instance.renderer.canvas);
