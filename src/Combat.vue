@@ -11,10 +11,10 @@
                     <div style="margin-bottom: 20px;">WEAPON: {{ char.weapon.name }}</div>
 
                     <div>HP: {{ char.hp }}</div>
-                    <progress class="combat-player-hp" :value="char.hp" :max="char.strength * 3"></progress>
+                    <progress class="combat-player-hp" :value="char.hp" :max="char.max_hp"></progress>
 
                     <div>SP: {{ char.sp }}</div>
-                    <progress class="combat-player-hp" :value="char.sp" :max="char.synth_power * 3"></progress>
+                    <progress class="combat-player-hp" :value="char.sp" :max="char.max_sp"></progress>
                 </div>
 
                 <div id="combat-actions">
@@ -24,8 +24,8 @@
                     <div class="choice">
                         SYNTH POWER
                     </div>
-                    <div class="choice" @click="useItem">
-                        ITEM
+                    <div class="choice" @click="drinkBeer">
+                        DRINK BEER [{{ char.beers }}]
                     </div>
                 </div>
             </div>
@@ -56,19 +56,23 @@
                 char: {
                     ac:4,
                     dexterity:4,
+                    max_hp: 120,
                     hp:120,
                     inventory: [],
                     name:'grawlix',
+                    max_sp: 12,
                     sp:12,
-                    strength:40,
+                    strength:4,
                     synth_power:4,
                     weapon:{
                         name: 'sekera',
-                        dmg: 8
-                    }
+                        dmg: 8,
+                        base_stat: 'strength'
+                    },
+                    status_effect: null,
+                    beers: 3
                 },
-                // enemies_prop: ['Computerboy', 'Synthmage'],
-                enemies_prop: ['Thrivefool'],
+                enemies_prop: ['Geek'],
 
                 enemies: [],
                 enemy_list: [
@@ -80,7 +84,7 @@
                     },
                     {
                         name: 'Daniel Jackson',
-                        hp: 5,
+                        hp: 50,
                         attack: [3, 9],
                         skill: 'NICOTINE POISON' // 3 kola ti vzdy ubere poison 1 HP
                     },
@@ -107,7 +111,7 @@
                     },
                     {
                         name: 'Vektoroskop',
-                        hp: 6,
+                        hp: 60,
                         attack: [3, 7],
                         skill: 'TV HYPNOSIS' // na dalsie 3 kola mas o polovicu mensi attack(tj ak hadzes 1d8, tak najprv hodis 1d8 a potom sa vysledok predeli 2)
                     },
@@ -125,9 +129,13 @@
                     },
                     {
                         name: 'Geek',
-                        hp: 1,
+                        hp: 100,
                         attack: [2, 9],
-                        skill: 'I WANT TO PLAY DND' // nema ziaden efekt, ale zaspamuje ti screen hlaskou
+                        skill: 'I WANT TO PLAY DND', // nema ziaden efekt, ale zaspamuje ti screen hlaskou
+                        onDeath: function() {
+                            var labels = document.getElementsByClassName('i_want_to_play_dnd')
+                            while (labels[0]) labels[0].parentNode.removeChild(labels[0])
+                        }
                     },
                     {
                         name: 'Vyhadzovac',
@@ -152,6 +160,17 @@
                                 this.parent.removeEnemy(this.id)
                             }
                         }
+                    }
+                ],
+                synth_powers: [
+                    {
+                        name: 'HEAL'
+                    },
+                    {
+                        name: 'DEFENSE'
+                    },
+                    {
+                        name: 'SUMMON'
                     }
                 ]
             }
@@ -179,7 +198,7 @@
                     }
                     this.chosen_enemy = enemy
 
-                    var damage = this.diceRoll(8)
+                    var damage = this.diceRoll(8) + this.char[this.char.weapon.base_stat]
                     enemy.hp = enemy.hp - damage
 
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
@@ -218,10 +237,9 @@
                 var enemy = ready_enemies[0]
                 enemy.attacked = true
 
-                if (this.diceRoll(100) <= 100 && enemy.skill) {   //  ABILITY
+                if (this.diceRoll(100) <= 40 && enemy.skill && this.char.status_effect == null) {   //  ABILITY
                     this.add_log(enemy.name + ' pouzil schopnost ' + enemy.skill + '.')
                     this.enemySkill(enemy.skill)
-
                 } else {                                          //  ATTACK
                     if (this.diceRoll(10) > this.char.ac) {
                         var damage = this.randomNumber(enemy.attack[0], enemy.attack[1])
@@ -239,6 +257,8 @@
 
                 this.choosing_enemy_to_attack = false
                 this.add_log('░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░')
+
+                if (this.char.status_effect) this.char.status_effect.effect()
             },
             win() {
                 this.add_log('WIN')
@@ -263,27 +283,93 @@
             itemUsed(item) {
                 this.add_log('Predmet ' + item + ' pouzity.')
             },
+            drinkBeer() {
+                if (this.char.beers == 0) {
+                    this.add_log('Uz si vsetko vychlastal kamo.')
+                } else {
+                    this.char.beers--
+
+                    if (this.char.max_hp - this.char.hp < 5) var heal = this.char.max_hp - this.char.hp
+                    else var heal = 5
+
+                    this.char.hp += heal
+                    this.add_log('Dal si si pivo a vyliecil '+heal+' HP.')
+                }
+            },
             enemySkill(skill) {
                 if (skill == 'TIME HACK') {
-
+                    this.char.status_effect = {
+                        name: 'TIME HACK',
+                        parent: this,
+                        effect: function() {
+                            this.parent.char.status_effect = null
+                            this.parent.endTurn()
+                            this.parent.endTurn()
+                        }
+                    }
                 } else if (skill == 'SYNTH BOLT') {
                     var damage = this.randomNumber(1, 10)
                     this.char.hp = this.char.hp - damage
                     this.add_log('Schytas supu za ' + damage + '.')
                 } else if (skill == 'NICOTINE POISON') {
-
+                    this.char.status_effect = {
+                        name: 'NICOTINE POISON',
+                        parent: this,
+                        duration: 3,
+                        effect: function() {
+                            this.parent.char.hp--
+                            this.duration --
+                            this.parent.add_log('NICOTINE POISON ti dal 1 damage.')
+                            if (this.duration == 0) this.parent.char.status_effect = null
+                        }
+                    }
                 } else if (skill == 'CYBER BOMBA') {
                     this.addEnemy('Cyber bomba')
                 } else if (skill == 'SUMMON EVIL SYNTH') {
                     this.addEnemy('Evil synth')
                 } else if (skill == 'TV HYPNOSIS') {
-
+                    this.char.status_effect = {
+                        name: 'TV HYPNOSIS',
+                        parent: this,
+                        duration: 4,
+                        char_stats: {
+                            strength: this.char.strength,
+                            dexterity: this.char.dexterity,
+                            weapon_dmg: this.char.weapon.dmg
+                        },
+                        effect: function() {
+                            if (this.duration == 4) {
+                                this.parent.char.strength = this.parent.char.strength / 2
+                                this.parent.char.dexterity = this.parent.char.dexterity / 2
+                                this.parent.char.weapon.dmg = this.parent.char.weapon.dmg / 2
+                            }
+                            this.duration --
+                            if (this.duration == 0) {
+                                this.parent.char.status_effect = null
+                                this.parent.char.strength = this.char_stats.strength
+                                this.parent.char.dexterity = this.char_stats.dexterity
+                                this.parent.char.weapon.dmg = this.char_stats.weapon_dmg
+                            }
+                        }
+                    }
                 } else if (skill == 'NIGHTCALL') {
 
                 } else if (skill == 'GRCKA') {
                     this.char.hp = this.char.hp - 2
                     this.add_log('Schytas supu za 2.')
                 } else if (skill == 'I WANT TO PLAY DND') {
+                    var node = document.createElement('div')
+                    var body = document.querySelector('#app')
+                    var textnode = document.createTextNode('I WANT TO PLAY DND')
+                    node.appendChild(textnode)
+                    body.appendChild(node)
+                    node.className = 'i_want_to_play_dnd'
+
+                    var x = this.randomNumber(100, 1500)
+                    var y = this.randomNumber(100, 800)
+
+                    node.style.top = y.toString() + 'px'
+                    node.style.left = x.toString() + 'px'
 
                 } else if (skill == 'NAOZAJ NEJSI NA GUESTLISTE') {
                     var damage = this.randomNumber(1, 3)
@@ -390,5 +476,9 @@
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
     background: green;
+    }
+
+    .i_want_to_play_dnd {
+        position: absolute;
     }
 </style>
