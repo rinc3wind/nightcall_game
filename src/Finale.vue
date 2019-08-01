@@ -67,9 +67,13 @@
 
             <div v-if="char.xp == 0" @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
         </div>
-        <div v-show="step == 101">
-            <div id="example-map-container" class="game-container"></div>
-            <div id="example-console-container" class="game-container"></div>
+        <div v-if="step == 101">
+            <div id="map-floor1" class="game-container"></div>
+            <div id="console-container" class="game-container"></div>
+        </div>
+        <div v-if="step == 103">
+            <div id="map-floor2" class="game-container2"></div>
+            <div id="console-container2" class="game-container2"></div>
         </div>
         <div v-if="step == 102">
             <combat :char="char" :enemies_prop="enemies">
@@ -107,48 +111,25 @@
                 floor1: {
                     start: { x: 6, y: 15 },
                     layout: [
-                        "############",
-                        "##.S..B#####",
-                        "##.S..B#####",
-                        "##.....#####",
-                        "##.S....D###",
-                        "#####..#####",
-                        "#####V.#####",
-                        "#####..#####",
-                        "##........+▶",
-                        "##.S...#####",
-                        "##.S.....W##",
-                        "##.S.....W##",
-                        "#######.####",
-                        "##B......S##",
-                        "##B......S##",
-                        "##B......S##",
-                        "##B......S##",
-                        "############"
+                        "####################################################################################",
+                        "##.S..B####################################################W#W######################",
+                        "##.S..B####################################################...........###BBBBBBBB###",
+                        "##.....#####################################################S########.###........###",
+                        "##.S....D##################################################SSS#######.###.......S###",
+                        "#####..##############################################################.###.......S###",
+                        "#####V.##############################################################.###........###",
+                        "#####..###################################################......................S###",
+                        "##........+▶############################################################.........###",
+                        "##.S...#################################################################S.......S###",
+                        "##.S.....W##############################################################.........###",
+                        "##.S.....W##############################################################S.......S###",
+                        "#######.################################################################.........###",
+                        "##B......S##############################################################.........###",
+                        "##B......S##############################################################.........###",
+                        "##B......S##########################################################......SSSSSSS###",
+                        "##B......S##########################################################....SSSSSSSSS###",
+                        "####################################################################################"
                     ],
-                },
-                floor2: {
-                    start: { x: 0, y: 7 },
-                    layout: [
-                        "##########################",
-                        "#W#W######################",
-                        "#...........###BBBBBBBB###",
-                        "##S########.###........###",
-                        "#SSS#######.###.......S###",
-                        "###########.###.......S###",
-                        "###########.###........###",
-                        "......................S###",
-                        "##############.........###",
-                        "##############S.......S###",
-                        "##############.........###",
-                        "##############S.......S###",
-                        "##############.........###",
-                        "##############.........###",
-                        "##############.........###",
-                        "##########......SSSSSSS###",
-                        "##########....SSSSSSSSS###",
-                        "##########################"
-                    ]
                 },
                 mapCharToType: {
                     '#': 'wall',
@@ -186,38 +167,37 @@
                 this.char.sp = this.char.synth_power * 3
                 this.char.ac = this.char.dexterity
             },
-            loadFloor(floor) {
-                var game = this.game
-                game.map.loadTilesFromArrayString(floor.layout, this.mapCharToType, 'floor');
-                game.entityManager.loadFromArrayString(floor.layout, this.entityCharToType);
-                game.setMapSize(game.map.width, game.map.height);
-                game.input.addBindings(this.keyBindings);
-                game.player.x = floor.start.x;
-                game.player.y = floor.start.y;
-                game.renderer.resize(30, 20);
-                game.renderer.layers = [
-                    new RL.RendererLayer(game, 'map', {
+            loadFloor(instance, floor) {
+                instance.map.loadTilesFromArrayString(floor.layout, this.mapCharToType, 'floor');
+                instance.entityManager.loadFromArrayString(floor.layout, this.entityCharToType);
+                instance.setMapSize(instance.map.width, instance.map.height);
+                instance.input.addBindings(this.keyBindings);
+                instance.player.x = floor.start.x;
+                instance.player.y = floor.start.y;
+                instance.renderer.resize(30, 20);
+                instance.renderer.layers = [
+                    new RL.RendererLayer(instance, 'map', {
                         draw: false,
                         mergeWithPrevLayer: false
                     }),
-                    new RL.RendererLayer(game, 'entity', {
+                    new RL.RendererLayer(instance, 'entity', {
                         draw: false,
                         mergeWithPrevLayer: true
                     }),
-                    new RL.RendererLayer(game, 'lighting', {
+                    new RL.RendererLayer(instance, 'lighting', {
                         draw: true,
                         mergeWithPrevLayer: false
                     }),
-                    new RL.RendererLayer(game, 'fov', {
+                    new RL.RendererLayer(instance, 'fov', {
                         draw: true,
                         mergeWithPrevLayer: false
                     }),
                 ];
-                var mapContainerEl = document.getElementById('example-map-container');
-                var consoleContainerEl = document.getElementById('example-console-container');
-                mapContainerEl.appendChild(this.game.renderer.canvas);
-                consoleContainerEl.appendChild(this.game.console.el);
-                this.game.start();
+                var mapContainerEl = document.getElementById('map-floor1');
+                var consoleContainerEl = document.getElementById('console-container');
+                mapContainerEl.appendChild(instance.renderer.canvas);
+                consoleContainerEl.appendChild(instance.console.el);
+                instance.start();
             },
             diceRoll(sides) {
                 return Math.floor(Math.random() * sides) + 1
@@ -254,11 +234,12 @@
             })
 
             bus.$on('exit', (exit) => {
-                this.loadFloor(this['floor'+exit.floor])
+                this.game.renderer.setCenter(58, 7)
+                this.game.player.moveTo(58, 7)
             })
 
-            this.game = new RL.Game();
-            this.loadFloor(this.floor1)
+            this.game = new RL.Game()
+            this.loadFloor(this.game, this.floor1)
         }
     }
 </script>
@@ -274,5 +255,11 @@
     }
     canvas {
         border: solid 2px;
+    }
+    #map-floor1 {
+        margin-left: -100px;
+    }
+    #map-floor2 {
+        margin-left: -100px;
     }
 </style>
