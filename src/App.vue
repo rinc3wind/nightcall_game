@@ -33,7 +33,7 @@
                         <td><img class="menu-item-image" src="icons/load.jpg"></td>
                         <td>SynthPowa</td>
                     </tr>
-                    <tr class="setting" @click="chapter = 6; step = 101">
+                    <tr class="setting" @click="chapter = 6; step = 100">
                         <td><img class="menu-item-image" src="icons/load.jpg"></td>
                         <td>RPG</td>
                     </tr>

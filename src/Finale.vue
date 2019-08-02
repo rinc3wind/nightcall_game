@@ -65,7 +65,7 @@
                 <span>{{ char.ac }}</span>
             </div>
 
-            <div v-if="char.xp == 0" @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
+            <div v-if="char.xp == 0" @click="$emit('setStep', 101); generateCharacter()" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 101">
             <div id="map-floor1" class="game-container"></div>
@@ -100,7 +100,11 @@
                     hp: 6,
                     sp: 6,
                     ac: 2,
+                    max_hp: 6,
+                    max_sp: 6,
                     inventory: [],
+                    beers: 0,
+                    status_effect: null,
                     weapon: {}
                 },
                 enemies: [],
@@ -150,6 +154,10 @@
             }
         },
         methods: {
+            generateCharacter() {
+                this.char.max_hp = this.char.hp
+                this.char.max_sp = this.char.sp
+            },
             changeStats(stat, which) {
                 if (which == '+' && this.char.xp > 0) {
                     this.char[stat]++
@@ -159,8 +167,8 @@
                     this.char[stat]--
                     this.char.xp++
                 }
-                this.char.hp = this.char.strength * 3
-                this.char.sp = this.char.synth_power * 3
+                this.char.hp = this.char.strength * 5
+                this.char.sp = this.char.synth_power * 5
                 this.char.ac = this.char.dexterity
             },
             loadFloor(instance, floor) {
@@ -239,26 +247,6 @@
                     base_stat: 'strength',
                     dmg: 4
                 }
-            }
-
-            this.char = {
-                ac:4,
-                dexterity:4,
-                max_hp: 120,
-                hp:120,
-                inventory: [],
-                name:'grawlix',
-                max_sp: 12,
-                sp:12,
-                strength:4,
-                synth_power:4,
-                weapon:{
-                    name: 'sekera',
-                    dmg: 8,
-                    base_stat: 'strength'
-                },
-                status_effect: null,
-                beers: 3
             }
 
             bus.$on('start_combat', (params) => {

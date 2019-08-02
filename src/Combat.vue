@@ -75,13 +75,13 @@
                     },
                     {
                         name: 'Synthmage',
-                        hp: 40,
+                        hp: 50,
                         attack: [3, 10],
                         skill: 'SYNTH BOLT' // 1d10, nehadze sa na obranu a rovno ubere damage
                     },
                     {
                         name: 'Thrivefool',
-                        hp: 8,
+                        hp: 60,
                         attack: [2, 7],
                         skill: 'CYBER BOMBA', // na screene sa zjavi bomba a timer, ked vydrzi 5 kol tak dostanes 10 damage
                         onDeath: function() {
@@ -96,19 +96,19 @@
                     },
                     {
                         name: 'Kavinsky',
-                        hp: 15,
+                        hp: 100,
                         attack: [2, 7],
                         skill: 'NIGHTCALL' //Zahra Nightcall, musis ho zahrat lepsie, spusti sa nightcall minihra z kostola.
                     },
                     {
                         name: 'Najebanec',
-                        hp: 2,
+                        hp: 50,
                         attack: [2, 9],
                         skill: 'GRCKA' // dostanes automaticky 2 damage
                     },
                     {
                         name: 'Geek',
-                        hp: 50,
+                        hp: 40,
                         attack: [2, 9],
                         skill: 'I WANT TO PLAY DND', // nema ziaden efekt, ale zaspamuje ti screen hlaskou
                         onDeath: function() {
@@ -118,13 +118,13 @@
                     },
                     {
                         name: 'Vyhadzovac',
-                        hp: 3,
+                        hp: 30,
                         attack: [2, 9],
                         skill: 'NAOZAJ NEJSI NA GUESTLISTE' // schytas supu, 1d3;
                     },
                     {
                         name: 'Evil synth',
-                        hp: 50,
+                        hp: 30,
                         attack: [2, 6]
                     },
                     {
