@@ -177,7 +177,7 @@
                     }
                     this.chosen_enemy = enemy
 
-                    var damage = this.diceRoll(8) + this.char[this.char.weapon.base_stat]
+                    var damage = this.diceRoll(this.char.weapon.dmg) + this.char[this.char.weapon.base_stat]
                     enemy.hp = enemy.hp - damage
 
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
