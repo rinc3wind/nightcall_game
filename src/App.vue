@@ -7,31 +7,41 @@
 
             <div class="settings">
                 <b>Moznosti</b><br><br>
-                <div @click="togglePlayer" class="setting">
-                    <span v-if="audio_player_paused == true">Zapnut hudbu</span>
-                    <span v-else>Vypnut hudbu</span>
-                </div>
-                <div :class="{ 'disabled': disabled.save }" @click="saveProgress()" class="setting">
-                    Ulozit hru
-                </div>
-                <div :class="{ 'disabled': disabled.load }" @click="loadProgress()" class="setting">
-                    Nacitat hru
-                </div>
-                <div :class="{ 'disabled': disabled.new }" @click="newGame()" class="setting">
-                    Nova hra
-                </div>
-                <div @click="chapter = 'credits'" class="setting">
-                    Autori
-                </div>
-                <div @click="chapter = 5; step = 100" class="setting">
-                    SynthPowa
-                </div>
-                <div @click="chapter = 6; step = 101" class="setting">
-                    RPG
-                </div>
-                <div @click="chapter = 6; step = 102" class="setting">
-                    COMBAT
-                </div>
+                <table style="width:100%">
+                    <tr class="setting" @click="togglePlayer">
+                        <td><img class="menu-item-image" src="icons/sound.jpg"></td>
+                        <td v-if="audio_player_paused == true">Zapnut hudbu</td>
+                        <td v-else>Vypnut hudbu</td>
+                    </tr>
+                    <tr class="setting" :class="{ 'disabled': disabled.save }" @click="saveProgress()">
+                        <td><img class="menu-item-image" src="icons/save.jpg"></td>
+                        <td>Ulozit hru</td>
+                    </tr>
+                    <tr class="setting" :class="{ 'disabled': disabled.load }" @click="loadProgress()">
+                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
+                        <td>Nacitat hru</td>
+                    </tr>
+                    <tr class="setting" :class="{ 'disabled': disabled.new }" @click="newGame()">
+                        <td><img class="menu-item-image" src="icons/new_game.jpg"></td>
+                        <td>Nova hra</td>
+                    </tr>
+                    <tr class="setting" @click="chapter = 'credits'">
+                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
+                        <td>Autori</td>
+                    </tr>
+                    <tr class="setting" @click="chapter = 5; step = 100">
+                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
+                        <td>SynthPowa</td>
+                    </tr>
+                    <tr class="setting" @click="chapter = 6; step = 101">
+                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
+                        <td>RPG</td>
+                    </tr>
+                    <tr class="setting" @click="chapter = 6; step = 102">
+                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
+                        <td>COMBAT</td>
+                    </tr>
+                </table>
             </div>
 
             <div v-if="player.inventory.length > 0" class="inventory">
