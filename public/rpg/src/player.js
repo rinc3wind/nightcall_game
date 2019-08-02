@@ -203,6 +203,26 @@
         * @return {Bool} true if action was taken.
         */
         move: function(x, y){
+            var enemy_list = ['Computerboy', 'Synthmage', 'Grawlix', 'Thrivefool', 'Daniel Jackson', 'Vektoroskop']
+            if (x >=72 && x <= 90 && y == 9 && this.game.player.wins == 0) {
+                bus.$emit('start_combat', {
+                    char: this.game.player.character,
+                    enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                })
+            }
+            if (x >=72 && x <= 90 && y == 11  && this.game.player.wins == 1) {
+                bus.$emit('start_combat', {
+                    char: this.game.player.character,
+                    enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                })
+            }
+            if (x >=72 && x <= 90 && y == 13  && this.game.player.wins == 2) {
+                bus.$emit('start_combat', {
+                    char: this.game.player.character,
+                    enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                })
+            }
+
             if(this.canMoveTo(x, y)){
                 this.moveTo(x, y);
                 return true;
@@ -211,7 +231,7 @@
                 var targetTileEnt = this.game.entityManager.get(x, y);
                 // if already occupied
                 if(targetTileEnt) {
-                    bus.$emit('start_combat')
+                    // bus.$emit('start_combat')
                     this.game.console.log('Excuse me <strong>Mr.' + targetTileEnt.name + '</strong>, you appear to be in the way.');
                     return targetTileEnt.bump(this);
                 } else {

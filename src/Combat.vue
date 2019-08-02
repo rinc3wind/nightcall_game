@@ -47,33 +47,12 @@
 
 <script>
     export default {
-        //props: ['char', 'enemies_prop'],
+        props: ['char', 'enemies_prop'],
         data() {
             return {
                 combat_log: [],
                 choosing_enemy_to_attack: false,
                 chosen_enemy: {},
-                char: {
-                    ac:4,
-                    dexterity:4,
-                    max_hp: 120,
-                    hp:120,
-                    inventory: [],
-                    name:'grawlix',
-                    max_sp: 12,
-                    sp:12,
-                    strength:4,
-                    synth_power:4,
-                    weapon:{
-                        name: 'sekera',
-                        dmg: 8,
-                        base_stat: 'strength'
-                    },
-                    status_effect: null,
-                    beers: 3
-                },
-                enemies_prop: ['Geek'],
-
                 enemies: [],
                 enemy_list: [
                     {
@@ -129,7 +108,7 @@
                     },
                     {
                         name: 'Geek',
-                        hp: 100,
+                        hp: 50,
                         attack: [2, 9],
                         skill: 'I WANT TO PLAY DND', // nema ziaden efekt, ale zaspamuje ti screen hlaskou
                         onDeath: function() {
@@ -262,6 +241,9 @@
             },
             win() {
                 this.add_log('WIN')
+                console.log(this.char);
+
+                this.$emit('win', this.char)
             },
             fail() {
                 this.add_log('FAIL')

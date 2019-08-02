@@ -67,16 +67,12 @@
 
             <div v-if="char.xp == 0" @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
         </div>
-        <div v-if="step == 101">
+        <div v-show="step == 101">
             <div id="map-floor1" class="game-container"></div>
             <div id="console-container" class="game-container"></div>
         </div>
-        <div v-if="step == 103">
-            <div id="map-floor2" class="game-container2"></div>
-            <div id="console-container2" class="game-container2"></div>
-        </div>
         <div v-if="step == 102">
-            <combat :char="char" :enemies_prop="enemies">
+            <combat :char="char" :enemies_prop="enemies" @win="combatFinished(char)">
             </combat>
         </div>
     </div>
@@ -202,10 +198,17 @@
                 var consoleContainerEl = document.getElementById('console-container');
                 mapContainerEl.appendChild(instance.renderer.canvas);
                 consoleContainerEl.appendChild(instance.console.el);
+                instance.player.wins = 0
+                instance.player.character = this.char
                 instance.start();
             },
             diceRoll(sides) {
                 return Math.floor(Math.random() * sides) + 1
+            },
+            combatFinished(char) {
+                this.game.player.character = char
+                this.game.player.wins++
+                this.$emit('setStep', 101)
             }
         },
         mounted() {
@@ -215,26 +218,52 @@
             if (this.player.inventory.indexOf('sekera') != -1) {
                 this.char.weapon = {
                     name: 'sekera',
+                    base_stat: 'strength',
                     dmg: 8
                 }
             } else if (this.player.inventory.indexOf('bejzbolka') != -1) {
                 this.char.weapon = {
                     name: 'bejzbolka',
+                    base_stat: 'strength',
                     dmg: 6
                 }
             } else if (this.player.inventory.indexOf('prak') != -1) {
                 this.char.weapon = {
                     name: 'prak',
+                    base_stat: 'dexterity',
                     dmg: 6
                 }
             } else {
                 this.char.weapon = {
                     name: 'unarmed',
+                    base_stat: 'strength',
                     dmg: 4
                 }
             }
 
-            bus.$on('start_combat', () => {
+            this.char = {
+                ac:4,
+                dexterity:4,
+                max_hp: 120,
+                hp:120,
+                inventory: [],
+                name:'grawlix',
+                max_sp: 12,
+                sp:12,
+                strength:4,
+                synth_power:4,
+                weapon:{
+                    name: 'sekera',
+                    dmg: 8,
+                    base_stat: 'strength'
+                },
+                status_effect: null,
+                beers: 3
+            }
+
+            bus.$on('start_combat', (params) => {
+                this.char = params.char
+                this.enemies = params.enemies
                 this.$emit('setStep', 102)
             })
 
