@@ -70,10 +70,17 @@
         <div v-show="step == 101">
             <div id="map-floor1" class="game-container"></div>
             <div id="console-container" class="game-container"></div>
+            <div>HP: {{ player.char.hp }} / {{ player.char.max_hp }}</div>
+            <div>SP: {{ player.char.sp }} / {{ player.char.max_sp }}</div>
+            <div>Weapon: {{ player.char.weapon.name }}</div>
+            <div>Beers: {{ player.char.beers }}</div>
         </div>
         <div v-if="step == 102">
-            <combat :char="player.char" :enemies_prop="enemies" @win="combatFinished(player.char)">
+            <combat :char="player.char" :enemies_prop="enemies" @win="combatFinished(player.char)" @fail="youDied">
             </combat>
+        </div>
+        <div v-if="step == 103">
+            <div id="you-died">YOU DIED</div>
         </div>
     </div>
 </template>
@@ -201,6 +208,9 @@
                 this.game.player.character = char
                 this.game.player.wins++
                 this.$emit('setStep', 101)
+            },
+            youDied() {
+                this.$emit('setStep', 103)
             }
         },
         mounted() {
@@ -246,6 +256,13 @@
 
             this.game = new RL.Game()
             this.loadFloor(this.game, this.floor1)
+
+            bus.$on('App/GameLoaded', () => {
+                setTimeout(() => {
+                    this.game.player.wins = 0
+                    this.game.player.character = this.player.char
+                }, 10)
+            })
         }
     }
 </script>
@@ -267,5 +284,11 @@
     }
     #map-floor2 {
         margin-left: -100px;
+    }
+    #you-died {
+        font-size: 80px;
+        position: absolute;
+        top: 40%;
+        left: 37%;
     }
 </style>

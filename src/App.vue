@@ -25,22 +25,6 @@
                         <td><img class="menu-item-image" src="icons/new_game.jpg"></td>
                         <td>Nova hra</td>
                     </tr>
-                    <tr class="setting" @click="chapter = 'credits'">
-                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
-                        <td>Autori</td>
-                    </tr>
-                    <tr class="setting" @click="chapter = 5; step = 100">
-                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
-                        <td>SynthPowa</td>
-                    </tr>
-                    <tr class="setting" @click="chapter = 6; step = 100">
-                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
-                        <td>RPG</td>
-                    </tr>
-                    <tr class="setting" @click="chapter = 6; step = 102">
-                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
-                        <td>COMBAT</td>
-                    </tr>
                 </table>
             </div>
 
@@ -303,6 +287,7 @@
                         load: false,
                         save: false
                     })
+                    bus.$emit('App/GameLoaded')
                 } else {
                     this.note = 'Nie je ulozena ziadna pozicia'
                 }
@@ -447,7 +432,6 @@
     .setting {
         cursor: pointer;
     }
-
     .setting:hover {
         color: white;
     }

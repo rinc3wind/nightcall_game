@@ -21,8 +21,11 @@
                     <div class="choice" @click="attack">
                         ATTACK
                     </div>
-                    <div class="choice">
+                    <div class="choice" @click="synthPowerVisible = !synthPowerVisible">
                         SYNTH POWER
+                    </div>
+                    <div v-if="synthPowerVisible">
+                        <div @click="useSynthPower(power.id)" class="synth-power" v-for="power in synth_powers" :key="power.id">{{ power.name }} [{{ power.cost }} SP]</div>
                     </div>
                     <div class="choice" @click="drinkBeer">
                         DRINK BEER [{{ char.beers }}]
@@ -50,6 +53,7 @@
         props: ['char', 'enemies_prop'],
         data() {
             return {
+                synthPowerVisible: false,
                 combat_log: [],
                 choosing_enemy_to_attack: false,
                 chosen_enemy: {},
@@ -98,7 +102,15 @@
                         name: 'Kavinsky',
                         hp: 100,
                         attack: [2, 7],
-                        skill: 'NIGHTCALL' //Zahra Nightcall, musis ho zahrat lepsie, spusti sa nightcall minihra z kostola.
+                        skill: true,
+                        skills: ['ARPEGGIATOR', 'CUTOFF', 'DELAY']
+                    },
+                    {
+                        name: 'Kavinsky echo',
+                        hp: 20,
+                        attack: [2, 7],
+                        skill: true,
+                        skills: ['ARPEGGIATOR', 'CUTOFF', 'DELAY']
                     },
                     {
                         name: 'Najebanec',
@@ -143,13 +155,19 @@
                 ],
                 synth_powers: [
                     {
-                        name: 'HEAL'
+                        id: 1,
+                        name: 'HEAL',
+                        cost: 4
                     },
                     {
-                        name: 'DEFENSE'
+                        id: 2,
+                        name: 'THORNS',
+                        cost: 5
                     },
                     {
-                        name: 'SUMMON'
+                        id: 3,
+                        name: 'ABSORB',
+                        cost: 3
                     }
                 ]
             }
@@ -167,6 +185,21 @@
                 if (this.choosing_enemy_to_attack == false) {
                     this.add_log('Vyber enemaca.')
                     this.choosing_enemy_to_attack = true
+                }
+            },
+            useSynthPower(id) {
+                var power = this.synth_powers.filter(power => {
+                    return power.id == id
+                })[0]
+
+                if (this.char.sp >= power.cost) {
+                    this.add_log('Pouzil si synth power ' + power.name + '.')
+                    this.char.sp -= power.cost
+                    setTimeout(() => {
+                        this.endTurn()
+                    }, 1000)
+                } else {
+                    this.add_log('Nemas dost synth pointov kamo.')
                 }
             },
             chooseEnemy(enemy) {
@@ -187,7 +220,7 @@
                         this.add_log(enemy.name + ' je porazeny.')
 
                         this.enemies = this.enemies.filter(enemyFromArray => {
-                            return enemyFromArray.name != enemy.name
+                            return enemyFromArray.id != enemy.id
                         })
                         if (this.enemies.length == 0) this.win()
                     }
@@ -217,6 +250,7 @@
                 enemy.attacked = true
 
                 if (this.diceRoll(100) <= 40 && enemy.skill && this.char.status_effect == null) {   //  ABILITY
+                    if (enemy.skills) enemy.skill = enemy.skills[Math.floor(Math.random() * enemy.skills.length)]
                     this.add_log(enemy.name + ' pouzil schopnost ' + enemy.skill + '.')
                     this.enemySkill(enemy.skill)
                 } else {                                          //  ATTACK
@@ -240,13 +274,10 @@
                 if (this.char.status_effect) this.char.status_effect.effect()
             },
             win() {
-                this.add_log('WIN')
-                console.log(this.char);
-
                 this.$emit('win', this.char)
             },
             fail() {
-                this.add_log('FAIL')
+                this.$emit('fail')
             },
             add_log(string) {
                 this.combat_log.push({
@@ -334,8 +365,19 @@
                             }
                         }
                     }
-                } else if (skill == 'NIGHTCALL') {
-
+                } else if (skill == 'ARPEGGIATOR') {
+                    this.char.hp = this.char.hp - 10
+                    this.add_log('Schytas supu za 1.')
+                    this.add_log('Schytas supu za 2.')
+                    this.add_log('Schytas supu za 3.')
+                    this.add_log('Schytas supu za 4.')
+                } else if (skill == 'CUTOFF') {
+                    this.char.hp = this.char.hp - 2
+                    this.char.max_hp = this.char.max_hp - 2
+                    this.add_log('HP permanentne znizene o 2.')
+                } else if (skill == 'DELAY') {
+                    this.addEnemy('Kavinsky echo')
+                    this.addEnemy('Kavinsky echo')
                 } else if (skill == 'GRCKA') {
                     this.char.hp = this.char.hp - 2
                     this.add_log('Schytas supu za 2.')
@@ -464,5 +506,17 @@
 
     .i_want_to_play_dnd {
         position: absolute;
+    }
+
+    .synth-power {
+        cursor: pointer;
+        color: white;
+        padding: 5px;
+        padding-left: 20px;
+        font-size: 16px;
+    }
+    .synth-power:hover {
+        background-color: white;
+        color: black;
     }
 </style>
