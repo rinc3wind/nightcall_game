@@ -203,6 +203,8 @@
         * @return {Bool} true if action was taken.
         */
         move: function(x, y){
+            console.log(x, y);
+
             var enemy_list = ['Computerboy', 'Synthmage', 'Grawlix', 'Thrivefool', 'Daniel Jackson', 'Vektoroskop']
             if (x >=72 && x <= 90 && y == 9 && this.game.player.wins == 0) {
                 bus.$emit('start_combat', {
@@ -220,6 +222,13 @@
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                })
+            }
+            if (x == 6 && y == 13) {
+                bus.$emit('start_combat', {
+                    char: this.game.player.character,
+                    // enemies: ['Kavinsky']
+                    enemies: ['Vyhadzovac', 'Vyhadzovac', 'Vyhadzovac', 'Vyhadzovac']
                 })
             }
 
