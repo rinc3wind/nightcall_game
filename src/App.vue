@@ -219,7 +219,23 @@
                     inventory: [],
                     finished_chapters: [],
                     states: [],
-                    cheats_enabled: false
+                    cheats_enabled: false,
+                    char: {
+                        name: null,
+                        xp: 6,
+                        strength: 2,
+                        dexterity: 2,
+                        synth_power: 2,
+                        hp: 6,
+                        sp: 6,
+                        ac: 2,
+                        max_hp: 6,
+                        max_sp: 6,
+                        inventory: [],
+                        beers: 0,
+                        status_effect: null,
+                        weapon: {}
+                    }
                 },
                 chapter: 0,
                 step: 0,
@@ -302,6 +318,22 @@
                     inventory: [],
                     finished_chapters: [],
                     states: [],
+                    char: {
+                        name: null,
+                        xp: 6,
+                        strength: 2,
+                        dexterity: 2,
+                        synth_power: 2,
+                        hp: 6,
+                        sp: 6,
+                        ac: 2,
+                        max_hp: 6,
+                        max_sp: 6,
+                        inventory: [],
+                        beers: 0,
+                        status_effect: null,
+                        weapon: {}
+                    }
                 },
                 this.chapter = 0
                 this.step = 0

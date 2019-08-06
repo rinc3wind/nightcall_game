@@ -30,49 +30,49 @@
         <div v-show="step == 100">
             <div>
                 <span>Strength: </span>
-                <span>{{ char.strength }}</span>
+                <span>{{ player.char.strength }}</span>
                 <span class="stat_span" @click="changeStats('strength', '+')">+</span>
                 <span class="stat_span" @click="changeStats('strength', '-')">-</span>
             </div>
 
             <div>
                 <span>Dexterity: </span>
-                <span>{{ char.dexterity }}</span>
+                <span>{{ player.char.dexterity }}</span>
                 <span class="stat_span" @click="changeStats('dexterity', '+')">+</span>
                 <span class="stat_span" @click="changeStats('dexterity', '-')">-</span>
             </div>
             <div>
                 <span>Synth power: </span>
-                <span>{{ char.synth_power }}</span>
+                <span>{{ player.char.synth_power }}</span>
                 <span class="stat_span" @click="changeStats('synth_power', '+')">+</span>
                 <span class="stat_span" @click="changeStats('synth_power', '-')">-</span>
             </div>
 
             <div style="margin-top: 20px;">
-                Points to allocate: {{ char.xp }}
+                Points to allocate: {{ player.char.xp }}
             </div>
 
             <div style="margin-top: 20px;">
                 <span>Hit points: </span>
-                <span>{{ char.hp }}</span>
+                <span>{{ player.char.hp }}</span>
             </div>
             <div>
                 <span>Synth power: </span>
-                <span>{{ char.sp }}</span>
+                <span>{{ player.char.sp }}</span>
             </div>
             <div style="margin-bottom: 20px;">
                 <span>Armor class: </span>
-                <span>{{ char.ac }}</span>
+                <span>{{ player.char.ac }}</span>
             </div>
 
-            <div v-if="char.xp == 0" @click="$emit('setStep', 101); generateCharacter()" class="choice">{{ lang.continue }}</div>
+            <div v-if="player.char.xp == 0" @click="$emit('setStep', 101); generateCharacter()" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 101">
             <div id="map-floor1" class="game-container"></div>
             <div id="console-container" class="game-container"></div>
         </div>
         <div v-if="step == 102">
-            <combat :char="char" :enemies_prop="enemies" @win="combatFinished(char)">
+            <combat :char="player.char" :enemies_prop="enemies" @win="combatFinished(player.char)">
             </combat>
         </div>
     </div>
@@ -91,22 +91,6 @@
         data() {
             return {
                 game: null,
-                char: {
-                    name: null,
-                    xp: 6,
-                    strength: 2,
-                    dexterity: 2,
-                    synth_power: 2,
-                    hp: 6,
-                    sp: 6,
-                    ac: 2,
-                    max_hp: 6,
-                    max_sp: 6,
-                    inventory: [],
-                    beers: 0,
-                    status_effect: null,
-                    weapon: {}
-                },
                 enemies: [],
                 floor1: {
                     start: { x: 6, y: 15 },
@@ -155,21 +139,21 @@
         },
         methods: {
             generateCharacter() {
-                this.char.max_hp = this.char.hp
-                this.char.max_sp = this.char.sp
+                this.player.char.max_hp = this.player.char.hp
+                this.player.char.max_sp = this.player.char.sp
             },
             changeStats(stat, which) {
-                if (which == '+' && this.char.xp > 0) {
-                    this.char[stat]++
-                    this.char.xp--
+                if (which == '+' && this.player.char.xp > 0) {
+                    this.player.char[stat]++
+                    this.player.char.xp--
                 }
-                if (which == '-' && this.char.xp <= 6 && this.char[stat] > 2) {
-                    this.char[stat]--
-                    this.char.xp++
+                if (which == '-' && this.player.char.xp <= 6 && this.player.char[stat] > 2) {
+                    this.player.char[stat]--
+                    this.player.char.xp++
                 }
-                this.char.hp = this.char.strength * 5
-                this.char.sp = this.char.synth_power * 5
-                this.char.ac = this.char.dexterity
+                this.player.char.hp = this.player.char.strength * 5
+                this.player.char.sp = this.player.char.synth_power * 5
+                this.player.char.ac = this.player.char.dexterity
             },
             loadFloor(instance, floor) {
                 instance.map.loadTilesFromArrayString(floor.layout, this.mapCharToType, 'floor');
@@ -207,7 +191,7 @@
                 mapContainerEl.appendChild(instance.renderer.canvas);
                 consoleContainerEl.appendChild(instance.console.el);
                 instance.player.wins = 0
-                instance.player.character = this.char
+                instance.player.character = this.player.char
                 instance.start();
             },
             diceRoll(sides) {
@@ -220,29 +204,29 @@
             }
         },
         mounted() {
-            this.char.name = this.player.name
-            this.char.inventory = this.player.inventory
+            this.player.char.name = this.player.name
+            this.player.char.inventory = this.player.inventory
 
             if (this.player.inventory.indexOf('sekera') != -1) {
-                this.char.weapon = {
+                this.player.char.weapon = {
                     name: 'sekera',
                     base_stat: 'strength',
                     dmg: 8
                 }
             } else if (this.player.inventory.indexOf('bejzbolka') != -1) {
-                this.char.weapon = {
+                this.player.char.weapon = {
                     name: 'bejzbolka',
                     base_stat: 'strength',
                     dmg: 6
                 }
             } else if (this.player.inventory.indexOf('prak') != -1) {
-                this.char.weapon = {
+                this.player.char.weapon = {
                     name: 'prak',
                     base_stat: 'dexterity',
                     dmg: 6
                 }
             } else {
-                this.char.weapon = {
+                this.player.char.weapon = {
                     name: 'unarmed',
                     base_stat: 'strength',
                     dmg: 4
@@ -250,7 +234,7 @@
             }
 
             bus.$on('start_combat', (params) => {
-                this.char = params.char
+                this.player.char = params.char
                 this.enemies = params.enemies
                 this.$emit('setStep', 102)
             })
