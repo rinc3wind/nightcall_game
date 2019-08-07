@@ -271,7 +271,7 @@
         kavinsky: {
             name: 'kavinsky',
             char: 'K',
-            color: 'pink',
+            color: 'red',
             bgColor: '#222',
             passable: false,
             blocksLos: true,
