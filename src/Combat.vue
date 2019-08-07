@@ -113,7 +113,7 @@
                         hp: 20,
                         attack: [2, 7],
                         skill: true,
-                        skills: ['ARPEGGIATOR', 'CUTOFF', 'DELAY']
+                        skills: ['ARPEGGIATOR', 'CUTOFF']
                     },
                     {
                         name: 'Najebanec',

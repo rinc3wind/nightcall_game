@@ -204,10 +204,20 @@
                 this.player.char.ac = this.player.char.dexterity
             },
             setLights(instance) {
-                instance.lighting.set(7, 16, 255, 252, 176);
-                instance.lighting.set(77, 3, 255, 0, 255);
-                instance.lighting.set(80, 14, 0, 208, 255);
-                instance.lighting.set(74, 14, 0, 208, 255);
+                instance.lighting.set(7, 16, 255, 252, 176)
+                instance.lighting.set(77, 3, 255, 0, 255)
+                instance.lighting.set(80, 14, 0, 208, 255)
+                instance.lighting.set(74, 14, 0, 208, 255)
+
+                instance.lighting.set(3, 13, 252, 169, 3)
+                instance.lighting.set(3, 16, 252, 169, 3)
+                instance.lighting.set(9, 8, 252, 169, 3)
+                instance.lighting.set(5, 7, 252, 169, 3)
+                instance.lighting.set(5, 1, 252, 169, 3)
+
+                instance.lighting.set(58, 7, 252, 169, 3)
+                instance.lighting.set(69, 2, 252, 169, 3)
+                instance.lighting.set(60, 2, 252, 169, 3)
             },
             loadFloor(instance, floor) {
                 instance.map.loadTilesFromArrayString(floor.layout, this.mapCharToType, 'floor');
