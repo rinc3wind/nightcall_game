@@ -208,7 +208,10 @@
             color: '#777',
             bgColor: '#2e2e2e',
             passable: false,
-            blocksLos: true
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('note', 'Zamknute dvere kamo. Tadialto dalej neprejdes.')
+            }
         },
         wc: {
             name: 'wc',
@@ -216,7 +219,10 @@
             color: '#777',
             bgColor: '#2e2e2e',
             passable: false,
-            blocksLos: true
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('note', 'Keby sa ti chcelo curat, tak prave tuna by si vyriesil tento neprijemny problem. Kedze sa ti vsak curat momentalne nechce, tak ides dalej.')
+            }
         },
         table: {
             name: 'table',
@@ -224,7 +230,10 @@
             color: '#777',
             bgColor: '#2e2e2e',
             passable: false,
-            blocksLos: true
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('note', 'Dreveny, relativne cisty stol. Niesi debil, aby si ho isiel po niekom hadzat. Takze ides dalej.')
+            }
         },
         bar: {
             name: 'bar',
@@ -232,7 +241,10 @@
             color: '#777',
             bgColor: '#2e2e2e',
             passable: false,
-            blocksLos: true
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('dialogue', 'bar')
+            }
         },
         vyhadzovaci: {
             name: 'vyhadzovaci',
@@ -240,7 +252,10 @@
             color: '#777',
             bgColor: '#2e2e2e',
             passable: false,
-            blocksLos: true
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('dialogue', 'vyhadzovac')
+            }
         },
         exit: {
             name: 'exit',
@@ -251,6 +266,20 @@
             blocksLos: true,
             bump: function(entity){
                 bus.$emit('exit', { floor: 2 })
+            }
+        },
+        kavinsky: {
+            name: 'kavinsky',
+            char: 'K',
+            color: 'pink',
+            bgColor: '#222',
+            passable: false,
+            blocksLos: true,
+            bump: function(entity){
+                bus.$emit('start_combat', {
+                    char: this.game.player.character,
+                    enemies: ['Kavinsky']
+                })
             }
         },
         door: {

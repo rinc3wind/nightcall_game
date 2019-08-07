@@ -143,6 +143,7 @@
 
             <finale
                 v-if="chapter == 6"
+                :note="note"
                 :player="player"
                 :step="step"
                 @setDisabled="setDisabled($event)"

@@ -20,9 +20,7 @@
                     <span class="name">Daniel Jackson</span>^800<br><br>
                     <span class="header">nakodil</span><br>
                     <a href="https://www.facebook.com/grawlix.synthwave" target="_blank" class="name">Grawlix</a>^800<br><br>
-                    <span class="header">nakreslil</span><br>
-                    <span class="name">Eniac</span>^800<br><br>
-                    <span class="header">textova korektura</span><br>
+                    <span class="header">textova korektura a ikonky</span><br>
                     <span class="name">Synthmage</span><br><br>
                     <span class="header">soundtrack</span><br>
                     <span class="name">****</span>^800<br><br><br><br>

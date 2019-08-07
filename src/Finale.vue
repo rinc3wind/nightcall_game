@@ -69,18 +69,57 @@
         </div>
         <div v-show="step == 101">
             <div id="map-floor1" class="game-container"></div>
-            <div id="console-container" class="game-container"></div>
+            <!-- <div id="console-container" class="game-container"></div> -->
             <div>HP: {{ player.char.hp }} / {{ player.char.max_hp }}</div>
             <div>SP: {{ player.char.sp }} / {{ player.char.max_sp }}</div>
             <div>Weapon: {{ player.char.weapon.name }}</div>
             <div>Beers: {{ player.char.beers }}</div>
         </div>
         <div v-if="step == 102">
-            <combat :char="player.char" :enemies_prop="enemies" @win="combatFinished(player.char)" @fail="youDied">
+            <combat :char="player.char" :enemies_prop="enemies" @win="combatFinished(player.char)" @fail="youDied" @gameWon="gameWon">
             </combat>
         </div>
         <div v-if="step == 103">
             <div id="you-died">YOU DIED</div>
+        </div>
+        <div v-if="step == 104">
+            <div v-if="player.char.beers <= 0">
+                Vidis pred sebou bar. Nemas vsak ziadne penaze. Ked vsak barman Szaki zbada, ze ti vytrca z vacku syntak, nacapuje ti pivecko for free.
+                <div @click="$emit('setStep', 101); player.char.beers++" class="choice">{{ lang.continue }}</div>
+            </div>
+            <div v-else>
+                Mozes vymenit item z inventara za pivo. Momentalne mas pri sebe {{ player.char.beers }}.
+                <div v-for="item in player.inventory" :key="item" class="choice" @click="player.char.beers++; $emit('removeItem', item)">
+                    {{ item }}
+                </div>
+                <div style="margin-top: 50px;" @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
+            </div>
+        </div>
+        <div v-if="step == 105">
+            VYHADZOVAC
+            <div @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
+        </div>
+        <div v-if="step == 106">
+            <p>Po tom co si vyjebal Kavinskeho, bol chudak z toho tak strasne v prdeli, ze pustil Wild Boys od Duran Duran. Necakal si na nic. Schmatol si prve pivo, ktore si videl v dosahu. Cas sa spomalil. Citis sa jak Neo v Matrixe. Vyhodis pohar do vzduchu. Spenene kvapky letia vzduchom a ty skocis rovno do ich cesty.</p>
+
+            <p>Wsssssplash!</p>
+
+            <p>Zareves na cele pluca &quot;NIGHTCALL DO PICEEEEEEE!!!&quot;</p>
+
+            <p>3000 hromov zaduni vzduchom, ktory voni ako dymostroj a cigaretovy dym. Zrazu sa pred tebou zhmotni Arnold Schwarzenegger v malych cervenych slipkach.</p>
+
+            <p>&quot;{{ player.name }}! Dal si to. Cely cas som ti veril. To ja som pravy hlas a duch Nightcallu.&quot;</p>
+
+            <p>Napne biceps.</p>
+
+            <p>&quot;Gratulujem. Vratil si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas. Stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
+
+            <p>Zmurkne na teba.</p>
+
+            <p>Zrazu si uvedomis, ze znova sedis pred pocitacom vo svojej izbe. Vsetko sa vratilo do normalu. Zdanlivo. Stale vsak v hlbke kosti citis, ze Halloweensky Nightcall nemozes vynechat. Vidime sa kamosko! Ak sa ti hra pacila, urcite nam o tom napis, lebo Nightcall neni len partia sockarov co spravila tuto trapnu hru. Nightcall je kazdy jeden z vas co chodi na akcie. Nightcall si ty! Nighcall do pice!</p>
+
+            <p>31 oktobra, Re:Fresh Club na Venturskej, 20.00</p>
+            <div @click="$emit('setStep', 0); $emit('setChapter', 'credits')" class="choice">{{ lang.continue }}</div>
         </div>
     </div>
 </template>
@@ -90,13 +129,14 @@
     import SneakingGame from './SneakingGame.vue'
 
     export default {
-        props: ['player', 'step'],
+        props: ['player', 'step', 'note'],
         components: {
             'combat': Combat,
             'sneaking-game': SneakingGame
         },
         data() {
             return {
+                gameWonTrigger: false,
                 game: null,
                 enemies: [],
                 floor1: {
@@ -116,7 +156,7 @@
                         "##.S.....W##############################################################S.......S###",
                         "#######.################################################################.........###",
                         "##B......S##############################################################.........###",
-                        "##B......S##############################################################.........###",
+                        "##B......S##############################################################.....K...###",
                         "##B......S##########################################################......SSSSSSS###",
                         "##B......S##########################################################....SSSSSSSSS###",
                         "####################################################################################"
@@ -131,7 +171,8 @@
                     'W': 'wc',
                     'V': 'vyhadzovaci',
                     'D': 'locked_door',
-                    '▶': 'exit'
+                    '▶': 'exit',
+                    'K': 'kavinsky'
                 },
                 entityCharToType: {
                     'Z': 'zombie'
@@ -162,6 +203,12 @@
                 this.player.char.sp = this.player.char.synth_power * 5
                 this.player.char.ac = this.player.char.dexterity
             },
+            setLights(instance) {
+                instance.lighting.set(7, 16, 255, 252, 176);
+                instance.lighting.set(77, 3, 255, 0, 255);
+                instance.lighting.set(80, 14, 0, 208, 255);
+                instance.lighting.set(74, 14, 0, 208, 255);
+            },
             loadFloor(instance, floor) {
                 instance.map.loadTilesFromArrayString(floor.layout, this.mapCharToType, 'floor');
                 instance.entityManager.loadFromArrayString(floor.layout, this.entityCharToType);
@@ -188,15 +235,11 @@
                         mergeWithPrevLayer: false
                     }),
                 ];
-
-                instance.lighting.set(7, 16, 255, 252, 176);
-                instance.lighting.set(77, 3, 255, 0, 255);
-                instance.lighting.set(77, 14, 0, 208, 255);
-
+                this.setLights(instance)
                 var mapContainerEl = document.getElementById('map-floor1');
-                var consoleContainerEl = document.getElementById('console-container');
+                //var consoleContainerEl = document.getElementById('console-container');
                 mapContainerEl.appendChild(instance.renderer.canvas);
-                consoleContainerEl.appendChild(instance.console.el);
+                //consoleContainerEl.appendChild(instance.console.el);
                 instance.player.wins = 0
                 instance.player.character = this.player.char
                 instance.start();
@@ -207,13 +250,32 @@
             combatFinished(char) {
                 this.game.player.character = char
                 this.game.player.wins++
-                this.$emit('setStep', 101)
+
+                if (this.gameWonTrigger == true) {
+                    this.$emit('setStep', 106)
+                } else {
+                    this.$emit('setStep', 101)
+                }
             },
             youDied() {
                 this.$emit('setStep', 103)
+            },
+            gameWon() {
+                this.gameWonTrigger = true
             }
         },
         mounted() {
+            var count = 0
+            window.addEventListener('keydown', (e) => {
+                if (this.note != null) {
+                    count++
+                    if (count == 2) {
+                        this.$emit('note', null)
+                        count = 0
+                    }
+                }
+            })
+
             this.player.char.name = this.player.name
             this.player.char.inventory = this.player.inventory
 
@@ -252,6 +314,13 @@
             bus.$on('exit', (exit) => {
                 this.game.renderer.setCenter(58, 7)
                 this.game.player.moveTo(58, 7)
+            })
+            bus.$on('note', (text) => {
+                this.$emit('note', text)
+            })
+            bus.$on('dialogue', (value) => {
+                if (value == 'bar') this.$emit('setStep', 104)
+                else if (value == 'vyhadzovac') this.$emit('setStep', 105)
             })
 
             this.game = new RL.Game()

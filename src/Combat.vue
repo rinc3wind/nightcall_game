@@ -103,7 +103,10 @@
                         hp: 100,
                         attack: [2, 7],
                         skill: true,
-                        skills: ['ARPEGGIATOR', 'CUTOFF', 'DELAY']
+                        skills: ['ARPEGGIATOR', 'CUTOFF', 'DELAY'],
+                        onDeath() {
+                            this.parent.$emit('gameWon')
+                        }
                     },
                     {
                         name: 'Kavinsky echo',
@@ -120,12 +123,15 @@
                     },
                     {
                         name: 'Geek',
-                        hp: 40,
+                        hp: 25,
                         attack: [2, 9],
                         skill: 'I WANT TO PLAY DND', // nema ziaden efekt, ale zaspamuje ti screen hlaskou
+                        skill_chance: 90,
                         onDeath: function() {
-                            var labels = document.getElementsByClassName('i_want_to_play_dnd')
-                            while (labels[0]) labels[0].parentNode.removeChild(labels[0])
+                            if (this.parent.enemies.length == 1) {
+                                var labels = document.getElementsByClassName('i_want_to_play_dnd')
+                                while (labels[0]) labels[0].parentNode.removeChild(labels[0])
+                            }
                         }
                     },
                     {
@@ -227,6 +233,17 @@
                     this.add_log('Nemas dost synth pointov kamo.')
                 }
             },
+            checkIfEnemyDies(enemy) {
+                if (enemy.hp <= 0) {
+                    if (enemy.onDeath) enemy.onDeath()
+                    this.add_log(enemy.name + ' je porazeny.')
+
+                    this.enemies = this.enemies.filter(enemyFromArray => {
+                        return enemyFromArray.id != enemy.id
+                    })
+                    if (this.enemies.length == 0) this.win()
+                }
+            },
             chooseEnemy(enemy) {
                 if (enemy.immortal) {
                     this.add_log('Na '+enemy.name+' sa neda zautocit.')
@@ -241,19 +258,16 @@
                     enemy.hp -= 7
                     this.char.hp += 7
                 }
-                if (enemy.hp <= 0) {
-                    if (enemy.onDeath) enemy.onDeath()
-                    this.add_log(enemy.name + ' je porazeny.')
 
-                    this.enemies = this.enemies.filter(enemyFromArray => {
-                        return enemyFromArray.id != enemy.id
-                    })
-                    if (this.enemies.length == 0) this.win()
-                }
+                this.checkIfEnemyDies(enemy)
+
                 if (this.enemies.length != 0) {
-                    setTimeout(() => {
-                        this.endTurn()
-                    }, 1000)
+                    if (this.choosing_enemy_to_attack == true || this.choosing_enemy_for_power == true) {
+                        this.choosing_enemy_for_power = false
+                        setTimeout(() => {
+                            this.endTurn()
+                        }, 1000)
+                    }
                 }
             },
             endTurn() {
@@ -274,7 +288,8 @@
                 var enemy = ready_enemies[0]
                 enemy.attacked = true
 
-                if (this.diceRoll(100) <= 40 && enemy.skill && this.char.status_effect == null) {   //  ABILITY
+                var skill_chance = enemy.skill_chance ? enemy.skill_chance : 30
+                if (this.diceRoll(100) <= skill_chance && enemy.skill && this.char.status_effect == null) {   //  ABILITY
                     if (enemy.skills) enemy.skill = enemy.skills[Math.floor(Math.random() * enemy.skills.length)]
                     this.add_log(enemy.name + ' pouzil schopnost ' + enemy.skill + '.')
                     this.enemySkill(enemy.skill)
@@ -282,13 +297,14 @@
                     if (this.diceRoll(10) > this.char.ac) {
                         var damage = this.randomNumber(enemy.attack[0], enemy.attack[1])
 
-                        if (this.char.reflect == false ) {
+                        if (this.char.reflect == false || this.char.reflect == null) {
                             this.char.hp = this.char.hp - damage
                             this.add_log('Dostal si supu od ' + enemy.name + ' za ' + damage + '.')
                         } else {
                             enemy.hp = enemy.hp - damage
                             this.add_log(enemy.name + ' si dal supu za ' + damage + '.')
                             this.char.reflect = false
+                            this.checkIfEnemyDies(enemy)
                         }
                     } else {
                         this.add_log(enemy.name + ' ta netrafil.')
@@ -338,7 +354,8 @@
                     else var heal = 5
 
                     this.char.hp += heal
-                    this.add_log('Dal si si pivo a vyliecil '+heal+' HP.')
+                    this.char.sp = this.char.max_sp
+                    this.add_log('Dal si si pivo a vyliecil '+heal+' HP. SP obnovene na max.')
                 }
             },
             enemySkill(skill) {
