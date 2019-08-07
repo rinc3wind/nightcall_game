@@ -56,7 +56,7 @@
                 synthPowerVisible: false,
                 combat_log: [],
                 choosing_enemy_to_attack: false,
-                chosen_enemy: {},
+                choosing_enemy_for_power: false,
                 enemies: [],
                 enemy_list: [
                     {
@@ -157,17 +157,44 @@
                     {
                         id: 1,
                         name: 'HEAL',
-                        cost: 4
+                        cost: 4,
+                        strength: 15,
+                        parent: this,
+                        effect() {
+                            var char = this.parent.char
+                            if (char.hp + this.strength > char.max_hp) {
+                                this.parent.add_log('Vyhealoval si si ' + (char.max_hp - char.hp) + ' HP.')
+                                char.hp = char.max_hp
+                            }
+                            else {
+                                char.hp += this.strength
+                                this.parent.add_log('Vyhealoval si si 10 HP.')
+                            }
+                            setTimeout(() => { this.parent.endTurn() }, 1000)
+                        }
                     },
                     {
                         id: 2,
-                        name: 'THORNS',
-                        cost: 5
+                        name: 'REFLECT',
+                        cost: 2,
+                        parent: this,
+                        effect() {
+                            this.parent.char.reflect = true
+                            this.parent.add_log('Dalsi obycajny utok enemaca odrazis naspat.')
+                            setTimeout(() => { this.parent.endTurn() }, 1000)
+                        }
                     },
                     {
                         id: 3,
                         name: 'ABSORB',
-                        cost: 3
+                        cost: 3,
+                        strength: 7,
+                        parent: this,
+                        effect() {
+                            this.parent.add_log('Vyber enemaca, ktoremu chces vysat HP.')
+                            this.parent.choosing_enemy_for_power = true
+                            this.parent.choosing_enemy_to_attack = false
+                        }
                     }
                 ]
             }
@@ -195,40 +222,38 @@
                 if (this.char.sp >= power.cost) {
                     this.add_log('Pouzil si synth power ' + power.name + '.')
                     this.char.sp -= power.cost
-                    setTimeout(() => {
-                        this.endTurn()
-                    }, 1000)
+                    power.effect()
                 } else {
                     this.add_log('Nemas dost synth pointov kamo.')
                 }
             },
             chooseEnemy(enemy) {
-                if (this.choosing_enemy_to_attack == true) {
-                    if (enemy.immortal) {
-                        this.add_log('Na '+enemy.name+' sa neda zautocit.')
-                        return
-                    }
-                    this.chosen_enemy = enemy
+                if (enemy.immortal) {
+                    this.add_log('Na '+enemy.name+' sa neda zautocit.')
+                    return
+                }
 
+                if (this.choosing_enemy_to_attack == true) {
                     var damage = this.diceRoll(this.char.weapon.dmg) + this.char[this.char.weapon.base_stat]
                     enemy.hp = enemy.hp - damage
-
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
+                } else if (this.choosing_enemy_for_power == true) {
+                    enemy.hp -= 7
+                    this.char.hp += 7
+                }
+                if (enemy.hp <= 0) {
+                    if (enemy.onDeath) enemy.onDeath()
+                    this.add_log(enemy.name + ' je porazeny.')
 
-                    if (enemy.hp <= 0) {
-                        if (enemy.onDeath) enemy.onDeath()
-                        this.add_log(enemy.name + ' je porazeny.')
-
-                        this.enemies = this.enemies.filter(enemyFromArray => {
-                            return enemyFromArray.id != enemy.id
-                        })
-                        if (this.enemies.length == 0) this.win()
-                    }
-                    if (this.enemies.length != 0) {
-                        setTimeout(() => {
-                            this.endTurn()
-                        }, 1000)
-                    }
+                    this.enemies = this.enemies.filter(enemyFromArray => {
+                        return enemyFromArray.id != enemy.id
+                    })
+                    if (this.enemies.length == 0) this.win()
+                }
+                if (this.enemies.length != 0) {
+                    setTimeout(() => {
+                        this.endTurn()
+                    }, 1000)
                 }
             },
             endTurn() {
@@ -256,8 +281,15 @@
                 } else {                                          //  ATTACK
                     if (this.diceRoll(10) > this.char.ac) {
                         var damage = this.randomNumber(enemy.attack[0], enemy.attack[1])
-                        this.char.hp = this.char.hp - damage
-                        this.add_log('Dostal si supu od ' + enemy.name + ' za ' + damage + '.')
+
+                        if (this.char.reflect == false ) {
+                            this.char.hp = this.char.hp - damage
+                            this.add_log('Dostal si supu od ' + enemy.name + ' za ' + damage + '.')
+                        } else {
+                            enemy.hp = enemy.hp - damage
+                            this.add_log(enemy.name + ' si dal supu za ' + damage + '.')
+                            this.char.reflect = false
+                        }
                     } else {
                         this.add_log(enemy.name + ' ta netrafil.')
                     }
