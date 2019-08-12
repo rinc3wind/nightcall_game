@@ -1,17 +1,12 @@
 <template>
     <div id="app">
         <div>
-            <audio id="audio_player" controls loop style="display: none;">
-                <source src="./assets/untitled.mp3" type="audio/mpeg">
-            </audio>
-
             <div class="settings">
                 <b>Moznosti</b><br><br>
                 <table style="width:100%">
-                    <tr class="setting" @click="togglePlayer">
-                        <td><img class="menu-item-image" src="icons/sound.jpg"></td>
-                        <td v-if="audio_player_paused == true">Zapnut hudbu</td>
-                        <td v-else>Vypnut hudbu</td>
+                    <tr class="setting" :class="{ 'disabled': disabled.new }" @click="newGame()">
+                        <td><img class="menu-item-image" src="icons/new_game.jpg"></td>
+                        <td>Nova hra</td>
                     </tr>
                     <tr class="setting" :class="{ 'disabled': disabled.save }" @click="saveProgress()">
                         <td><img class="menu-item-image" src="icons/save.jpg"></td>
@@ -21,9 +16,9 @@
                         <td><img class="menu-item-image" src="icons/load.jpg"></td>
                         <td>Nacitat hru</td>
                     </tr>
-                    <tr class="setting" :class="{ 'disabled': disabled.new }" @click="newGame()">
-                        <td><img class="menu-item-image" src="icons/new_game.jpg"></td>
-                        <td>Nova hra</td>
+                    <tr class="setting" @click="radio.show = true">
+                        <td><img class="menu-item-image" src="icons/sound.jpg"></td>
+                        <td>Radio</td>
                     </tr>
                 </table>
             </div>
@@ -68,6 +63,18 @@
                         {{ note }}
                     </div>
                     <div @click="note = null" class="choice" style="text-align: center;">
+                        {{ lang.continue }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="note" v-if="radio.show == true">
+                <div class="note_content">
+                    <div class="choice" style="margin-bottom: 10px;" v-for="track in radio.playlist" :key="track.id" @click="radio.playTrack(track.id)">
+                        <span v-if="track.is_playing">►</span>
+                        {{ track.name }}
+                    </div>
+                    <div @click="radio.show = false" class="choice" style="text-align: center;">
                         {{ lang.continue }}
                     </div>
                 </div>
@@ -194,6 +201,87 @@
         },
         data() {
             return {
+                radio: {
+                    show: false,
+                    playlist: [
+                        {
+                            id: 0,
+                            name: 'Grawlix - Arachnidism',
+                            is_playing: false,
+                            sound: new Howl({
+                                src: ['mp3/arachnidism.mp3'],
+                                onend() {
+                                    this.onEnd()
+                                }
+                            })
+                        },
+                        {
+                            id: 1,
+                            name: 'Grawlix - 90 years',
+                            is_playing: false,
+                            sound: new Howl({
+                                src: ['mp3/90_years.mp3'],
+                                onend() {
+                                    this.onEnd()
+                                }
+                            })
+                        },
+                        {
+                            id: 2,
+                            name: 'Grawlix - Sexendex',
+                            is_playing: false,
+                            sound: new Howl({
+                                src: ['mp3/sexendex.mp3'],
+                                onend() {
+                                    this.onEnd()
+                                }
+                            })
+                        },
+                        {
+                            id: 3,
+                            name: 'Grawlix - Breakpoint',
+                            is_playing: false,
+                            sound: new Howl({
+                                src: ['mp3/breakpoint.mp3'],
+                                onend() {
+                                    this.onEnd()
+                                }
+                            })
+                        },
+                        {
+                            id: 4,
+                            name: 'Nyctalope - Rusty Silicone',
+                            is_playing: false,
+                            sound: new Howl({
+                                src: ['mp3/rusty_silicone.mp3'],
+                                onend() {
+                                    this.onEnd()
+                                }
+                            })
+                        }
+                    ],
+                    getPlayingTrack() {
+                        return this.playlist.filter(track => {
+                            return track.is_playing == true
+                        })[0]
+                    },
+                    onEnd() {
+                        var track = this.getPlayingTrack
+                        if (track.id >= this.playlist.length - 1) {
+                            this.playTrack(0)
+                        } else {
+                            this.playTrack(track.id + 1)
+                        }
+                    },
+                    playTrack(index) {
+                        this.playlist.forEach(track => {
+                            track.sound.stop()
+                            track.is_playing = false
+                        })
+                        this.playlist[index].sound.play()
+                        this.playlist[index].is_playing = true
+                    }
+                },
                 page_ready: false,
                 player: {
                     name: null,
@@ -226,7 +314,6 @@
                 step: 0,
                 note: null,
                 audio_player: null,
-                audio_player_paused: true,
                 disabled: {
                     save: false,
                     load: false,
@@ -238,10 +325,7 @@
         mounted() {
             var self = this
             this.audio_player = document.getElementById('audio_player')
-            this.audio_player.oncanplaythrough = function () {
-                self.page_ready = true
-                document.querySelector('#app').style.display = 'block'
-            }
+            document.querySelector('#app').style.display = 'block'
             bus.$on('Combat/useItem', () => {
                 this.useItem = true
             })
@@ -259,11 +343,6 @@
             removeItem(item) {
                 var index = this.player.inventory.indexOf(item)
                 if (index != -1) this.player.inventory.splice(index, 1)
-            },
-            togglePlayer() {
-                if (this.audio_player.paused) this.audio_player.play()
-                else this.audio_player.pause()
-                this.audio_player_paused = this.audio_player.paused
             },
             saveProgress() {
                 if (this.disabled.save == true) return

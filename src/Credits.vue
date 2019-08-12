@@ -17,14 +17,17 @@
             this.typed = new this.Typed('#credits_element', {
                 strings: ['',
                     `<span class="header">napisal</span><br>
-                    <span class="name">Daniel Jackson</span>^800<br><br>
+                    <span class="name">Daniel Jackson</span>^500<br><br>
                     <span class="header">nakodil</span><br>
-                    <a href="https://www.facebook.com/grawlix.synthwave" target="_blank" class="name">Grawlix</a>^800<br><br>
+                    <a href="https://www.facebook.com/grawlix.synthwave" target="_blank" class="name">Grawlix</a>^500<br><br>
                     <span class="header">textova korektura a ikonky</span><br>
                     <span class="name">Synthmage</span><br><br>
                     <span class="header">soundtrack</span><br>
-                    <span class="name">****</span>^800<br><br><br><br>
-                    <span class="name">Vdaka za zahranie</span>^800<br><br>
+                    <span class="name">Grawlix</span>^500<br><br>
+                    <span class="name">Daniel Jackson</span>^500<br><br>
+                    <span class="name">Leo Clair</span>^500<br><br>
+                    <span class="name">Nyctalope</span>^500<br><br><br><br>
+                    <span class="name">Vdaka za zahranie</span>^500<br><br>
                     `
                 ],
                 typeSpeed: 40,
