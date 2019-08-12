@@ -65,7 +65,7 @@
                 <span>{{ player.char.ac }}</span>
             </div>
 
-            <div v-if="player.char.xp == 0" @click="$emit('setStep', 101); generateCharacter()" class="choice">{{ lang.continue }}</div>
+            <div v-if="player.char.xp == 0" @click="$emit('setStep', 101); generateCharacter(); startGame()" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 101">
             <div id="map-floor1" class="game-container"></div>
@@ -189,6 +189,51 @@
             generateCharacter() {
                 this.player.char.max_hp = this.player.char.hp
                 this.player.char.max_sp = this.player.char.sp
+                this.player.char.name = this.player.name
+                this.player.char.inventory = this.player.inventory
+
+                if (this.player.inventory.indexOf('sekera') != -1) {
+                    this.player.char.weapon = {
+                        name: 'sekera',
+                        base_stat: 'strength',
+                        dmg: 8
+                    }
+                } else if (this.player.inventory.indexOf('bejzbolka') != -1) {
+                    this.player.char.weapon = {
+                        name: 'bejzbolka',
+                        base_stat: 'strength',
+                        dmg: 6
+                    }
+                } else if (this.player.inventory.indexOf('prak') != -1) {
+                    this.player.char.weapon = {
+                        name: 'prak',
+                        base_stat: 'dexterity',
+                        dmg: 6
+                    }
+                } else {
+                    this.player.char.weapon = {
+                        name: 'unarmed',
+                        base_stat: 'strength',
+                        dmg: 4
+                    }
+                }
+            },
+            startGame() {
+                var count = 0
+                window.addEventListener('keydown', (e) => {
+                    if (this.note != null) {
+                        count++
+                        if (count == 2) {
+                            this.$emit('note', null)
+                            count = 0
+                        }
+                    }
+
+                    this.player.char.x = this.game.player.x
+                    this.player.char.y = this.game.player.y
+                })
+                this.game = new RL.Game()
+                this.loadFloor(this.game, this.floor1)
             },
             changeStats(stat, which) {
                 if (which == '+' && this.player.char.xp > 0) {
@@ -260,6 +305,7 @@
             combatFinished(char) {
                 this.game.player.character = char
                 this.game.player.wins++
+                this.player.char.wins = this.game.player.wins
 
                 if (this.gameWonTrigger == true) {
                     this.$emit('setStep', 106)
@@ -275,46 +321,6 @@
             }
         },
         mounted() {
-            var count = 0
-            window.addEventListener('keydown', (e) => {
-                if (this.note != null) {
-                    count++
-                    if (count == 2) {
-                        this.$emit('note', null)
-                        count = 0
-                    }
-                }
-            })
-
-            this.player.char.name = this.player.name
-            this.player.char.inventory = this.player.inventory
-
-            if (this.player.inventory.indexOf('sekera') != -1) {
-                this.player.char.weapon = {
-                    name: 'sekera',
-                    base_stat: 'strength',
-                    dmg: 8
-                }
-            } else if (this.player.inventory.indexOf('bejzbolka') != -1) {
-                this.player.char.weapon = {
-                    name: 'bejzbolka',
-                    base_stat: 'strength',
-                    dmg: 6
-                }
-            } else if (this.player.inventory.indexOf('prak') != -1) {
-                this.player.char.weapon = {
-                    name: 'prak',
-                    base_stat: 'dexterity',
-                    dmg: 6
-                }
-            } else {
-                this.player.char.weapon = {
-                    name: 'unarmed',
-                    base_stat: 'strength',
-                    dmg: 4
-                }
-            }
-
             bus.$on('start_combat', (params) => {
                 this.player.char = params.char
                 this.enemies = params.enemies
@@ -332,14 +338,17 @@
                 if (value == 'bar') this.$emit('setStep', 104)
                 else if (value == 'vyhadzovac') this.$emit('setStep', 105)
             })
-
-            this.game = new RL.Game()
-            this.loadFloor(this.game, this.floor1)
-
             bus.$on('App/GameLoaded', () => {
                 setTimeout(() => {
-                    this.game.player.wins = 0
+                    if (this.game == null) this.startGame()
                     this.game.player.character = this.player.char
+                    this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
+
+                    if (this.player.char.x && this.player.char.y) {
+                        this.game.renderer.setCenter(this.player.char.x, this.player.char.y)
+                        this.game.player.moveTo(this.player.char.x, this.player.char.y)
+                    }
+
                 }, 10)
             })
         }

@@ -142,7 +142,7 @@
             </chapter5>
 
             <finale
-                v-if="chapter == 6"
+                v-show="chapter == 6"
                 :note="note"
                 :player="player"
                 :step="step"
