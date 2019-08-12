@@ -207,37 +207,37 @@
 
             var enemy_list = ['Computerboy', 'Synthmage', 'Grawlix', 'Thrivefool', 'Daniel Jackson', 'Vektoroskop']
 
-            if (x >=72 && x <= 90 && y == 9 && this.game.player.wins == 3) {
+            if (x >=72 && x <= 90 && y == 9 && this.game.player.wins <= 3) {
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: [enemy_list[Math.floor(Math.random() * 6)]]
                 })
             }
-            if (x >=72 && x <= 90 && y == 11  && this.game.player.wins == 4) {
+            if (x >=72 && x <= 90 && y == 11  && this.game.player.wins <= 4) {
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: [enemy_list[Math.floor(Math.random() * 6)]]
                 })
             }
-            if (x >=72 && x <= 90 && y == 13  && this.game.player.wins == 5) {
+            if (x >=72 && x <= 90 && y == 13  && this.game.player.wins <= 5) {
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: [enemy_list[Math.floor(Math.random() * 6)]]
                 })
             }
-            if (x == 7 && y == 12 && this.game.player.wins == 0) {
+            if (x == 7 && y == 12 && this.game.player.wins <= 0) {
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: ['Geek', 'Geek', 'Geek']
                 })
             }
-            if (x == 71 && y == 7  && this.game.player.wins == 2) {
+            if (x == 71 && y == 7  && this.game.player.wins <= 2) {
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: ['Najebanec', 'Najebanec']
                 })
             }
-            if (x == 63 && y == 7  && this.game.player.wins == 1) {
+            if (x == 63 && y == 7  && this.game.player.wins <= 1) {
                 bus.$emit('start_combat', {
                     char: this.game.player.character,
                     enemies: ['Vyhadzovac', 'Vyhadzovac']
