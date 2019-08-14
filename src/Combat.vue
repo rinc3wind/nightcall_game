@@ -235,6 +235,7 @@
             },
             checkIfEnemyDies(enemy) {
                 if (enemy.hp <= 0) {
+                    this.char.kills.push(enemy.name)
                     if (enemy.onDeath) enemy.onDeath()
                     this.add_log(enemy.name + ' je porazeny.')
 
@@ -256,7 +257,8 @@
                     this.add_log(enemy.name + ' dostal supu za ' + damage + '.')
                 } else if (this.choosing_enemy_for_power == true) {
                     enemy.hp -= 7
-                    this.char.hp += 7
+                    if (this.char.hp >= this.char.max_hp - 7) this.char.hp = this.char.max_hp
+                    else this.char.hp += 7
                 }
 
                 this.checkIfEnemyDies(enemy)

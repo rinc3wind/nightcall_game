@@ -307,7 +307,8 @@
                         inventory: [],
                         beers: 0,
                         status_effect: null,
-                        weapon: {}
+                        weapon: {},
+                        kills: []
                     }
                 },
                 chapter: 0,
@@ -397,7 +398,8 @@
                         inventory: [],
                         beers: 0,
                         status_effect: null,
-                        weapon: {}
+                        weapon: {},
+                        kills: []
                     }
                 },
                 this.chapter = 0

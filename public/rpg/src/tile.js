@@ -255,6 +255,7 @@
             blocksLos: true,
             bump: function(entity){
                 bus.$emit('dialogue', 'vyhadzovac')
+                entity.game.map.set(9,8, 'floor')
             }
         },
         exit: {

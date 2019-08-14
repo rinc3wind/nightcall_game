@@ -235,9 +235,11 @@
             <p>Prezries si lepsie stol. V pravom dolnom rohu zbadas nozikom vyryty maly mobilny telefon. Jemne
                 po nom prejdes palcom. Stol zrazu zacne sycat a triast sa. Nadskakuje hore dole ako pri
                 zemetraseni v Hrnciarovciach v 95tom. Zrazu prestane skakat. Daco zahromzi a zo spodu sa vysunie
-                zasuvka, v ktorej najdes <span class="choice" @click="$emit('pickupItem', {item: 'mapa'}); $emit('note', 'Das si ju do vacku a rozbalis ju. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.')">mapu</span>.
+                zasuvka, v ktorej najdes <span class="choice" @click="$emit('pickupItem', {item: 'mapa'}); $emit('setStep', 11.21)">mapu</span>.
             </p>
-
+        </div>
+        <div v-if="step == 11.21">
+            <p>Das si ju do vacku a rozbalis ju. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.</p>
             <p>Arkadova herna &quot;U dojebaneho ovladaca&quot; <br>Detske ihrisko a s fixkou dopisana poznamka:
                 &quot;Dojebat skulaveho Sama&quot; <br>Re:Fresh Club <br>a Bratislavsky mur, ktory predeluje
                 Kamenne namestie</p>

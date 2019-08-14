@@ -96,8 +96,9 @@
             </div>
         </div>
         <div v-if="step == 105">
-            VYHADZOVAC
-            <div @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
+            <p>&quot;Kamosko. Vidime, ze nemas ani na vstupne podla toho ako vyzeras. Mame vsak pre teba exkluzivnu ponuku. Daj kolko chces, ak mas penaze kludne daj penaze, ak ne. Daj neco za banter. Kludne aj parek alebo slaninu.&quot;</p>
+            <div v-for="item in player.inventory" :key="item" @click="$emit('setStep', 101); $emit('removeItem', item);" class="choice">{{ item }}</div>
+            <!-- <div @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div> -->
         </div>
         <div v-if="step == 106">
             <p>Po tom co si vyjebal Kavinskeho, bol chudak z toho tak strasne v prdeli, ze pustil Wild Boys od Duran Duran. Necakal si na nic. Schmatol si prve pivo, ktore si videl v dosahu. Cas sa spomalil. Citis sa jak Neo v Matrixe. Vyhodis pohar do vzduchu. Spenene kvapky letia vzduchom a ty skocis rovno do ich cesty.</p>
@@ -148,9 +149,9 @@
                         "##.....#####################################################S########.###........###",
                         "##.S....D##################################################SSS#######.###.......S###",
                         "#####..##############################################################.###.......S###",
-                        "#####V.##############################################################.###........###",
+                        "#####..##############################################################.###........###",
                         "#####..###################################################......................S###",
-                        "##........+▶############################################################.........###",
+                        "##.......V+▶############################################################.........###",
                         "##.S...#################################################################S.......S###",
                         "##.S.....W##############################################################.........###",
                         "##.S.....W##############################################################S.......S###",
@@ -219,6 +220,7 @@
                 }
             },
             startGame() {
+                if (this.game != null) return
                 var count = 0
                 window.addEventListener('keydown', (e) => {
                     if (this.note != null) {
@@ -327,6 +329,16 @@
                 this.$emit('setStep', 102)
             })
 
+            bus.$on('start_combat_boss', (params) => {
+                this.player.char = params.char
+                var enemy_list = ['Computerboy', 'Synthmage', 'Grawlix', 'Thrivefool', 'Daniel Jackson', 'Vektoroskop']
+                this.player.char.kills.forEach(kill => {
+                    if (enemy_list.indexOf(kill) != -1) enemy_list.splice(enemy_list.indexOf(kill), 1)
+                })
+                this.enemies = [enemy_list[this.diceRoll(enemy_list.length) - 1]]
+                this.$emit('setStep', 102)
+            })
+
             bus.$on('exit', (exit) => {
                 this.game.renderer.setCenter(58, 7)
                 this.game.player.moveTo(58, 7)
@@ -340,7 +352,7 @@
             })
             bus.$on('App/GameLoaded', () => {
                 setTimeout(() => {
-                    if (this.game == null) this.startGame()
+                    this.startGame()
                     this.game.player.character = this.player.char
                     this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
 
