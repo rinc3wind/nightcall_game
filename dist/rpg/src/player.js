@@ -205,24 +205,19 @@
         move: function(x, y){
             console.log(x, y);
 
-            var enemy_list = ['Computerboy', 'Synthmage', 'Grawlix', 'Thrivefool', 'Daniel Jackson', 'Vektoroskop']
-
             if (x >=72 && x <= 90 && y == 9 && this.game.player.wins <= 3) {
-                bus.$emit('start_combat', {
-                    char: this.game.player.character,
-                    enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                bus.$emit('start_combat_boss', {
+                    char: this.game.player.character
                 })
             }
             if (x >=72 && x <= 90 && y == 11  && this.game.player.wins <= 4) {
-                bus.$emit('start_combat', {
-                    char: this.game.player.character,
-                    enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                bus.$emit('start_combat_boss', {
+                    char: this.game.player.character
                 })
             }
             if (x >=72 && x <= 90 && y == 13  && this.game.player.wins <= 5) {
-                bus.$emit('start_combat', {
-                    char: this.game.player.character,
-                    enemies: [enemy_list[Math.floor(Math.random() * 6)]]
+                bus.$emit('start_combat_boss', {
+                    char: this.game.player.character
                 })
             }
             if (x == 7 && y == 12 && this.game.player.wins <= 0) {
