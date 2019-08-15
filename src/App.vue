@@ -16,7 +16,7 @@
                         <td><img class="menu-item-image" src="icons/load.jpg"></td>
                         <td>Nacitat hru</td>
                     </tr>
-                    <tr class="setting" @click="radio.show = true">
+                    <tr class="setting" @click="showRadio = true">
                         <td><img class="menu-item-image" src="icons/sound.jpg"></td>
                         <td>Radio</td>
                     </tr>
@@ -68,17 +68,7 @@
                 </div>
             </div>
 
-            <div class="note" v-if="radio.show == true">
-                <div class="note_content">
-                    <div class="choice" style="margin-bottom: 10px;" v-for="track in radio.playlist" :key="track.id" @click="radio.playTrack(track.id)">
-                        <span v-if="track.is_playing">►</span>
-                        {{ track.name }}
-                    </div>
-                    <div @click="radio.show = false" class="choice" style="text-align: center;">
-                        {{ lang.continue }}
-                    </div>
-                </div>
-            </div>
+            <radio v-if="showRadio == true" @hide="showRadio = false"></radio>
 
             <character-creation
                 v-if="chapter == 0"
@@ -186,6 +176,7 @@
     import Chapter5 from './Chapter5.vue'
     import Finale from './Finale.vue'
     import Credits from './Credits.vue'
+    import Radio from './Radio.vue'
 
     export default {
         name: 'app',
@@ -197,91 +188,12 @@
             'chapter4': Chapter4,
             'chapter5': Chapter5,
             'finale'  : Finale,
-            'credits' : Credits
+            'credits' : Credits,
+            'radio' : Radio
         },
         data() {
             return {
-                radio: {
-                    show: false,
-                    playlist: [
-                        {
-                            id: 0,
-                            name: 'Grawlix - Arachnidism',
-                            is_playing: false,
-                            sound: new Howl({
-                                src: ['mp3/arachnidism.mp3'],
-                                onend() {
-                                    this.onEnd()
-                                }
-                            })
-                        },
-                        {
-                            id: 1,
-                            name: 'Grawlix - 90 years',
-                            is_playing: false,
-                            sound: new Howl({
-                                src: ['mp3/90_years.mp3'],
-                                onend() {
-                                    this.onEnd()
-                                }
-                            })
-                        },
-                        {
-                            id: 2,
-                            name: 'Grawlix - Sexendex',
-                            is_playing: false,
-                            sound: new Howl({
-                                src: ['mp3/sexendex.mp3'],
-                                onend() {
-                                    this.onEnd()
-                                }
-                            })
-                        },
-                        {
-                            id: 3,
-                            name: 'Grawlix - Breakpoint',
-                            is_playing: false,
-                            sound: new Howl({
-                                src: ['mp3/breakpoint.mp3'],
-                                onend() {
-                                    this.onEnd()
-                                }
-                            })
-                        },
-                        {
-                            id: 4,
-                            name: 'Nyctalope - Rusty Silicone',
-                            is_playing: false,
-                            sound: new Howl({
-                                src: ['mp3/rusty_silicone.mp3'],
-                                onend() {
-                                    this.onEnd()
-                                }
-                            })
-                        }
-                    ],
-                    getPlayingTrack() {
-                        return this.playlist.filter(track => {
-                            return track.is_playing == true
-                        })[0]
-                    },
-                    onEnd() {
-                        var track = this.getPlayingTrack
-                        if (track.id >= this.playlist.length - 1) {
-                            this.playTrack(0)
-                        } else {
-                            this.playTrack(track.id + 1)
-                        }
-                    },
-                    playTrack(index) {
-                        this.playlist.forEach(track => {
-                            track.sound.stop()
-                            track.is_playing = false
-                        })
-                        this.playlist[index].sound.play()
-                        this.playlist[index].is_playing = true
-                    }
-                },
+                showRadio: false,
                 page_ready: false,
                 player: {
                     name: null,
@@ -324,12 +236,15 @@
             }
         },
         mounted() {
-            var self = this
+            //var self = this
             this.audio_player = document.getElementById('audio_player')
             document.querySelector('#app').style.display = 'block'
             bus.$on('Combat/useItem', () => {
                 this.useItem = true
             })
+            // setTimeout(() => {
+            //     this.openFullscreen(document.querySelector('html'))
+            // }, 2000)
         },
         methods: {
             pickupItem(data) {
@@ -421,6 +336,18 @@
                     bus.$emit('App/useItem', item)
                     this.useItem = false
                 }
+            },
+            openFullscreen(element) {
+                var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+                if (requestMethod) { // Native full screen.
+                    requestMethod.call(element);
+                } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+                    var wscript = new ActiveXObject("WScript.Shell");
+                    if (wscript !== null) {
+                        wscript.SendKeys("{F11}");
+                    }
+                }
             }
         }
     }
@@ -438,6 +365,7 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+        height: 100%;
     }
 
     #app {
