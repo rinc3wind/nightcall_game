@@ -123,7 +123,9 @@
             <p v-else>Je cas to ukoncit. Stupis mu na fejs tvojou adidaskou a zatlacis. Oci mu vylezu z dierok a vrch lebky vybuchne jak sampanske. Vsetky gorily okolo sa rozplacu a zacnu utekat od teba prec.</p>
 
             <p>Utekas za gorilami a ides ich finishnut?</p>
-            <p><span class="choice" @click="$emit('setStep', 3.4); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">ANO</span> / <span class="choice" @click="$emit('setStep', 3.5); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">NIE</span></p>
+            <p>
+            <div class="choice" @click="$emit('setStep', 3.4); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">ANO</div>
+            <div class="choice" @click="$emit('setStep', 3.5); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">NIE</div>
         </div>
         <div v-if="step == 3.4">
             <p>Zacne ti hrat v hlave hlavna tema z Red Dead Redemption 2. Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu (jemne povedane), gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>

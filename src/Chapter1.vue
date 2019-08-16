@@ -149,8 +149,9 @@
             <p>No ked toto vsetko spachas, tak dojdi do Re:Freshu. Pockaj, ked budu akurat hrat Wild Boys od
                 Duran Duran, vylej na seba pivo a zakric &quot;Nightcall dopice!&quot; a tym vratis vsetky sfery
                 do poriadku. Chapeme sa {{ player.name }}? &quot;</p>
-            <p><span class="choice" @click="$emit('setStep', 8)">ANO</span> / <span class="choice"
-                    @click="$emit('setStep', 9)">NIE</span></p>
+            <p>
+            <div class="choice" @click="$emit('setStep', 8)">ANO</div>
+            <div class="choice" @click="$emit('setStep', 9)">NIE</div>
         </div>
         <div v-if="step == 7">
             <p> Kedze si velmi kreativny, vyberes z vacku Colgate Herbal a na prazdny papier nakreslis so zubnou

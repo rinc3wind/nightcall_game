@@ -407,15 +407,15 @@
         border: solid 2px;
     }
     #map-floor1 {
-        margin-left: -100px;
-    }
-    #map-floor2 {
-        margin-left: -100px;
+        /* margin-left: -100px; */
     }
     #you-died {
         font-size: 80px;
         position: absolute;
         top: 40%;
         left: 37%;
+    }
+    canvas {
+        width: 100%;
     }
 </style>

@@ -1,66 +1,64 @@
 <template>
-    <div id="app">
+    <div id="app" v-show="page_ready == true">
         <div v-if="isMobileBrowser">V tejto hre su minihry, ktore na mobile nedas kamo. Zapni si to na normalnom compe.</div>
         <div v-else>
-            <div class="settings">
-                <b>Moznosti</b><br><br>
-                <table style="width:100%">
-                    <tr class="setting" :class="{ 'disabled': disabled.new }" @click="newGame()">
-                        <td><img class="menu-item-image" src="icons/new_game.jpg"></td>
-                        <td>Nova hra</td>
-                    </tr>
-                    <tr class="setting" :class="{ 'disabled': disabled.save }" @click="saveProgress()">
-                        <td><img class="menu-item-image" src="icons/save.jpg"></td>
-                        <td>Ulozit hru</td>
-                    </tr>
-                    <tr class="setting" :class="{ 'disabled': disabled.load }" @click="loadProgress()">
-                        <td><img class="menu-item-image" src="icons/load.jpg"></td>
-                        <td>Nacitat hru</td>
-                    </tr>
-                    <!-- <tr class="setting" @click="showRadio = true">
-                        <td><img class="menu-item-image" src="icons/sound.jpg"></td>
-                        <td>Radio</td>
-                    </tr> -->
-                </table>
-            </div>
+            <div id="side-container">
+                <div class="settings">
+                    <div style="margin-bottom: 10px;"><b>Moznosti</b></div>
+                    <table style="width:100%">
+                        <tr class="setting" :class="{ 'disabled': disabled.new }" @click="newGame()">
+                            <td><img class="menu-item-image" src="icons/new_game.jpg"></td>
+                            <td>Nova hra</td>
+                        </tr>
+                        <tr class="setting" :class="{ 'disabled': disabled.save }" @click="saveProgress()">
+                            <td><img class="menu-item-image" src="icons/save.jpg"></td>
+                            <td>Ulozit hru</td>
+                        </tr>
+                        <tr class="setting" :class="{ 'disabled': disabled.load }" @click="loadProgress()">
+                            <td><img class="menu-item-image" src="icons/load.jpg"></td>
+                            <td>Nacitat hru</td>
+                        </tr>
+                    </table>
+                </div>
 
-            <div v-if="player.inventory.length > 0" class="inventory">
-                <b>Tvoj inventar</b><br><br>
+                <div v-if="player.inventory.length > 0" class="inventory">
+                    <div style="margin-bottom: 10px;"><b>Tvoj inventar</b></div>
 
-                <table style="width:100%">
-                    <tr class="inventory-item" v-for="item in player.inventory" :key="item">
-                        <td>
-                            <img class="inventory-item-image" v-if="item=='walkman'" src="icons/walkman.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='cigarety & zapalovac'" src="icons/cigi.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='slanina'" src="icons/bacon.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='3 litrova Arcade Watch zbrnda'" src="icons/aw_pitie.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='bejzbolka'" src="icons/bejsbolka.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='borovicka'" src="icons/borovicka.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='70 halierov'" src="icons/centy.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='ocurana cigareta'" src="icons/ciga4.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='flaska coca coly'" src="icons/cola.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='sojovy jogurt'" src="icons/jogurt.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='3 litrova priesvitna Kobra Gang kokotina'" src="icons/kobra_pitie.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='kartonova krabica'" src="icons/krabica.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='mapa'" src="icons/mapa.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='3 litrova Nightcall Cola'" src="icons/nc_pitie.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='parok'" src="icons/parek.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='prak'" src="icons/prak.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='sekera'" src="icons/sekera.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='flasa vodky'" src="icons/vodka.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='Riflova bunda'" src="icons/riflovka1.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='kahance'" src="icons/kahance.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='zapalky'" src="icons/zapalky.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='tricko Rush'" src="icons/tricko.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='Jedi-ska roba'" src="icons/jedi_roba.jpg">
-                            <img class="inventory-item-image" v-else-if="item=='Arturia JUP-8 V'" src="icons/syntak.jpg">
-                            <img class="inventory-item-image" v-else src="icons/vodka.jpg">
-                        </td>
-                        <td class="choice" @click="showRadio = true" v-if="item == 'walkman'">{{ item }}</td>
-                        <td v-else>{{ item }}</td>
-                    </tr>
-                </table>
+                    <table style="width:100%">
+                        <tr class="inventory-item" v-for="item in player.inventory" :key="item">
+                            <td>
+                                <img class="inventory-item-image" v-if="item=='walkman'" src="icons/walkman.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='cigarety & zapalovac'" src="icons/cigi.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='slanina'" src="icons/bacon.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='3 litrova Arcade Watch zbrnda'" src="icons/aw_pitie.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='bejzbolka'" src="icons/bejsbolka.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='borovicka'" src="icons/borovicka.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='70 halierov'" src="icons/centy.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='ocurana cigareta'" src="icons/ciga4.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='flaska coca coly'" src="icons/cola.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='sojovy jogurt'" src="icons/jogurt.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='3 litrova priesvitna Kobra Gang kokotina'" src="icons/kobra_pitie.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='kartonova krabica'" src="icons/krabica.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='mapa'" src="icons/mapa.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='3 litrova Nightcall Cola'" src="icons/nc_pitie.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='parok'" src="icons/parek.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='prak'" src="icons/prak.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='sekera'" src="icons/sekera.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='flasa vodky'" src="icons/vodka.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='Riflova bunda'" src="icons/riflovka1.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='kahance'" src="icons/kahance.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='zapalky'" src="icons/zapalky.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='tricko Rush'" src="icons/tricko.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='Jedi-ska roba'" src="icons/jedi_roba.jpg">
+                                <img class="inventory-item-image" v-else-if="item=='Arturia JUP-8 V'" src="icons/syntak.jpg">
+                                <img class="inventory-item-image" v-else src="icons/vodka.jpg">
+                            </td>
+                            <td class="choice" @click="showRadio = true" v-if="item == 'walkman'">{{ item }}</td>
+                            <td v-else>{{ item }}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
 
             <div class="note" v-if="note != null">
@@ -76,97 +74,100 @@
 
             <radio v-show="showRadio == true" @hide="showRadio = false"></radio>
 
-            <character-creation
-                v-if="chapter == 0"
-                :player="player"
-                :step="step"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </character-creation>
+            <div id="main-game-container">
 
-            <chapter1
-                v-if="chapter == 1"
-                :player="player"
-                :step="step"
-                @setDisabled="setDisabled($event)"
-                @note="note = $event"
-                @pickupItem="pickupItem($event)"
-                @removeItem="removeItem($event)"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </chapter1>
+                <character-creation
+                    v-if="chapter == 0"
+                    :player="player"
+                    :step="step"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </character-creation>
 
-            <chapter2
-                v-if="chapter == 2"
-                :player="player"
-                :step="step"
-                @setDisabled="setDisabled($event)"
-                @note="note = $event"
-                @pickupItem="pickupItem($event)"
-                @removeItem="removeItem($event)"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </chapter2>
+                <chapter1
+                    v-if="chapter == 1"
+                    :player="player"
+                    :step="step"
+                    @setDisabled="setDisabled($event)"
+                    @note="note = $event"
+                    @pickupItem="pickupItem($event)"
+                    @removeItem="removeItem($event)"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </chapter1>
 
-            <chapter3
-                v-if="chapter == 3"
-                :player="player"
-                :step="step"
-                @setDisabled="setDisabled($event)"
-                @note="note = $event"
-                @pickupItem="pickupItem($event)"
-                @removeItem="removeItem($event)"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </chapter3>
+                <chapter2
+                    v-if="chapter == 2"
+                    :player="player"
+                    :step="step"
+                    @setDisabled="setDisabled($event)"
+                    @note="note = $event"
+                    @pickupItem="pickupItem($event)"
+                    @removeItem="removeItem($event)"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </chapter2>
 
-            <chapter4
-                v-if="chapter == 4"
-                :player="player"
-                :step="step"
-                @setDisabled="setDisabled($event)"
-                @note="note = $event"
-                @pickupItem="pickupItem($event)"
-                @removeItem="removeItem($event)"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </chapter4>
+                <chapter3
+                    v-if="chapter == 3"
+                    :player="player"
+                    :step="step"
+                    @setDisabled="setDisabled($event)"
+                    @note="note = $event"
+                    @pickupItem="pickupItem($event)"
+                    @removeItem="removeItem($event)"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </chapter3>
 
-            <chapter5
-                v-if="chapter == 5"
-                :player="player"
-                :step="step"
-                @setDisabled="setDisabled($event)"
-                @note="note = $event"
-                @pickupItem="pickupItem($event)"
-                @removeItem="removeItem($event)"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </chapter5>
+                <chapter4
+                    v-if="chapter == 4"
+                    :player="player"
+                    :step="step"
+                    @setDisabled="setDisabled($event)"
+                    @note="note = $event"
+                    @pickupItem="pickupItem($event)"
+                    @removeItem="removeItem($event)"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </chapter4>
 
-            <finale
-                v-if="chapter == 6"
-                :note="note"
-                :player="player"
-                :step="step"
-                :game_loaded="game_loaded"
-                @mounted="game_loaded = false"
-                @setDisabled="setDisabled($event)"
-                @note="note = $event"
-                @pickupItem="pickupItem($event)"
-                @removeItem="removeItem($event)"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </finale>
+                <chapter5
+                    v-if="chapter == 5"
+                    :player="player"
+                    :step="step"
+                    @setDisabled="setDisabled($event)"
+                    @note="note = $event"
+                    @pickupItem="pickupItem($event)"
+                    @removeItem="removeItem($event)"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </chapter5>
 
-            <credits
-                v-if="chapter == 'credits'"
-                :player="player"
-                :step="step"
-                @note="note = $event"
-                @setStep="step = $event"
-                @setChapter="chapter = $event">
-            </credits>
+                <finale
+                    v-if="chapter == 6"
+                    :note="note"
+                    :player="player"
+                    :step="step"
+                    :game_loaded="game_loaded"
+                    @mounted="game_loaded = false"
+                    @setDisabled="setDisabled($event)"
+                    @note="note = $event"
+                    @pickupItem="pickupItem($event)"
+                    @removeItem="removeItem($event)"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </finale>
+
+                <credits
+                    v-if="chapter == 'credits'"
+                    :player="player"
+                    :step="step"
+                    @note="note = $event"
+                    @setStep="step = $event"
+                    @setChapter="chapter = $event">
+                </credits>
+            </div>
         </div>
         <!-- <div v-if="page_ready == false" class="loading">
                 NACITAVAM
@@ -235,13 +236,11 @@
                 chapter: 0,
                 step: 0,
                 note: null,
-                audio_player: null,
                 disabled: {
                     save: false,
                     load: false,
                     new: false
-                },
-                useItem: false
+                }
             }
         },
         computed: {
@@ -251,12 +250,12 @@
             }
         },
         mounted() {
-            //var self = this
-            this.audio_player = document.getElementById('audio_player')
+            document.onreadystatechange = () => {
+                if (document.readyState == "complete") {
+                    this.page_ready = true
+                }
+            }
             document.querySelector('#app').style.display = 'block'
-            bus.$on('Combat/useItem', () => {
-                this.useItem = true
-            })
             // setTimeout(() => {
             //     this.openFullscreen(document.querySelector('html'))
             // }, 2000)
@@ -347,18 +346,12 @@
             setDisabled(items) {
                 this.disabled = items
             },
-            useItemAction(item) {
-                if (this.useItem == true) {
-                    bus.$emit('App/useItem', item)
-                    this.useItem = false
-                }
-            },
             openFullscreen(element) {
                 var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
 
                 if (requestMethod) { // Native full screen.
                     requestMethod.call(element);
-                } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+                } else if (typeof window.ActiveXObject !== "undefined") { // Older IE
                     var wscript = new ActiveXObject("WScript.Shell");
                     if (wscript !== null) {
                         wscript.SendKeys("{F11}");
@@ -370,6 +363,15 @@
 </script>
 
 <style>
+    #main-game-container {
+         max-height: calc(100vh - 80px);
+         overflow-y: auto;
+         padding: 10px;
+         position: absolute;
+         left: calc(17% + 220px);
+         width: 40%;
+    }
+
     @font-face {
         font-family: pixel_font;
         src: url(assets/pixel.ttf);
@@ -388,7 +390,7 @@
         width: 660px;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 60px;
+        margin-top: 40px;
         text-align: justify;
         font-family: pixel_font;
         font-size: 18px;
@@ -419,11 +421,14 @@
         position: absolute;
         width: 300px;
         left: 10px;
+        top: 230px;
+        max-height: calc(100% - 250px);
+        overflow-y: auto;
     }
 
     .settings {
         position: absolute;
-        right: 10px;
+        left: 10px;
     }
 
     .note {

@@ -348,13 +348,6 @@
                     container.scrollTop = container.scrollHeight;
                 }, 50)
             },
-            useItem() {
-                this.add_log('Vyber si predmet z inventaru.')
-                bus.$emit('Combat/useItem')
-            },
-            itemUsed(item) {
-                this.add_log('Predmet ' + item + ' pouzity.')
-            },
             drinkBeer() {
                 if (this.char.beers == 0) {
                     this.add_log('Uz si vsetko vychlastal kamo.')
@@ -485,10 +478,6 @@
             this.enemies_prop.forEach(enemy_name => {
                 this.addEnemy(enemy_name)
             })
-
-            bus.$on('App/useItem', (item) => {
-                this.itemUsed(item)
-            })
         }
     }
 </script>
@@ -521,7 +510,7 @@
         margin-bottom: 20px;
     }
     #combat-console {
-        width: 100%;
+        width: calc(100% - 30px);
         float: left;
         margin-top: 20px;
         border: solid 1px;

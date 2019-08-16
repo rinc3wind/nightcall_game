@@ -3,11 +3,11 @@
         <div class="note_content" style="margin: 5% auto;">
 
             <table class="wp-table" style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
-                <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" class="choice" style="height: 40px;" :class="{'playing-track':track.is_playing}">
+                <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" style="height: 40px;" :class="{'playing-track':track.is_playing}" class="choice">
 
                     <td style="width: 4%;">
                         <span v-if="track.is_playing">►</span>
-                        <span v-else-if="track.is_loaded == false">L</span>
+                        <span v-else-if="track.is_loaded == false"><img src="/icons/loading.gif" style="width: 20px;" alt=""></span>
                     </td>
 
                     <td style="width: 42%;">{{ track.artist }}</td>
@@ -198,6 +198,7 @@
                 }
             },
             playTrack(index) {
+                if (this.playlist[index].is_loaded == false) return
                 this.playlist.forEach(track => {
                     track.sound.stop()
                     track.is_playing = false
