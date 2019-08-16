@@ -4,7 +4,12 @@
 
             <table class="wp-table" style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
                 <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" class="choice" style="height: 40px;" :class="{'playing-track':track.is_playing}">
-                    <td style="width: 4%;"><span v-if="track.is_playing">►</span></td>
+
+                    <td style="width: 4%;">
+                        <span v-if="track.is_playing">►</span>
+                        <span v-else-if="track.is_loaded == false">L</span>
+                    </td>
+
                     <td style="width: 42%;">{{ track.artist }}</td>
                     <td style="width: 54%;">{{ track.name }}</td>
                 </tr>
@@ -43,10 +48,14 @@
                         artist: 'Grawlix',
                         name: 'Arachnidism',
                         is_playing: false,
+                        is_loaded: false,
                         sound: new Howl({
                             src: ['mp3/ost/arachnidism.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 0)
                             }
                         })
                     },
@@ -58,7 +67,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/obelisk.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 1)
                             }
                         })
                     },
@@ -70,7 +82,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/rusty_silicone.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 2)
                             }
                         })
                     },
@@ -82,7 +97,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/breakpoint.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 3)
                             }
                         })
                     },
@@ -94,7 +112,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/moderny_chlapec.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 4)
                             }
                         })
                     },
@@ -106,7 +127,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/autumn_marina.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 5)
                             }
                         })
                     },
@@ -118,7 +142,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/descent.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 6)
                             }
                         })
                     },
@@ -130,7 +157,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/sticky_spawn.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 7)
                             }
                         })
                     },
@@ -142,7 +172,10 @@
                         sound: new Howl({
                             src: ['mp3/ost/birth_of_phoenix.mp3'],
                             onend() {
-                                this.nextTrack()
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 8)
                             }
                         })
                     }
@@ -181,7 +214,12 @@
             },
             pause() {
                 this.playingTrack.sound.pause()
-            }
+            },
+            getTrackById(track_id) {
+                return this.playlist.filter(track => {
+                    return track.id == track_id
+                })[0]
+            },
         },
         computed: {
             isPlaying: function() {
@@ -192,10 +230,16 @@
                     return track.is_playing == true
                 })[0]
             }
+        },
+        mounted() {
+            bus.$on('nextTrack', () => {
+                this.nextTrack()
+            })
+            bus.$on('trackLoaded', (track_id) => {
+                var track = this.getTrackById(track_id)
+                track.is_loaded = true
+            })
         }
-        // mounted() {
-        //     Howler.prototype.onEnd = this.onEnd()
-        // }
     }
 </script>
 

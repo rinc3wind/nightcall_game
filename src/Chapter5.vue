@@ -128,11 +128,11 @@
         </div>
         <div v-if="step == 14">
             <p>Dobre, kamosko. Mas pred sebou dalsiu mini-hru. Musis zajebat Kavinskeho Nightcall. Na obrazovke sa ti budu zjavovat kombinacie klaves, ktore musis stlacat. Ked to das, zahras to jak pan, ked ne, virtuoz Johny bude smutny.</p>
-            <span @click="$emit('setStep', 100)" class="choice">{{ lang.continue }}</span>
+            <span @click="$emit('setStep', 100); disableMenu(true)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 15">
             <p>&quot;Ale no tak. {{ player.name }}. Sak sa snaz. To takto nachuja nehra ani moj tlsty sused Tibor.</p>
-            <span @click="$emit('setStep', 100)" class="choice">{{ lang.continue }}</span>
+            <span @click="$emit('setStep', 100); disableMenu(true)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 16">
             <p>&quot;Fuha! To bolo {{ player.name }}. Paradicka. Dobre sa mi tu s tebu dzemuje, ale cas nas tlaci. Tusim ta negdo hlada.&quot;</p>
@@ -180,6 +180,7 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers';
     export default {
         props: ['player', 'step'],
         mounted() {
@@ -193,6 +194,8 @@
         },
         data() {
             return {
+                cheating: false,
+                cheating_count: 0,
                 interval: null,
                 numberOfHits: 0,
                 playing: false,
@@ -222,6 +225,11 @@
         },
         methods: {
             keyDown(e) {
+                setTimeout(() => {
+                    this.cheating = false
+                }, 60)
+                if (this.cheating) this.cheating_count++
+
                 this.keyPressed = e.key
                 this.visibleNotes.forEach(visibleNote => {
                 })
@@ -235,6 +243,7 @@
                         break
                     }
                 }
+                this.cheating = true
             },
             keyUp(e) {
                 this.keyPressed = null
@@ -248,6 +257,8 @@
                         self.$emit('setStep', 16)
                         self.sound.stop()
                         MIDI.Player.stop()
+                        self.disableMenu(false)
+                        self.cheating_count = 0
                     }
                 })
                 this.sound.once('load', () => {
@@ -340,6 +351,13 @@
                 setTimeout(() => {
                     MIDI.Player.start()
                 }, 10725)
+            },
+            disableMenu(value) {
+                this.$emit('setDisabled', {
+                    new: value,
+                    save: value,
+                    load: value
+                })
             }
         },
         watch:{
@@ -355,6 +373,14 @@
                     this.visibleNotes = []
                     this.numberOfHits = 0
                     this.$emit('setStep', 15)
+                    this.disableMenu(false)
+                    this.cheating_count = 0
+                }
+            },
+            cheating_count: function(value) {
+                if (value > 100) {
+                    this.$emit('note', 'Dobre si s tym vyjebal kamosko.')
+                    this.cheating_count = 0
                 }
             }
         }

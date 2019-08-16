@@ -22,7 +22,7 @@
 
             <span v-if="player.inventory.indexOf('walkman') == -1">
                 <span class="choice"
-                    @click="$emit('pickupItem', {item: 'walkman', note: 'Das si walkmana do vacku, sluchadla okolo krku.'})">
+                    @click="$emit('pickupItem', {item: 'walkman', note: 'Das si walkmana do vacku, sluchadla okolo krku. (walkman sa da pustit kliknutim na predmet walkman v inventari)'})">
                     walkman
                 </span>
                 ,

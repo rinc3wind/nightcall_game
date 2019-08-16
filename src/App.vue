@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <div>
+        <div v-if="isMobileBrowser">V tejto hre su minihry, ktore na mobile nedas kamo. Zapni si to na normalnom compe.</div>
+        <div v-else>
             <div class="settings">
                 <b>Moznosti</b><br><br>
                 <table style="width:100%">
@@ -16,45 +17,50 @@
                         <td><img class="menu-item-image" src="icons/load.jpg"></td>
                         <td>Nacitat hru</td>
                     </tr>
-                    <tr class="setting" @click="showRadio = true">
+                    <!-- <tr class="setting" @click="showRadio = true">
                         <td><img class="menu-item-image" src="icons/sound.jpg"></td>
                         <td>Radio</td>
-                    </tr>
+                    </tr> -->
                 </table>
             </div>
 
             <div v-if="player.inventory.length > 0" class="inventory">
                 <b>Tvoj inventar</b><br><br>
-                <div class="inventory-item" v-for="item in player.inventory" :key="item">
-                    <img class="inventory-item-image" v-if="item=='walkman'" src="icons/walkman.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='cigarety & zapalovac'" src="icons/cigi.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='slanina'" src="icons/bacon.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='3 litrova Arcade Watch zbrnda'" src="icons/aw_pitie.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='bejzbolka'" src="icons/bejsbolka.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='borovicka'" src="icons/borovicka.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='70 halierov'" src="icons/centy.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='ocurana cigareta'" src="icons/ciga4.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='flaska coca coly'" src="icons/cola.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='sojovy jogurt'" src="icons/jogurt.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='3 litrova priesvitna Kobra Gang kokotina'" src="icons/kobra_pitie.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='kartonova krabica'" src="icons/krabica.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='mapa'" src="icons/mapa.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='3 litrova Nightcall Cola'" src="icons/nc_pitie.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='parok'" src="icons/parek.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='prak'" src="icons/prak.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='sekera'" src="icons/sekera.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='flasa vodky'" src="icons/vodka.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='Riflova bunda'" src="icons/riflovka1.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='kahance'" src="icons/kahance.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='zapalky'" src="icons/zapalky.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='tricko Rush'" src="icons/tricko.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='Jedi-ska roba'" src="icons/jedi_roba.jpg">
-                    <img class="inventory-item-image" v-else-if="item=='Arturia JUP-8 V'" src="icons/syntak.jpg">
 
-                    <img class="inventory-item-image" v-else src="icons/vodka.jpg">
-                    <span class="inventory-item-text" :class="{ 'active-item': useItem }" @click="useItemAction(item)">{{ item }}</span>
-                </div>
+                <table style="width:100%">
+                    <tr class="inventory-item" v-for="item in player.inventory" :key="item">
+                        <td>
+                            <img class="inventory-item-image" v-if="item=='walkman'" src="icons/walkman.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='cigarety & zapalovac'" src="icons/cigi.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='slanina'" src="icons/bacon.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='Colgate Herbal'" src="icons/pasta.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='3 litrova Arcade Watch zbrnda'" src="icons/aw_pitie.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='bejzbolka'" src="icons/bejsbolka.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='borovicka'" src="icons/borovicka.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='70 halierov'" src="icons/centy.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='ocurana cigareta'" src="icons/ciga4.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='flaska coca coly'" src="icons/cola.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='sojovy jogurt'" src="icons/jogurt.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='3 litrova priesvitna Kobra Gang kokotina'" src="icons/kobra_pitie.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='kartonova krabica'" src="icons/krabica.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='mapa'" src="icons/mapa.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='3 litrova Nightcall Cola'" src="icons/nc_pitie.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='parok'" src="icons/parek.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='prak'" src="icons/prak.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='sekera'" src="icons/sekera.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='flasa vodky'" src="icons/vodka.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='Riflova bunda'" src="icons/riflovka1.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='kahance'" src="icons/kahance.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='zapalky'" src="icons/zapalky.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='tricko Rush'" src="icons/tricko.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='Jedi-ska roba'" src="icons/jedi_roba.jpg">
+                            <img class="inventory-item-image" v-else-if="item=='Arturia JUP-8 V'" src="icons/syntak.jpg">
+                            <img class="inventory-item-image" v-else src="icons/vodka.jpg">
+                        </td>
+                        <td class="choice" @click="showRadio = true" v-if="item == 'walkman'">{{ item }}</td>
+                        <td v-else>{{ item }}</td>
+                    </tr>
+                </table>
             </div>
 
             <div class="note" v-if="note != null">
@@ -68,7 +74,7 @@
                 </div>
             </div>
 
-            <radio v-if="showRadio == true" @hide="showRadio = false"></radio>
+            <radio v-show="showRadio == true" @hide="showRadio = false"></radio>
 
             <character-creation
                 v-if="chapter == 0"
@@ -139,10 +145,12 @@
             </chapter5>
 
             <finale
-                v-show="chapter == 6"
+                v-if="chapter == 6"
                 :note="note"
                 :player="player"
                 :step="step"
+                :game_loaded="game_loaded"
+                @mounted="game_loaded = false"
                 @setDisabled="setDisabled($event)"
                 @note="note = $event"
                 @pickupItem="pickupItem($event)"
@@ -193,6 +201,7 @@
         },
         data() {
             return {
+                game_loaded: false,
                 showRadio: false,
                 page_ready: false,
                 player: {
@@ -233,6 +242,12 @@
                     new: false
                 },
                 useItem: false
+            }
+        },
+        computed: {
+            isMobileBrowser: function() {
+                if (typeof window.orientation !== 'undefined') return true
+                else return false
             }
         },
         mounted() {
@@ -284,6 +299,7 @@
                         save: false
                     })
                     bus.$emit('App/GameLoaded')
+                    this.game_loaded = true
                 } else {
                     this.note = 'Nie je ulozena ziadna pozicia'
                 }
@@ -412,7 +428,7 @@
 
     .note {
         position: fixed;
-        z-index: 1;
+        z-index: 1001;
         left: 0;
         top: 0;
         width: 100%;

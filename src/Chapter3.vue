@@ -29,7 +29,7 @@
 
             <p>&quot;Co dajesz mi do wymiany?&quot;</p>
 
-            <div v-for="item in player.inventory" :key="item" @click="$emit('setStep', 4); $emit('removeItem', item); $emit('pickupItem', { item: 'kartonova krabica' })" class="choice">{{ item }}</div>
+            <div v-for="item in inventoryWithoutMap" :key="item" @click="$emit('setStep', 4); $emit('removeItem', item); $emit('pickupItem', { item: 'kartonova krabica' })" class="choice">{{ item }}</div>
         </div>
         <div v-if="step == 2.1">
             <p>Dzeremi ta ignoruje.</p>
@@ -70,16 +70,16 @@
         </div>
         <div v-if="step == 9">
             <p>Dobre kamo. Idem ti scul vysvetlit ako funguje toto plizenie. Vyberes z vacku krabicu, Zlozis ju. Jebnes ju na seba a ides sa preplizit okolo obtlstlej pokladnicky. Uvidis bar, ktory sa bude postupne naplnat ako sa budes blizit okolo svojho cielu. Musis ho naplnit do plna samozrejme. Pocas toho, ako sa budes plizit, nastane sem tam moment, ze tlsta pokladnicka Alzbeta zacne nieco vetrit. Vtedy obrazovka blikne a musis rychle klavesu pustit. Ak to stihnes vcas. Podari sa ti preplizit. Ak nie, kukne skaredo na teba, ty sa zlaknes a musis ist od zaciatku.</p>
-            <span @click="$emit('setStep', 10.1)" class="choice">Pome na to.</span>
+            <span @click="$emit('setStep', 10.1); disableMenu(true)" class="choice">Pome na to.</span>
         </div>
 
         <div v-if="step == 10.1">
-            <sneaking-game :player="player" :speed="1" :reactionTime="1100" @win="$emit('setStep', 11)">
+            <sneaking-game :player="player" :speed="1" :reactionTime="1100" @win="$emit('setStep', 11); disableMenu(false)">
             </sneaking-game>
         </div>
 
         <div v-if="step == 10.2">
-            <sneaking-game :player="player" :speed="0.35" :reactionTime="500" @win="$emit('setStep', 13)">
+            <sneaking-game :player="player" :speed="0.35" :reactionTime="500" @win="$emit('setStep', 13); disableMenu(false)">
             </sneaking-game>
         </div>
 
@@ -90,7 +90,7 @@
 
         <div v-if="step == 12">
             <p>Nastal ten moment, kamosko. Vypijes nasupu tvoj lahodny troj litrovy mok. Odgrgnes si jak tvoja mama po obede a ides na to. Uz citis jak sa ti mocovody chystaju. Zajebes na seba krabicu a game begins. Musis sa preplizit cez vojakov a rychle ocurat mur.</p>
-            <span @click="$emit('setStep', 10.2)" class="choice">Pome na to.</span>
+            <span @click="$emit('setStep', 10.2); disableMenu(true)" class="choice">Pome na to.</span>
         </div>
 
         <div v-if="step == 13">
@@ -122,9 +122,21 @@
             return {
             }
         },
-        mounted() {
-        },
         methods: {
+            disableMenu(value) {
+                this.$emit('setDisabled', {
+                    new: value,
+                    save: value,
+                    load: value
+                })
+            }
+        },
+        computed: {
+            inventoryWithoutMap: function() {
+                return this.player.inventory.filter(item => {
+                    return item != 'mapa'
+                })
+            }
         }
     }
 </script>

@@ -95,8 +95,17 @@
                     {
                         name: 'Vektoroskop',
                         hp: 60,
+                        skill_chance: 30,
                         attack: [3, 7],
-                        skill: 'TV HYPNOSIS' // na dalsie 3 kola mas o polovicu mensi attack(tj ak hadzes 1d8, tak najprv hodis 1d8 a potom sa vysledok predeli 2)
+                        skill: 'TV HYPNOSIS', // na dalsie 3 kola mas o polovicu mensi attack(tj ak hadzes 1d8, tak najprv hodis 1d8 a potom sa vysledok predeli 2)
+                        onDeath() {
+                            if (this.parent.char.status_effect != null) {
+                                this.parent.char.strength = this.parent.char.status_effect.char_stats.strength
+                                this.parent.char.dexterity = this.parent.char.status_effect.char_stats.dexterity
+                                this.parent.char.weapon.dmg = this.parent.char.status_effect.char_stats.weapon_dmg
+                                this.parent.char.status_effect = null
+                            }
+                        }
                     },
                     {
                         name: 'Kavinsky',
@@ -403,16 +412,16 @@
                         },
                         effect: function() {
                             if (this.duration == 4) {
-                                this.parent.char.strength = this.parent.char.strength / 2
-                                this.parent.char.dexterity = this.parent.char.dexterity / 2
-                                this.parent.char.weapon.dmg = this.parent.char.weapon.dmg / 2
+                                this.parent.char.strength = Math.floor(this.parent.char.strength / 2)
+                                this.parent.char.dexterity = Math.floor(this.parent.char.dexterity / 2)
+                                this.parent.char.weapon.dmg = Math.floor(this.parent.char.weapon.dmg / 2)
                             }
                             this.duration --
                             if (this.duration == 0) {
-                                this.parent.char.status_effect = null
                                 this.parent.char.strength = this.char_stats.strength
                                 this.parent.char.dexterity = this.char_stats.dexterity
                                 this.parent.char.weapon.dmg = this.char_stats.weapon_dmg
+                                this.parent.char.status_effect = null
                             }
                         }
                     }

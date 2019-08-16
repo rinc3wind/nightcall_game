@@ -205,6 +205,13 @@
         move: function(x, y){
             console.log(x, y);
 
+            if (x == 8 && y == 16) {
+                bus.$emit('start_combat', {
+                    char: this.game.player.character,
+                    enemies: ['Vektoroskop']
+                })
+            }
+
             if (x >=72 && x <= 90 && y == 9 && this.game.player.wins <= 3) {
                 bus.$emit('start_combat_boss', {
                     char: this.game.player.character

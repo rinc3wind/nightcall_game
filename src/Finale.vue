@@ -4,15 +4,15 @@
             <p>Hned po prichode domov si vybehol do izby. Musis pockat, kym sa doma ukludni situacia, aby si sa vedel vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
 
             <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven sa mozes posledny krat citit jak Solid Snake.</p>
-            <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
+            <div @click="$emit('setStep', 1); disableMenu(true)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 1">
-            <sneaking-game @win="$emit('setStep', 3)" @fail="$emit('setStep', 2)" :player="player" :speed="0.65" :reactionTime="700">
+            <sneaking-game @win="$emit('setStep', 3); disableMenu(false)" @fail="$emit('setStep', 2); disableMenu(false)" :player="player" :speed="0.65" :reactionTime="700">
             </sneaking-game>
         </div>
         <div v-show="step == 2">
             <p>Vyjebes sa po schodoch jak po flaske borovicky. Toto nebolo moc smooth. Pre istotu nachvilu zalezies naspat do izby a nacuvas. Vzduch je cisty, nikoho si nezobudil. Ides to vyskusat znova.</p>
-            <div @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</div>
+            <div @click="$emit('setStep', 1); disableMenu(true)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 3">
             <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. <span v-if="player.inventory.indexOf('walkman') != -1">Nastavis si opat walkmana. A pustis {{ player.song }}. </span>Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes na Ventursku do Re:Freshu. Citis sa jak Luke Skywalker, ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
@@ -89,14 +89,14 @@
             </div>
             <div v-else>
                 Mozes vymenit item z inventara za pivo. Momentalne mas pri sebe {{ player.char.beers }}.
-                <div v-for="item in player.inventory" :key="item" class="choice" @click="player.char.beers++; $emit('removeItem', item)">
+                <div v-for="item in inventoryWithoutMap" :key="item" class="choice" @click="player.char.beers++; $emit('removeItem', item)">
                     {{ item }}
                 </div>
                 <div style="margin-top: 50px;" @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div>
             </div>
         </div>
         <div v-if="step == 105">
-            <p>&quot;Kamosko. Vidime, ze nemas ani na vstupne podla toho ako vyzeras. Mame vsak pre teba exkluzivnu ponuku. Daj kolko chces, ak mas penaze kludne daj penaze, ak ne. Daj neco za banter. Kludne aj parek alebo slaninu.&quot;</p>
+            <p>&quot;Kamosko. Vidime, ze nemas ani na vstupne podla toho ako vyzeras. Mame vsak pre teba exkluzivnu ponuku. Daj kolko chces, ak mas penaze kludne daj penaze, ak ne. Daj neco za barter. Kludne aj parek alebo slaninu.&quot;</p>
             <div v-for="item in player.inventory" :key="item" @click="$emit('setStep', 101); $emit('removeItem', item);" class="choice">{{ item }}</div>
             <!-- <div @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div> -->
         </div>
@@ -130,7 +130,7 @@
     import SneakingGame from './SneakingGame.vue'
 
     export default {
-        props: ['player', 'step', 'note'],
+        props: ['player', 'step', 'note', 'game_loaded'],
         components: {
             'combat': Combat,
             'sneaking-game': SneakingGame
@@ -314,18 +314,34 @@
                 } else {
                     this.$emit('setStep', 101)
                 }
+                this.disableMenu(false)
             },
             youDied() {
                 this.$emit('setStep', 103)
             },
             gameWon() {
                 this.gameWonTrigger = true
+            },
+            disableMenu(value) {
+                this.$emit('setDisabled', {
+                    new: value,
+                    save: value,
+                    load: value
+                })
+            }
+        },
+        computed: {
+            inventoryWithoutMap: function() {
+                return this.player.inventory.filter(item => {
+                    return item != 'mapa'
+                })
             }
         },
         mounted() {
             bus.$on('start_combat', (params) => {
                 this.player.char = params.char
                 this.enemies = params.enemies
+                this.disableMenu(true)
                 this.$emit('setStep', 102)
             })
 
@@ -336,6 +352,7 @@
                     if (enemy_list.indexOf(kill) != -1) enemy_list.splice(enemy_list.indexOf(kill), 1)
                 })
                 this.enemies = [enemy_list[this.diceRoll(enemy_list.length) - 1]]
+                this.disableMenu(true)
                 this.$emit('setStep', 102)
             })
 
@@ -350,17 +367,27 @@
                 if (value == 'bar') this.$emit('setStep', 104)
                 else if (value == 'vyhadzovac') this.$emit('setStep', 105)
             })
+
+            if (this.game_loaded == true) {
+                this.startGame()
+                this.game.player.character = this.player.char
+                this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
+                if (this.player.char.x && this.player.char.y) {
+                    this.game.renderer.setCenter(this.player.char.x, this.player.char.y)
+                    this.game.player.moveTo(this.player.char.x, this.player.char.y)
+                }
+            }
+            this.$emit('mounted')
+
             bus.$on('App/GameLoaded', () => {
                 setTimeout(() => {
                     this.startGame()
                     this.game.player.character = this.player.char
                     this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
-
                     if (this.player.char.x && this.player.char.y) {
                         this.game.renderer.setCenter(this.player.char.x, this.player.char.y)
                         this.game.player.moveTo(this.player.char.x, this.player.char.y)
                     }
-
                 }, 10)
             })
         }
