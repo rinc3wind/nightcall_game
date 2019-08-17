@@ -76,6 +76,21 @@
                     },
                     {
                         id: 2,
+                        artist: 'Leo Clair',
+                        name: 'Unit AE-35',
+                        is_playing: false,
+                        sound: new Howl({
+                            src: ['mp3/ost/unit_ae_35.mp3'],
+                            onend() {
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 1)
+                            }
+                        })
+                    },
+                    {
+                        id: 3,
                         artist: 'Nyctalope',
                         name: 'Rusty silicone',
                         is_playing: false,
@@ -90,7 +105,7 @@
                         })
                     },
                     {
-                        id: 3,
+                        id: 4,
                         artist: 'Grawlix',
                         name: 'Breakpoint',
                         is_playing: false,
@@ -105,7 +120,7 @@
                         })
                     },
                     {
-                        id: 4,
+                        id: 5,
                         artist: 'Daniel Jackson',
                         name: 'Moderny Chlapec',
                         is_playing: false,
@@ -120,7 +135,22 @@
                         })
                     },
                     {
-                        id: 5,
+                        id: 6,
+                        artist: 'Leo Clair',
+                        name: 'Hirajoshi Interface',
+                        is_playing: false,
+                        sound: new Howl({
+                            src: ['mp3/ost/hirajoshi.mp3'],
+                            onend() {
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 1)
+                            }
+                        })
+                    },
+                    {
+                        id: 7,
                         artist: 'Nyctalope',
                         name: 'Autumn marina',
                         is_playing: false,
@@ -135,7 +165,7 @@
                         })
                     },
                     {
-                        id: 6,
+                        id: 8,
                         artist: 'Grawlix',
                         name: 'Descent',
                         is_playing: false,
@@ -150,7 +180,7 @@
                         })
                     },
                     {
-                        id: 7,
+                        id: 9,
                         artist: 'Daniel Jackson',
                         name: 'Sticky Spawn of the Stars',
                         is_playing: false,
@@ -165,7 +195,22 @@
                         })
                     },
                     {
-                        id: 8,
+                        id: 10,
+                        artist: 'Leo Clair',
+                        name: 'Mars dust',
+                        is_playing: false,
+                        sound: new Howl({
+                            src: ['mp3/ost/mars_dust.mp3'],
+                            onend() {
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 1)
+                            }
+                        })
+                    },
+                    {
+                        id: 11,
                         artist: 'Nyctalope',
                         name: 'Birth of Phoenix',
                         is_playing: false,
