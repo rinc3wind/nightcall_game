@@ -364,12 +364,13 @@
 
 <style>
     #main-game-container {
-         max-height: calc(100vh - 80px);
-         overflow-y: auto;
-         padding: 10px;
-         position: absolute;
-         left: calc(17% + 220px);
-         width: 40%;
+        /* max-height: calc(100vh - 80px); */
+        height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding: 10px;
+        position: relative;
+        left: calc(17% + 220px);
+        width: 40%;
     }
 
     @font-face {
@@ -387,7 +388,7 @@
     }
 
     #app {
-        width: 660px;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 40px;

@@ -148,7 +148,7 @@
             <p>Schmatnes syntak a bezis do auta. Syntak spokojne vo vacku. Tatko soferuje domov a ty mas pred sebou poslednu ulohu. Dostat sa do Re:Freshu na ten vyjebany Nightcall.</p>
             <div @click="$emit('setChapter', 6); $emit('setStep', 0)" class="choice">{{ lang.continue }}</div>
         </div>
-        <div v-if="step == 100">
+        <div v-if="step == 100" id="synth-hero-container">
             <div style="float: left; font-size: 23px;">
                 <div v-if="loading && (mp3_loaded == false || midi_loaded == false)">
                     LOADING...
@@ -158,7 +158,7 @@
                     <span v-else :style="{'visibility': playing ? 'hidden' : 'visible'}" @click="play" class="choice">PLAY</span>
                 </div>
 
-                <pre style="height: 190px;">
+                <pre style="height: 200px;">
                     {{ playground }}
                 </pre>
 
@@ -395,18 +395,22 @@ import { setTimeout } from 'timers';
     #chapter5-container progress[value] {
         -webkit-appearance: none;
         appearance: none;
-        width: 400px;
+        width: 410px;
         height: 30px;
         transform: rotate(270deg);
         -webkit-transform: rotate(270deg); /*Webkit*/
         -moz-transform: rotate(270deg); /*FireFox*/
         position: absolute;
-        top: 317px;
-        left: 56%;
+        top: 267px;
+        left: 350px;
     }
     #chapter5-container progress[value]::-webkit-progress-bar {
         background-color: black;
         border: 2px solid;
         border-color: yellowgreen;
+    }
+    #synth-hero-container {
+        position: fixed;
+        width: 100%;
     }
 </style>

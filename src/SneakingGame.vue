@@ -143,7 +143,7 @@
     }
     .flash {
         background-color: yellowgreen;
-        position: absolute;
+        position: fixed;
         opacity: 0.7;
         top: 0;
         left: 0;

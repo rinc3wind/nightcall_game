@@ -142,44 +142,6 @@
 </script>
 
 <style>
-    progress[value] {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 100%;
-        height: 100px;
-    }
-    progress[value]::-webkit-progress-bar {
-        background-color: black;
-        border: 2px solid;
-        border-color: yellowgreen;
-    }
-    progress[value]::-webkit-progress-value {
-        background-color: yellowgreen;
-        opacity: 0.6;
-    }
 
-    progress.moving[value]::-webkit-progress-value {
-        background-color: yellowgreen;
-        opacity: 1;
-    }
-    progress.danger[value]::-webkit-progress-value {
-        background-color: white;
-        opacity: 1;
-    }
-    .arrowKey.moving {
-        opacity: 1;
-    }
-    .arrowKey {
-        opacity: 0.6;
-    }
-    .flash {
-        background-color: yellowgreen;
-        position: absolute;
-        opacity: 0.7;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-    }
 </style>
 

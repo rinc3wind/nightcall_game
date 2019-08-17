@@ -67,7 +67,7 @@
 
             <div v-if="player.char.xp == 0" @click="$emit('setStep', 101); generateCharacter(); startGame()" class="choice">{{ lang.continue }}</div>
         </div>
-        <div v-show="step == 101">
+        <div v-show="step == 101" id="outer-game-container">
             <div id="map-floor1" class="game-container"></div>
             <!-- <div id="console-container" class="game-container"></div> -->
             <div>HP: {{ player.char.hp }} / {{ player.char.max_hp }}</div>
@@ -368,7 +368,7 @@
                 else if (value == 'vyhadzovac') this.$emit('setStep', 105)
             })
 
-            if (this.game_loaded == true) {
+            if (this.game_loaded == true && this.step == 101) {
                 this.startGame()
                 this.game.player.character = this.player.char
                 this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
@@ -380,15 +380,17 @@
             this.$emit('mounted')
 
             bus.$on('App/GameLoaded', () => {
-                setTimeout(() => {
-                    this.startGame()
-                    this.game.player.character = this.player.char
-                    this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
-                    if (this.player.char.x && this.player.char.y) {
-                        this.game.renderer.setCenter(this.player.char.x, this.player.char.y)
-                        this.game.player.moveTo(this.player.char.x, this.player.char.y)
-                    }
-                }, 10)
+                if (this.step == 101) {
+                    setTimeout(() => {
+                        this.startGame()
+                        this.game.player.character = this.player.char
+                        this.game.player.wins = this.player.char.wins ? this.player.char.wins : 0
+                        if (this.player.char.x && this.player.char.y) {
+                            this.game.renderer.setCenter(this.player.char.x, this.player.char.y)
+                            this.game.player.moveTo(this.player.char.x, this.player.char.y)
+                        }
+                    }, 10)
+                }
             })
         }
     }
@@ -416,6 +418,9 @@
         left: 37%;
     }
     canvas {
-        width: 100%;
+        width: 95%;
+    }
+    #outer-game-container {
+        position: fixed;
     }
 </style>
