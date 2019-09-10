@@ -37,6 +37,10 @@
                 tooltip.style.top = (ev.clientY) + 'px';
                 tooltip.style.left = (ev.clientX + 20) + 'px';
             },false)
+
+            bus.$on('map/changeLabel', label => {
+                this.label = label
+            })
         }
     }
 </script>
@@ -72,6 +76,7 @@
     }
 
     #map_container {
+        /* background: url(/text_adventure/icons/mapa_big.jpg); */
         background: url(/icons/mapa_big.jpg);
         width: 100%;
         height: 100%;

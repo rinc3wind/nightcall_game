@@ -264,13 +264,7 @@
         </div>
         <div v-if="step == 11.3">
             <p>Dobra volba kamosko. Teraz kam? Pome na to. Musis zachranit svet, boha.</p>
-
             <div class="choice" @click="showMap()">Pozri do mapy.</div>
-
-            <!-- <div class="choice" @click="$emit('setStep', 11.41)">Idem ocurat velky Bratislavsky mur.</div>
-            <div class="choice" @click="$emit('setStep', 11.42)">Idem najst skulaveho Sama a zbit ho.</div>
-            <div class="choice" @click="$emit('setStep', 11.43)">Idem do Arkadovej herne zajebat high score v Space
-                Invaders.</div> -->
         </div>
         <div v-if="step == 11.41">
             <p>Vyjdes von z baraku. Vzduch voni jak plesnive listy a tekvica.
@@ -309,14 +303,14 @@
                 if (destination == 'mur') {
                     this.$emit('setStep', 11.41)
                     bus.$emit('closeMap')
-                }
-                if (destination == 'ovladac') {
+                } else if (destination == 'ovladac') {
                     this.$emit('setStep', 11.43)
                     bus.$emit('closeMap')
-                }
-                if (destination == 'ihrisko') {
+                } else if (destination == 'ihrisko') {
                     this.$emit('setStep', 11.42)
                     bus.$emit('closeMap')
+                } else {
+                    bus.$emit('map/changeLabel', 'Zatial nie kamosko.')
                 }
             })
         }

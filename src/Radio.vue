@@ -1,15 +1,36 @@
 <template>
-    <div class="note">
+    <div class="note" id="radio_wrapper">
+
+        <div id="radio_close" @click="$emit('hide')">X</div>
+
         <div class="note_content" style="margin: 5% auto; width: 40%; font-size: 1vw; height: 500px; position: relative;">
 
-            <img style="width: 35%; float: left;" src="/icons/walkman_big.jpg"></img>
+            <div>
+                <img style="width: 35%; position: absolute; top: 0px; left: 10px;" src="icons/walkman_big.jpg"></img>
+
+                <!-- <div style="
+                    background-color: gold;
+                    width: 20px;
+                    height: 20px;
+                    position: absolute;
+
+                "></div> -->
+                <!-- <img style="width: 35%; position: absolute; top: 15%; left: 10px;" src="icons/walkman/walkman.gif"></img>
+                <img style="width: 6%; position: absolute; top: 20px; left: 26px;" src="icons/walkman/button_01.gif"></img>
+                <img style="width: 6%; position: absolute; top: 20px; left: 26px;" src="icons/walkman/button_02.gif"></img> -->
+                <!-- <img style="float: left;" src="icons/walkman/button_02.gif"></img>
+                <img style="float: left;" src="icons/walkman/button_03.gif"></img>
+                <img style="float: left;" src="icons/walkman/button_04.gif"></img>
+                <img style="float: left;" src="icons/walkman/button_05.gif"></img> -->
+            </div>
+
 
             <table class="wp-table" style="width: 65%; float: right;" border="0" cellspacing="0" cellpadding="0">
-                <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" style="height: 40px;" :class="{'playing-track':track.is_playing}" class="choice">
+                <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" style="height: 30px;" :class="{'playing-track':track.is_playing}" class="choice">
 
                     <td style="width: 4%;">
                         <span v-if="track.is_playing">►</span>
-                        <span v-else-if="track.is_loaded == false"><img src="/icons/loading.gif" style="width: 20px;" alt=""></span>
+                        <span v-else-if="track.is_loaded == false"><img src="icons/loading.gif" style="width: 20px;" alt=""></span>
                     </td>
 
                     <td style="width: 42%;">{{ track.artist }}</td>
@@ -292,6 +313,18 @@
 </script>
 
 <style>
+    #radio_close {
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 40px;
+        font-size: 60px;
+        cursor: pointer;
+    }
+    #radio_wrapper {
+        background-color:rgba(0, 0, 0, 0.4);
+    }
+
     .playing-track {
         color: greenyellow !important;
     }
