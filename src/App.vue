@@ -73,6 +73,7 @@
             </div>
 
             <radio v-show="showRadio == true" @hide="showRadio = false"></radio>
+            <mapa v-show="showMap == true" @hide="showMap = false"></mapa>
 
             <div id="main-game-container">
 
@@ -186,6 +187,7 @@
     import Finale from './Finale.vue'
     import Credits from './Credits.vue'
     import Radio from './Radio.vue'
+    import Mapa from './Mapa.vue'
 
     export default {
         name: 'app',
@@ -198,12 +200,14 @@
             'chapter5': Chapter5,
             'finale'  : Finale,
             'credits' : Credits,
-            'radio' : Radio
+            'radio' : Radio,
+            'mapa' : Mapa
         },
         data() {
             return {
                 game_loaded: false,
                 showRadio: false,
+                showMap: false,
                 page_ready: false,
                 player: {
                     name: null,
@@ -256,9 +260,13 @@
                 }
             }
             document.querySelector('#app').style.display = 'block'
-            // setTimeout(() => {
-            //     this.openFullscreen(document.querySelector('html'))
-            // }, 2000)
+
+            bus.$on('openMap', () => {
+                this.showMap = true
+            })
+            bus.$on('closeMap', () => {
+                this.showMap = false
+            })
         },
         methods: {
             pickupItem(data) {

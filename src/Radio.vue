@@ -1,8 +1,10 @@
 <template>
     <div class="note">
-        <div class="note_content" style="margin: 5% auto;">
+        <div class="note_content" style="margin: 5% auto; width: 40%; font-size: 1vw; height: 500px; position: relative;">
 
-            <table class="wp-table" style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+            <img style="width: 35%; float: left;" src="/icons/walkman_big.jpg"></img>
+
+            <table class="wp-table" style="width: 65%; float: right;" border="0" cellspacing="0" cellpadding="0">
                 <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" style="height: 40px;" :class="{'playing-track':track.is_playing}" class="choice">
 
                     <td style="width: 4%;">
@@ -15,7 +17,7 @@
                 </tr>
             </table>
 
-            <table class="wp-table" style="width: 100%; text-align: center; margin-top: 20px;">
+            <!-- <table class="wp-table" style="width: 100%; text-align: center; margin-top: 20px;">
                 <tr>
                     <td style="width: 33%;">
                         <span class="choice" @click="previousTrack">|◀</span>
@@ -28,11 +30,11 @@
                         <span class="choice" @click="nextTrack">▶|</span>
                     </td>
                 </tr>
-            </table>
+            </table> -->
 
-            <div @click="$emit('hide')" class="choice" style="text-align: center; margin-top: 30px;">
+            <!-- <div @click="$emit('hide')" class="choice" style="text-align: center; margin-top: 30px;">
                 {{ lang.continue }}
-            </div>
+            </div> -->
 
         </div>
     </div>
