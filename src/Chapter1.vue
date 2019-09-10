@@ -240,7 +240,7 @@
             </p>
         </div>
         <div v-if="step == 11.21">
-            <p>Das si ju do vacku a rozbalis ju. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.</p>
+            <p>Vezmes ju a hned aj rozbalis. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.</p>
             <p>Arkadova herna &quot;U dojebaneho ovladaca&quot; <br>Detske ihrisko a s fixkou dopisana poznamka:
                 &quot;Dojebat skulaveho Sama&quot; <br>Re:Fresh Club <br>a Bratislavsky mur, ktory predeluje
                 Kamenne namestie</p>
@@ -278,14 +278,14 @@
             <span @click="$emit('setChapter', 3); $emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 11.42">
-            <p>Vyjdes von z baraku. Zvuk voni jak plesnive listy a tekvica.
+            <p>Vyjdes von z baraku. Vzduch voni jak plesnive listy a tekvica.
             <span v-if="player.inventory.indexOf('cigarety & zapalovac') != -1">Zapalis si cigosku. </span>
             <span v-if="player.inventory.indexOf('walkman') != -1">Zadelis na usi sluchadla a zapnes walkmana. Zacne ti hrat {{ player.song }}.</span>
             Naskocis na svoju bmxku, zaflekujes a upalujes cez jesennu Bratislavu za svojim cielom.</p>
             <span @click="$emit('setChapter', 2); $emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 11.43">
-            <p>Vyjdes von z baraku. Zvuk voni jak plesnive listy a tekvica.
+            <p>Vyjdes von z baraku. Vzduch voni jak plesnive listy a tekvica.
             <span v-if="player.inventory.indexOf('cigarety & zapalovac') != -1">Zapalis si cigosku. </span>
             <span v-if="player.inventory.indexOf('walkman') != -1">Zadelis na usi sluchadla a zapnes walkmana. Zacne ti hrat {{ player.song }}.</span>
             Naskocis na svoju bmxku, zaflekujes a upalujes cez jesennu Bratislavu za svojim cielom.</p>

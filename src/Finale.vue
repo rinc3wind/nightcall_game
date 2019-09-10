@@ -113,7 +113,7 @@
 
             <p>Napne biceps.</p>
 
-            <p>&quot;Gratulujem. Vratil si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas. Stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
+            <p>&quot;Gratulujem. Vratil si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas, stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
 
             <p>Zmurkne na teba.</p>
 
