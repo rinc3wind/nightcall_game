@@ -70,8 +70,7 @@
         </div>
         <div v-if="step == 2.32">
             <p>Sprintujes jak Usain Bolt. Dobehnes k BMXke. Rychlo nasadas, gorilam ukazujes fakere a ficis dalej. Kam teraz kamosko?</p>
-            <div v-if="player.finished_chapters.indexOf(3) == -1" class="choice" @click="$emit('setChapter', 3); $emit('setStep', 0); player.finished_chapters.push(2)">Idem ocurat velky Bratislavsky mur.</div>
-            <div v-if="player.finished_chapters.indexOf(4) == -1" class="choice" @click="$emit('setChapter', 4); $emit('setStep', 0); player.finished_chapters.push(2)">Idem do Arkadovej herne zajebat high score v Space Invaders.</div>
+            <div class="choice" @click="showMap()">Pozri do mapy.</div>
         </div>
 
         <div v-if="step == 2.4">
@@ -84,9 +83,7 @@
         </div>
         <div v-if="step == 2.42">
             <p>Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu, gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
-
-            <div v-if="player.finished_chapters.indexOf(3) == -1" class="choice" @click="$emit('setChapter', 3); $emit('setStep', 0); player.finished_chapters.push(2)">Idem ocurat velky Bratislavsky mur.</div>
-            <div v-if="player.finished_chapters.indexOf(4) == -1" class="choice" @click="$emit('setChapter', 4); $emit('setStep', 0); player.finished_chapters.push(2)">Idem do Arkadovej herne zajebat high score v Space Invaders.</div>
+            <div class="choice" @click="showMap()">Pozri do mapy.</div>
         </div>
 
         <div v-if="step == 3">
@@ -128,17 +125,15 @@
             <div class="choice" @click="$emit('setStep', 3.5); $emit('removeItem', 'slanina'); $emit('removeItem', 'parok'); $emit('removeItem', 'sojovy jogurt');">NIE</div>
         </div>
         <div v-if="step == 3.4">
-            <p>Zacne ti hrat v hlave hlavna tema z Red Dead Redemption 2. Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu (jemne povedane), gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
+            <p>Zacne ti hrat v hlave hlavna tema z Red Dead Redemption 2. Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu (jemne povedane), gorily su spacifikovane a ty zijes.</p>
 
             <div v-if="player.finished_chapters.indexOf(3) != -1 && player.finished_chapters.indexOf(4) != -1">
                 <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
-                <span @click="$emit('setChapter', 5); $emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
             </div>
             <div v-else>
-                <p>&quot;Kam sa vydas teraz?&quot;</p>
-                <div v-if="player.finished_chapters.indexOf(3) == -1" class="choice" @click="$emit('setChapter', 3); $emit('setStep', 0); player.finished_chapters.push(2)">Idem ocurat velky Bratislavsky mur.</div>
-
-                <div v-if="player.finished_chapters.indexOf(4) == -1" class="choice" @click="$emit('setChapter', 4); $emit('setStep', 0); player.finished_chapters.push(2)">Idem do Arkadovej herne zajebat high score v Space Invaders.</div>
+                <p>Kam sa vydas teraz?</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
             </div>
         </div>
         <div v-if="step == 3.5">
@@ -146,13 +141,11 @@
 
             <div v-if="player.finished_chapters.indexOf(3) != -1 && player.finished_chapters.indexOf(4) != -1">
                 <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
-                <span @click="$emit('setChapter', 5); $emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
             </div>
             <div v-else>
-                <p>&quot;Kam sa vydas teraz?&quot;</p>
-                <div v-if="player.finished_chapters.indexOf(3) == -1" class="choice" @click="$emit('setChapter', 3); $emit('setStep', 0); player.finished_chapters.push(2)">Idem ocurat velky Bratislavsky mur.</div>
-
-                <div v-if="player.finished_chapters.indexOf(4) == -1" class="choice" @click="$emit('setChapter', 4); $emit('setStep', 0); player.finished_chapters.push(2)">Idem do Arkadovej herne zajebat high score v Space Invaders.</div>
+                <p>Kam sa vydas teraz?</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
             </div>
         </div>
 
@@ -212,7 +205,47 @@
                 }
 
                 return Math.floor(Math.random() * sides) + 1
+            },
+            showMap() {
+                bus.$emit('openMap')
             }
+        },
+        mounted() {
+            bus.$on('map/clicked', (destination) => {
+                if (this.player.finished_chapters.indexOf(3) != -1 && this.player.finished_chapters.indexOf(4) != -1) {
+                    if (destination == 'domov') {
+                        this.$emit('setChapter', 5)
+                        this.$emit('setStep', 0);
+                        this.player.finished_chapters.push(2)
+                        bus.$emit('closeMap')
+                    } else {
+                        bus.$emit('map/changeLabel', 'Musis ist domov, kamosko.')
+                    }
+                }
+                else if (destination == 'mur') {
+                    if (this.player.finished_chapters.indexOf(3) != -1) {
+                        bus.$emit('map/changeLabel', 'Tam sme uz boli, kamosko.')
+                    } else {
+                        this.$emit('setChapter', 3)
+                        this.$emit('setStep', 0);
+                        this.player.finished_chapters.push(2)
+                        bus.$emit('closeMap')
+                    }
+                } else if (destination == 'ovladac') {
+                    if (this.player.finished_chapters.indexOf(4) != -1) {
+                        bus.$emit('map/changeLabel', 'Tam sme uz boli, kamosko.')
+                    } else {
+                        this.$emit('setChapter', 4)
+                        this.$emit('setStep', 0);
+                        this.player.finished_chapters.push(2)
+                        bus.$emit('closeMap')
+                    }
+                } else if (destination == 'ihrisko') {
+                    bus.$emit('map/changeLabel', 'Tu sa nachadzas.')
+                } else {
+                    bus.$emit('map/changeLabel', 'Zatial nie, kamosko.')
+                }
+            })
         }
     }
 </script>

@@ -18,7 +18,7 @@
             <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. <span v-if="player.inventory.indexOf('walkman') != -1">Nastavis si opat walkmana. A pustis {{ player.song }}. </span>Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes na Ventursku do Re:Freshu. Citis sa jak Luke Skywalker, ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
 
             <p>Vies, ze Nightcall bez teba nema zmysel.</p>
-            <div @click="$emit('setStep', 4)" class="choice">{{ lang.continue }}</div>
+            <div class="choice" @click="showMap()">Pozri do mapy.</div>
         </div>
         <div v-show="step == 4">
             <p>Prichadzas na Ventursku. Kluckujes na bajku cez davy ozratych britskych turistov, sprostuckych futbalovych chuliganov a vychrtle trafo pipky s civavami pod pazuchami. Skoro to najebes do asi 2.5 metroveho bezkrkeho typka s asi najhorsimi kerkami co si kedy videl. Cez jeho pravy biceps ma obrovsku karikaturu fejsu nejakej starej zenskej, hore nad nou je comic sansovy napis &quot;Manka&quot;. Len tak tak stihnes stocit bajk a missnes Manku asi o 2 centimetre.</p>
@@ -187,6 +187,9 @@
             }
         },
         methods: {
+            showMap() {
+                bus.$emit('openMap')
+            },
             generateCharacter() {
                 this.player.char.max_hp = this.player.char.hp
                 this.player.char.max_sp = this.player.char.sp
@@ -338,6 +341,15 @@
             }
         },
         mounted() {
+            bus.$on('map/clicked', (destination) => {
+                if (destination == 'refresh') {
+                    this.$emit('setStep', 4)
+                    bus.$emit('closeMap')
+                } else {
+                    bus.$emit('map/changeLabel', 'To uz nema zmysel, kamosko.')
+                }
+            })
+
             bus.$on('start_combat', (params) => {
                 this.player.char = params.char
                 this.enemies = params.enemies

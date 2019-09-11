@@ -128,12 +128,11 @@
 
             <div v-if="player.finished_chapters.indexOf(2) != -1 && player.finished_chapters.indexOf(3) != -1">
                 <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
-                <span @click="$emit('setChapter', 5); $emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
             </div>
             <div v-else>
-                <p>&quot;Je vsak treba pokracovat dalej. Do vecera este casu. Kam sa vydas teraz?&quot;</p>
-                <div v-if="player.finished_chapters.indexOf(2) == -1" class="choice" @click="$emit('setChapter', 2); $emit('setStep', 0); player.finished_chapters.push(4)">Idem najst skulaveho Sama a zbit ho.</div>
-                <div v-if="player.finished_chapters.indexOf(3) == -1" class="choice" @click="$emit('setChapter', 3); $emit('setStep', 0); player.finished_chapters.push(4)">Idem ocurat velky Bratislavsky mur.</div>
+                <p>Je vsak treba pokracovat dalej. Do vecera este casu. Kam sa vydas teraz?</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
             </div>
         </div>
     </div>
@@ -189,6 +188,42 @@
         mounted() {
             window.addEventListener('keyup', (e) => {
                 this.keyUp(e)
+            })
+
+            bus.$on('map/clicked', (destination) => {
+                if (this.player.finished_chapters.indexOf(2) != -1 && this.player.finished_chapters.indexOf(3) != -1) {
+                    if (destination == 'domov') {
+                        this.$emit('setChapter', 5)
+                        this.$emit('setStep', 0);
+                        this.player.finished_chapters.push(4)
+                        bus.$emit('closeMap')
+                    } else {
+                        bus.$emit('map/changeLabel', 'Musis ist domov, kamosko.')
+                    }
+                }
+                else if (destination == 'mur') {
+                    if (this.player.finished_chapters.indexOf(3) != -1) {
+                        bus.$emit('map/changeLabel', 'Tam sme uz boli, kamosko.')
+                    } else {
+                        this.$emit('setChapter', 3)
+                        this.$emit('setStep', 0);
+                        this.player.finished_chapters.push(4)
+                        bus.$emit('closeMap')
+                    }
+                } else if (destination == 'ihrisko') {
+                    if (this.player.finished_chapters.indexOf(2) != -1) {
+                        bus.$emit('map/changeLabel', 'Tam sme uz boli, kamosko.')
+                    } else {
+                        this.$emit('setChapter', 2)
+                        this.$emit('setStep', 0);
+                        this.player.finished_chapters.push(4)
+                        bus.$emit('closeMap')
+                    }
+                } else if (destination == 'ovladac') {
+                    bus.$emit('map/changeLabel', 'Tu sa nachadzas.')
+                } else {
+                    bus.$emit('map/changeLabel', 'Zatial nie, kamosko.')
+                }
             })
         },
         methods: {
@@ -271,6 +306,9 @@
                     this.textAlreadyTyped = ''
                     this.level++
                 }
+            },
+            showMap() {
+                bus.$emit('openMap')
             }
         },
         watch: {
