@@ -69,8 +69,16 @@
             <p>Bezis jak Forrest Gump. Nestaci. Uz uz si pri svojej BMXke. V tom momente vsak zakopnes o koren stromu a vyjebes sa na zem. Skor ako stihnes zareagovat. Vsetky 4 gorily su na tebe a kopu ta hlava nehlava. Jak planeta opic, kamosko. Zrazu ta vypne. A si mrtvy. Skoda. Nabuduce rozmyslaj do pici. Sam a neozbrojeny ides proti 4 gorilam? More, akoze prepacime ti vsetko mozne. Ale toto ne.</p>
         </div>
         <div v-if="step == 2.32">
-            <p>Sprintujes jak Usain Bolt. Dobehnes k BMXke. Rychlo nasadas, gorilam ukazujes fakere a ficis dalej. Kam teraz kamosko?</p>
-            <div class="choice" @click="showMap()">Pozri do mapy.</div>
+            <p>Sprintujes jak Usain Bolt. Dobehnes k BMXke. Rychlo nasadas, gorilam ukazujes fakere a ficis dalej.</p>
+
+            <div v-if="player.finished_chapters.indexOf(3) != -1 && player.finished_chapters.indexOf(4) != -1">
+                <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
+            </div>
+            <div v-else>
+                <p>Kam teraz kamosko?</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
+            </div>
         </div>
 
         <div v-if="step == 2.4">
@@ -82,8 +90,16 @@
             <p>Rozbehnes sa na prvu gorilu a mieris kopacku na brucho. Akonahle sa vsak tvoja biedna nozka dotkne jeho brusneho svalu tak padas na zem jak mech. Setky 4 gorily su na tebe a kopu ta hlava nehlava. Jak planeta opic, kamosko. Zrazu ta vypne. A si mrtvy. Skoda. Nabuduce rozmyslaj do pici. Sam a neozbrojeny ides proti 4 gorilam? More, akoze prepacime ti vsetko mozne. Ale toto ne.</p>
         </div>
         <div v-if="step == 2.42">
-            <p>Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu, gorily su spacifikovane a ty zijes. Kam sa vydas teraz?</p>
-            <div class="choice" @click="showMap()">Pozri do mapy.</div>
+            <p>Nevies preco to spravis takto, ale spravis to tak. Vyberies z vacku ruku a predstieras, ze ide o Colt. Pif, pif, pif, paf do pice. Vsetky 4 gorily sa zrutia na zem. Si jak Clint Eastwoodov mladsi syn. Vsade su mlaky krvi. Gorily sa zvijaju v krcoch jak Mojsej po 2 flaskach vodky. Dal si to. Neveris tomu. Ale dal si to. Pomsta je dokonana. Skulavy Samo dostal na picu, gorily su spacifikovane a ty zijes.</p>
+
+            <div v-if="player.finished_chapters.indexOf(3) != -1 && player.finished_chapters.indexOf(4) != -1">
+                <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
+            </div>
+            <div v-else>
+                <p>Kam sa vydas teraz?</p>
+                <div class="choice" @click="showMap()">Pozri do mapy.</div>
+            </div>
         </div>
 
         <div v-if="step == 3">
