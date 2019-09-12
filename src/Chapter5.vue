@@ -329,7 +329,7 @@ import { setTimeout } from 'timers';
                         this.visibleNotes.forEach(note => {
                             if (note.timeSignature == timeSignature) {
                                 this.noteClear(note.timeSignature)
-                                this.success = this.success - 1.5
+                                if (this.player.cheats_enabled == false) this.success = this.success - 1.5
                                 this.sound.volume(0.2)
                             }
                         })

@@ -36,8 +36,6 @@
                 loop: false,
                 showCursor: false
             })
-        },
-        methods: {
         }
     }
 </script>

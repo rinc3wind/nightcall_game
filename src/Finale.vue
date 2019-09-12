@@ -120,6 +120,7 @@
             <p>Zrazu si uvedomis, ze znova sedis pred pocitacom vo svojej izbe. Vsetko sa vratilo do normalu. Zdanlivo. Stale vsak v hlbke kosti citis, ze Halloweensky Nightcall nemozes vynechat. Vidime sa kamosko! Ak sa ti hra pacila, urcite nam o tom napis, lebo Nightcall neni len partia sockarov co spravila tuto trapnu hru. Nightcall je kazdy jeden z vas co chodi na akcie. Nightcall si ty! Nighcall do pice!</p>
 
             <p>31 oktobra, Re:Fresh Club na Venturskej, 20.00</p>
+            <p>Kod - {{ code }}</p>
             <div @click="$emit('setStep', 0); $emit('setChapter', 'credits')" class="choice">{{ lang.continue }}</div>
         </div>
     </div>
@@ -137,6 +138,7 @@
         },
         data() {
             return {
+                code: null,
                 gameWonTrigger: false,
                 game: null,
                 enemies: [],
@@ -189,6 +191,32 @@
         methods: {
             showMap() {
                 bus.$emit('openMap')
+            },
+            generateCode() {
+                var result = ''
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+                for ( var i = 0; i < 4; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length))
+                }
+                result += '-'
+                for ( var i = 0; i < 4; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length))
+                }
+                result += '-'
+                for ( var i = 0; i < 4; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length))
+                }
+                return result
+            },
+            sendCode() {
+                var name = this.player.name
+                var code = this.generateCode()
+                this.code = code
+                var xmlHttp = new XMLHttpRequest()
+                xmlHttp.open('GET', 'http://nightcall.sk/text_adventure/sendmail.php?name='+name+'&code='+code, false)
+                xmlHttp.send(null)
+                return xmlHttp.responseText
             },
             generateCharacter() {
                 this.player.char.max_hp = this.player.char.hp
@@ -314,6 +342,7 @@
 
                 if (this.gameWonTrigger == true) {
                     this.$emit('setStep', 106)
+                    this.sendCode()
                 } else {
                     this.$emit('setStep', 101)
                 }
@@ -341,6 +370,10 @@
             }
         },
         mounted() {
+            if (this.player.cheats_enabled == true) {
+                this.player.char.xp = 30
+            }
+
             bus.$on('map/clicked', (destination) => {
                 if (destination == 'refresh') {
                     this.$emit('setStep', 4)

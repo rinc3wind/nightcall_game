@@ -5,25 +5,14 @@
 
         <div class="note_content" style="margin: 5% auto; width: 40%; font-size: 1vw; height: 500px; position: relative;">
 
-            <div>
-                <img style="width: 35%; position: absolute; top: 0px; left: 10px;" src="icons/walkman_big.jpg"></img>
-
-                <!-- <div style="
-                    background-color: gold;
-                    width: 20px;
-                    height: 20px;
-                    position: absolute;
-
-                "></div> -->
-                <!-- <img style="width: 35%; position: absolute; top: 15%; left: 10px;" src="icons/walkman/walkman.gif"></img>
-                <img style="width: 6%; position: absolute; top: 20px; left: 26px;" src="icons/walkman/button_01.gif"></img>
-                <img style="width: 6%; position: absolute; top: 20px; left: 26px;" src="icons/walkman/button_02.gif"></img> -->
-                <!-- <img style="float: left;" src="icons/walkman/button_02.gif"></img>
-                <img style="float: left;" src="icons/walkman/button_03.gif"></img>
-                <img style="float: left;" src="icons/walkman/button_04.gif"></img>
-                <img style="float: left;" src="icons/walkman/button_05.gif"></img> -->
+            <div style="margin-left: 1%; height: 0px;">
+                <img id="walkman_image" style="width: 35%; position: absolute; left: 10px;" src="icons/walkman/walkman.gif"></img>
+                <img :style="walkman_buttons_offset" class="walkman_button" @click="previousTrack" src="icons/walkman/button_01.gif"></img>
+                <img :style="walkman_buttons_offset" class="walkman_button" @click="stop" src="icons/walkman/button_02.gif"></img>
+                <img :style="walkman_buttons_offset" class="walkman_button" @click="play" src="icons/walkman/button_03.gif"></img>
+                <img :style="walkman_buttons_offset" class="walkman_button" @click="pause" src="icons/walkman/button_04.gif"></img>
+                <img :style="walkman_buttons_offset" class="walkman_button" @click="nextTrack" src="icons/walkman/button_05.gif"></img>
             </div>
-
 
             <table class="wp-table" style="width: 65%; float: right;" border="0" cellspacing="0" cellpadding="0">
                 <tr v-for="track in playlist" :key="track.id" @click="playTrack(track.id)" style="height: 30px;" :class="{'playing-track':track.is_playing}" class="choice">
@@ -38,31 +27,13 @@
                 </tr>
             </table>
 
-            <!-- <table class="wp-table" style="width: 100%; text-align: center; margin-top: 20px;">
-                <tr>
-                    <td style="width: 33%;">
-                        <span class="choice" @click="previousTrack">|◀</span>
-                    </td>
-                    <td style="width: 33%;">
-                        <span class="choice" v-if="playingTrack == null || isPlaying == false" @click="play">▶</span>
-                        <span class="choice" v-else @click="pause">▌▌</span>
-                    </td>
-                    <td style="width: 33%;">
-                        <span class="choice" @click="nextTrack">▶|</span>
-                    </td>
-                </tr>
-            </table> -->
-
-            <!-- <div @click="$emit('hide')" class="choice" style="text-align: center; margin-top: 30px;">
-                {{ lang.continue }}
-            </div> -->
-
         </div>
     </div>
 </template>
 
 <script>
     export default {
+        props: ['show'],
         data() {
             return {
                 playlist: [
@@ -247,7 +218,15 @@
                             }
                         })
                     }
-                ]
+                ],
+                walkman_buttons_offset: {
+                    top: '0px'
+                }
+            }
+        },
+        watch: {
+            show: function() {
+                this.walkman_buttons_offset.top = document.querySelector('#walkman_image').height + 'px'
             }
         },
         methods: {
@@ -284,6 +263,9 @@
             pause() {
                 this.playingTrack.sound.pause()
             },
+            stop() {
+                this.playingTrack.sound.stop()
+            },
             getTrackById(track_id) {
                 return this.playlist.filter(track => {
                     return track.id == track_id
@@ -301,6 +283,10 @@
             }
         },
         mounted() {
+            window.onresize = event => {
+                this.walkman_buttons_offset.top = document.querySelector('#walkman_image').height + 'px'
+            }
+
             bus.$on('nextTrack', () => {
                 this.nextTrack()
             })
@@ -331,5 +317,16 @@
     .playing-track:hover {
         color: greenyellow !important;
         background: none !important;
+    }
+    .walkman_button {
+        width: 6.8%;
+        cursor: pointer;
+        position: relative;
+    }
+    .walkman_button:hover {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border: 4px solid white;
     }
 </style>
