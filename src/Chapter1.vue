@@ -309,6 +309,8 @@
                 } else if (destination == 'ihrisko') {
                     this.$emit('setStep', 11.42)
                     bus.$emit('closeMap')
+                } else if (destination == 'domov') {
+                    bus.$emit('map/changeLabel', 'Tu sa nachadzas.')
                 } else {
                     bus.$emit('map/changeLabel', 'Zatial nie kamosko.')
                 }

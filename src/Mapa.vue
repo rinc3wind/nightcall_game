@@ -76,8 +76,7 @@
     }
 
     #map_container {
-        background: url(/text_adventure/icons/mapa_big.jpg);
-        /* background: url(/icons/mapa_big.jpg); */
+        background: url(assets/mapa_big.jpg);
         width: 100%;
         height: 100%;
         background-size: contain;
@@ -88,8 +87,6 @@
     }
 
     .map_marker {
-        /* background-color: gold;
-        opacity: 0.5; */
         position: absolute;
         cursor: pointer;
     }
