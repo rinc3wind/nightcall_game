@@ -140,7 +140,7 @@
             }
         },
         mounted() {
-            bus.$on('map/clicked', (destination) => {
+            bus.$on('map/clicked/3', (destination) => {
                 if (this.player.finished_chapters.indexOf(2) != -1 && this.player.finished_chapters.indexOf(4) != -1) {
                     if (destination == 'domov') {
                         this.$emit('setChapter', 5)

@@ -73,7 +73,7 @@
             </div>
 
             <radio :show="showRadio" v-show="showRadio == true" @hide="showRadio = false"></radio>
-            <mapa v-show="showMap == true" @hide="showMap = false"></mapa>
+            <mapa :chapter="chapter" v-show="showMap == true" @hide="showMap = false"></mapa>
 
             <div id="main-game-container">
 

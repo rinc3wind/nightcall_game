@@ -295,11 +295,11 @@
         props: ['player', 'step'],
         methods: {
             showMap() {
-                bus.$emit('openMap')
+                bus.$emit('openMap', 1)
             }
         },
         mounted() {
-            bus.$on('map/clicked', (destination) => {
+            bus.$on('map/clicked/1', (destination) => {
                 if (destination == 'mur') {
                     this.$emit('setStep', 11.41)
                     bus.$emit('closeMap')

@@ -3,7 +3,7 @@
         <div v-if="step == 0">
             <p>Upalujes, co ti nohy stacia a blizis sa na vychyrene Dubravske detske ihrisko. Teraz ho mozno
                 poznas pod menom ZIHADIELKO. Vtedy v 87 sa vsak nevolalo nijak. Len ihrisko. Az neskor sa niekto
-                rozhodol ho pomenovat podla veci, ktora je schopna vase decko sparalizovat alebo usmrtit.
+                rozhodol ho pomenovat podla veci, ktora je schopna vase decko sparalyzovat alebo usmrtit.
                 Zaparkujes bajk v bezpecnej vzdialenosti, zosadnes a opries ho o <span class="choice" @click="$emit('setStep', 1)">strom</span>.</p>
 
             <p>V dialke vidis gang chalanov. 4 skarede gorily a medzi nimi tvoj hlavny enemy. Skulavy Samo. Par
@@ -227,7 +227,7 @@
             }
         },
         mounted() {
-            bus.$on('map/clicked', (destination) => {
+            bus.$on('map/clicked/2', (destination) => {
                 if (this.player.finished_chapters.indexOf(3) != -1 && this.player.finished_chapters.indexOf(4) != -1) {
                     if (destination == 'domov') {
                         this.$emit('setChapter', 5)
@@ -257,6 +257,7 @@
                         bus.$emit('closeMap')
                     }
                 } else if (destination == 'ihrisko') {
+                    console.log('here')
                     bus.$emit('map/changeLabel', 'Tu sa nachadzas.')
                 } else {
                     bus.$emit('map/changeLabel', 'Zatial nie, kamosko.')

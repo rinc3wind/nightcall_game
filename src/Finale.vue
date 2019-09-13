@@ -80,7 +80,7 @@
             </combat>
         </div>
         <div v-if="step == 103">
-            <div id="you-died">YOU DIED</div>
+            <div id="you-died" class="choice" @click="refreshPage">YOU DIED</div>
         </div>
         <div v-if="step == 104">
             <div v-if="player.char.beers <= 0">
@@ -189,6 +189,9 @@
             }
         },
         methods: {
+            refreshPage() {
+                location.reload()
+            },
             showMap() {
                 bus.$emit('openMap')
             },
@@ -374,7 +377,7 @@
                 this.player.char.xp = 30
             }
 
-            bus.$on('map/clicked', (destination) => {
+            bus.$on('map/clicked/6', (destination) => {
                 if (destination == 'refresh') {
                     this.$emit('setStep', 4)
                     bus.$emit('closeMap')

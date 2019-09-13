@@ -21,6 +21,7 @@
 
 <script>
     export default {
+        props: ['chapter'],
         data() {
             return {
                 label: ''
@@ -28,7 +29,7 @@
         },
         methods: {
             mapClicked(destination) {
-                bus.$emit('map/clicked', destination)
+                bus.$emit('map/clicked/' + this.chapter, destination)
             }
         },
         mounted() {
