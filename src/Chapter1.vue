@@ -2,21 +2,14 @@
     <div>
         <div v-if="step == 0">
             <b>Bratislava, 1987<br>
-                9:45<br>
+                9:42<br>
             </b>
             <br>
-            Zvoni ti budik, kamosko. Ticho v izbe pretne hlavna tema k Halloween od Johna Carpentera. Otvaras
-            zalepene karpinove oci a snazis sa nahmatat mobilny telefon. Neni na policke pri posteli. Neni na
-            stole. What. Kde je? Vstanes a chyta ta jemna panika. Nemas telefoncek do pici. O to vacsie
-            prekvapenie ti rozvibruje chrbticu, ked si uvedomis, ze tvoja izba vyzera celkovo uplne inak.<br>
+            Zvoni ti budik kamosko. Ticho v izbe pretne hlavna tema k Halloween od Johna Carpentera. Otvaras zalepene hnede karpinove oci a snazis sa nahmatat tvoj smartfon. Neni na policke pri posteli. Neni na stole. Co. Gde je? Vstanes a chyta ta jemna panika. Nemas telefoncek do pici. Tvoj cely zivot je prec. Panic pokracuje. O to vacsie prekvapenie ti rozvibruje analik, ked si uvedomis, ze tvoja izba vyzera inak.<br>
             <br>
-            Niekto ta evidentne uniesol. Si sice vo svojej izbe. Ale nie je to vlastne tvoja izba. Vsetko ako
-            keby zostarlo. Ale zaroven, je zname? Nechapacky. Kazdopadne. Napadla ti genialna vec. Ides otvorit
-            okno, kuknes sa ven a potom sa rozhodnes co budes robit. Ulica vyzera presne tak ako si ju pamatas.
-            Pokojne oktobrove rano v Dubravke. Na zemi su popadane listy a vzduch voni presne ako jesen.
-            Rozhliadnes sa lepsie po izbe.<br>
+            Niekto ta musel uniest. Si sice vo svojej izbe. Ale nie je to vlastne tvoja izba. Vsetko ako keby zostarlo. Ale zaroven je zname? Ako pocas detstva, ktore si nikdy nemal/a, ale vzdy chcel/a mat. Nechapacky. Kazdopadne. Napadla ti skvela vec. Ides otvorit okno, kuknes sa ven a potom sa rozhodnes co budes robit. Ulica vyzera presne tak ako si ju pamatas. Pokojne oktobrove rano v Dubravke. Na zemi su popadane zhnite listy a vzduch vonia presne ako jesen. Rozhliadnes sa lepsie po izbe.<br>
             <br>
-            Prec je tvoj laptop.
+            Po tvojom laptope ani stopy.
 
             Na stole zostal len
 
@@ -30,20 +23,18 @@
 
             <span v-if="player.inventory.indexOf('cigarety & zapalovac') == -1">
                 <span class="choice"
-                    @click="$emit('pickupItem', {item: 'cigarety & zapalovac', note: 'Zoberes zo stolu cigy a zapik. Urcite sa zidu.'})">
+                    @click="$emit('pickupItem', {item: 'cigarety & zapalovac', note: 'Zoberes zo stolu cigy a zapik. Stale fajcis, aj ked by si nemal/-a. Urcite sa zidu.'})">
                     cigarety & zapalovac
                 </span>
                 a
             </span>
-            tlaceny plagat na Nightcall, ktory sa odohrava dnes vecer, v pravom hornom rohu vidis Re:Fresh Club,
-            Bratislava, 1987.<br>
+            tlaceny plagat na Nightcall, ktory sa odohrava dnes vecer, v pravom hornom rohu vidis Kulturak, Bratislava, 1987.<br>
 
             <br>
             Vsetky tvoje videoherne plagaty su prec. Zostal len The Thing od Carpentera a Star Wars. V rohu
-            miestnosti sa zjavil stary televizor a k nemu pripojene NESko. Na boku telky je velka <span class="choice" @click="$emit('note', 'Je to cisto biela samolepka, na ktorej je fixou naskrabane - Ivanov televizor, nechytat lebo dostanes bombu.')">samolepka</span>.<br>
+            miestnosti sa zjavil stary televizor a k nemu pripojene NESko. Na boku telky je velka <span class="choice" @click="$emit('note', 'Je to cisto biela samolepka, na ktorej je fixou naskrabane - Ivanov televizor, nechytat lebo ti donesem domov dalsie tri.')">samolepka</span>.<br>
             <br>
-            Rozmyslas, co budes robit. Zavetris vsak velmi prijemnu vec. Slaninka a vajicka. Niekto robi dole
-            ranajky. A ty slintas jak Cujo.<br>
+            Rozmyslas co budes robit. Zavetris vsak velmi prijemnu vec. Slaninka a vajicka. Pomarancovy dzusik a kava. Niekto robi ranajky. A ty slintas jak Ibi Maiga nad jeho bronzovou bustou.<br>
             <br>
             Co urobis, kamosko?<br>
             <br>
