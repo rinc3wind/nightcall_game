@@ -393,6 +393,7 @@
         -o-background-size: cover;
         background-size: cover;
         height: 100%;
+        filter: hue-rotate(270deg);
     }
 
     #app {
