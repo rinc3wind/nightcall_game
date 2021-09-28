@@ -1,20 +1,16 @@
 <template>
     <div>
         <div v-if="step == 0">
-            <b>30. oktober 2019<br>
+            <b>29. oktober 2021<br>
                 23:56<br>
                 Bratislava<br>
             </b>
             <br>
-            Je chladna oktobrova noc. Tak ako kazdy vecer, tak aj dnes sedis do noci za pocitacom. Mas pootvorenu
-            okenicu nech ti aspon troska prudi vzduch v izbe. Tma. Celu izbu ozaruje len obrazovka tvojho
-            stareho laptopu.<br>
+            Je studena, uprsana oktobrova noc. Ako kazdy vecer, aj dnes sedis do noci za pocitacom, jak taky osamely nerd. Mas pootvorenu okenicu nech ti aspon troska prudi vzduch v izbe. Tma. Celu izbu matne ozaruje len obrazovka tvojho blikajuceho stareho laptopu.<br>
             <br>
-            Prekliknes tab na facebook. Kurva fix. Zase ta odhlasilo. Ides sa prihlasit. Cely interface je vsak
-            nejaky zvlastny. Namiesto emailu a hesla to chce po teba tvoje meno. Charakteristicka modra
-            obrazovka. Fko v kruzku. A krizom cez celu obrazovku svieti iba jeden riadok.<br>
+            Prekliknes tab na tvarovu knihu aka facebook. Boha jeho. Zase ta odhlasilo. Ides sa prihlasit. Cely interface je vsak nejaky zvlastny. Namiesto emailu a hesla to chce po teba tvoje meno. Klasicka modra obrazovka. Fko v kruzku. A krizom cez celu obrazovku svieti iba jeden riadok.<br>
             <br>
-            <b>"Zadaj svoje meno, kamosko. Staci prve. Napr. Rambo, Arnold, Marika"</b><br>
+            <b>"Zadaj svoje meno kamosko. Staci prve. Napr. Arnold, Xena alebo Dzeremy"</b><br>
             <br>
             <input autofocus v-model="player.name" @keyup.enter="$emit('setStep', 1)">
         </div>
@@ -34,22 +30,14 @@
                 @click="$emit('setStep', 3); player.family_status_o = true; player.family_status_m = false; focusInput()">otec</span>?"
         </div>
         <div v-if="step == 3">
-            Krista tento fejsbuk. Co sa ma to pyta? Sak chcem len lajknut nejake memecka a ono takto. Skor ako
-            si vsak stihnes kvalitne zanadavat, obrazovka si pyta dalsiu odpoved.<br>
+            Krista tato tvarova kniha. Co sa ma to pyta? Sak chcem len lajknut nejake memecka, pozriet si ktory politik ma ojebal dnes a ono takto. Skor ako si vsak stihnes kvalitne zanadavat, obrazovka si pyta dalsiu odpoved.<br>
             <br>
-            "Aky je tvoj oblubeny track, kamosko? Interpret - song."<br>
+            "Aky je tvoj oblubeny track kamosko? Interpret - song."<br>
             <br>
             <input v-model="player.song" @keyup.enter="$emit('setStep', 4)">
         </div>
         <div v-if="step == 4">
-            No dobre. Stacilo krista. Konecne ti nabehne facebook. Klikas na staru znamu zemegulku, kde ti
-            svieti, az jedna notifikacia. Evidentne si popularny jak Ibrahim Maiga. Rozkliknes ju a zbadas, ze
-            sa daco deje v Nightcall evente. Pici. Uz zajtra. Konecne. Lineup vyzera v pohodicke. A este k tomu
-            Halloween. Pozries sa na postel, kde je uz nachystana Jedi-ska roba. Klikas na notifikaciu. Hm.
-            Nejaka hra? Textovka? Kto uz len hra dneska textovky. A sak vyskusame. Klikas na link. Loading.
-            Loading. Loading do piceee. Zrazu tma. Pocujes len zvonenie telefonu. Brnenie syntetizatora. Vo
-            vzduchu cigaretovy dym. Vona Nightcallu. Vypne ta jak po flaske borovicky. A spis. Spis jak spokojna
-            troj-hlava macka po dvoch spekoch.<br>
+            No dobre. Stacilo boha. Konecne ti nabehne facebook. Klikas na staru znamu zemegulku. Kde ti svieti az jedna notifikacia. Evidentne si popularny jak Brano Mojsej. Rozkliknes ju a zbadas, ze sa daco deje v Nightcall evente. Pici. Uz zajtra. Konecne. Lineup vyzera v poradku. Normalne sa tesis, ze to este furt byva a ta akcia neskapala. A este k tomu Halloween. Pozres sa na postel, kde je uz nachystana Jedi-ska roba. Klikas  na notifikaciu. Hm. Nejaka hra? Textovka? Remaster textovky? Musi jebat. Kto uz len hra dneska textovky. A kto ich remasteruje? Len kokoti. A sak nevadi vyskusame. Klikas na link. Loading. Loading. Loading do piceee. Zrazu tma. Pocujes len zvonenie telefonu. Brnenie syntetizatora. Vo vzduchu cigaretovy dym. Rozliate pivo a grcka v pisoari. Vona Nightcallu. Vypne ta jak po flaske borovicky. A spis. Spis jak papez, po navsteve materskej skolky v Rimavskej Sobote.<br>
             <br>
             <span @click="$emit('setChapter', 1); $emit('setStep', 0); checkPlayerName()" class="choice">{{ lang.continue }}</span>
         </div>
