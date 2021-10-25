@@ -1,26 +1,26 @@
 <template>
     <div>
         <div v-if="step == 0">
-            <p>Arkadova herna v Bratislave, kamosko. V 80 rokoch. Pedalujes na Grosslingovu jak uragan. Podla mapy by sa mala nachadzat presne tam, kde si pamatas, ze by sa malo nachadzat Gymnazium Grosslingova.</p>
+            <p>Arkadova herna v Bratislave kamosko. V 80 rokoch. Pedalujes na Grosslingovu jak uragan. Podla mapy by sa mala nachadzat presne tam, kde si pamatas, ze by sa malo nachadzat Gymnazium Grosslingova.</p>
             <span @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 1">
-            <p>Cele to je nejake divne. Toto urcite nie je socialisticke Cesko-Slovensko. Nieco je inak. Nehrozi, ze by komousi takymto sposobom prijali imperialisticku kulturu. Kazdopadne. Nestazujes sa a si zvedavy, co to bude zac.</p>
+            <p>Cele to je nejake divne. Toto urcite nieje socialisticke Cesko-Slovensko. Nieco je inak. Nehrozi, ze by komousi takymto sposobom prijali imperialisticku kulturu. Kazdopadne. Nestazujes sa a si zvedavy co to bude zac.</p>
 
-            <p>Zrazu zbadas v dialke tuto vysnivanu budovu. Uz ako decko si snival o tom, ze raz pojdes do poriadnej Arkadovej herne. Najblizsie k tomu, vsak bol ten jeden automat v lokalnom senku. Na streche je obrovsky napis
+            <p>Zrazu zbadas v dialke tu vysnivanu budovu. Uz ako decko si snival o tom, ze raz pojdes do poriadnej Arkadovej herne. Najblizsie k tomu, vsak bol ten jeden automat v lokalnom senku so soliterom. Na streche je obrovsky napis
 
-            <span class="choice" @click="$emit('note', 'Obrovsky neonovy vulgarny napis. Citis sa pobureny, ked citas slovo &quot;Dojebany&quot; Takto sa predsa nerozprava. Mama hovorila, ze sa mam citit pobureny.')">"U dojebaneho ovladaca"</span>
+            <span class="choice" @click="$emit('note', 'Obrovsky neonovy vulgarny napis. Vyzera cool.')">"U dojebaneho ovladaca"</span>
 
             Vsetko svieti fialovym neonom. Vpredu je odparkovanych asi 20
-            <span class="choice" @click="$emit('note', 'Cca 20 pestrofarebnych bicyklov oblepenych rozlicnymi samolepkami stoji zaparkovanych pred hernou. Jeden krajsi ako druhy. Chvilu rozmyslas, ze jeden ukradnes. V tom si ale uvedomis, ze sak mas svoju BMXku a nebudes chuj.')">BMXiek</span>
-            a z vnutra sa ozyvaju zname tony videohernej muziky. Si doma.</p>
+            <span class="choice" @click="$emit('note', 'Cca 20 pestrofarebnych bicyklov oblepenych rozlicnymi samolepkami stoji zaparkovanych pred hernou. Jeden krajsi ako druhy. Chvilu rozmyslas, ze jeden ukradnes. V tom si ale uvedomis, ze sak mas svoju BMXku a nebudes chuj, lebo len chuji kradnu bajky.')">BMXiek</span>
+            a z vnutra sa ozivaju zname tony chiptunovej muziky. Si doma..</p>
 
             <span @click="$emit('setStep', 2)" class="choice">Zaparkujes BMXku</span>
         </div>
         <div v-if="step == 2">
             <p>Najdes volne miesto medzi bajkami. Odstavis ho na stojan a pripnes zamkom.</p>
             <p>Vojdes dnu do herne.</p>
-            <p>Vstupis dnu. Vsetky tvoje zmysly naraz atakuje milion rozlicnych veci. Vona popkornu a rozliatej Coca Coly sa miesa s analogovymi tonmi, ktore vydava desiatka arkadovych masin naraz. Hned oproti tebe je skupinka starsich deti, ktore sa striedaju pri Street Fighterovi. V dialke vidis unudeneho bradateho prevadzkara, ktory pospava a opiera sa o pult. Co spravis?</p>
+            <p>Vstupis dnu. Vsetky tvoje zmysly naraz atakuje milion rozlicnych veci. Vona popkornu a rozliatej Coca Coly sa miesa s analogovymi tonmi, ktore vydava desiatka arkadovych masin naraz. Hned oproti tebe je skupinka starsich deti, ktore sa striedaju pri Street Fighterovi. V dialke vidis unudeneho bradateho a riadne chlpateho prevadzkara, ktory pospava a opiera sa o pult. Co spravis?</p>
 
             <div @click="$emit('setStep', 3)" class="choice">Prejdes sa po herni a skusis najst Space Invaders.</div>
             <div @click="$emit('setStep', 4)" class="choice">Skusis sa prihovorit k starsim deckam a spytas sa ich, kde je Space Invaders.</div>
@@ -28,21 +28,21 @@
         </div>
 
         <div v-if="step == 3">
-            <p>Kracas cez ulicky lemovane automatmi. Pozeras dolava, doprava. Pomalicky, systematicky prejdes cez celu hernu. Ale Space Invaders nevidis nikde.</p>
+            <p>Kracas cez ulicky lemovane automatmi. Pozeras dolava, doprava. Pomalicky systematicky prejdes cez celu hernu. Ale Space Invaders nevidis nikde. Ako keby ho nejaky chuj skryl. Chapes to kamo.</p>
             <span @click="$emit('setStep', 2)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 4">
             <p>Pridas sa k skupine decak pri Street Fighterovi.</p>
             <p>&quot;Hej, kamoskovci. Kde najdem Space Invaders?&quot;</p>
             <p>Otoci sa na teba jebakovy chudy chalan s okuliarmi.</p>
-            <p>&quot;Space Invaders? Musis sa spytat chlpateho Dusana,&quot; ukaze rukou na prispateho prevadzkara. &quot;Je to jeho oblubena hra. A aj ked tak nevyzera, je v tom celkom vyskillovany.&quot;</p>
+            <p>&quot;Space Invaders? Musis sa spytat chlpateho Dusana,&quot; ukaze rukou na prispateho prevadzkara. &quot;Je to jeho oblubena hra a drzi ju na tajnom mieste. A aj ked tak nevyzera, je v tom celkom vyskillovany.&quot;</p>
             <p>&quot;Diky kamo.&quot;</p>
             <span @click="$emit('setStep', 2)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 5">
             <p>Prides k pultu a prihovoris sa k prevadzkarovi.</p>
             <p>&quot;Ehm, dobry den?&quot;</p>
-            <p>&quot;Dobry, dobryyy.&quot; Zamrmle.</p>
+            <p>&quot;Dobry, dobryyy.&quot; Zamrmle, odchrachli a utre si sopel do chlpov na vrchnej strane ruky.</p>
             <p>&quot;Prosim vas, kde najdem Space Invaders? Potrebujem tam zadelit high score a zachranit svet.&quot;</p>
             <p>Vyguli na teba cervene a jednoznacne sfajcene oci.</p>
             <p>&quot;Hm. Space Invaders mam zamknute vzadu v kumbale. Nedavam to zahrat len tak kazdemu. Ale. Vis co. Vyzeras celkom sympaticky. Dohodnime sa takto. Akurat mi dosli cigosky a nemozem odtialto odijst. Ked mi doneses cigu. Dovolim ti zahrat Space Invaders. Co ty na to?&quot;</p>
@@ -61,17 +61,17 @@
             <span @click="$emit('setStep', 11)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 7">
-            <p>Vyjdes von pred Arkadovu hernu. Zbadas, ze v kanali pred hernou je napadanych vela spakov. Zacnes sa medzi nimi prehrabovat, lebo nemas ziaden self respect. Po par minutach najdes jednu takmer novu cigu. Vyzera sice, ze ju daco ocuralo. Ale to ta az tak netrapi, kedze ju fajcit nebudes.</p>
+            <p>Vyjdes von pred Arkadovu hernu. Zbadas, ze v kanali pred hernou je napadanych vela spakov. Zacnes sa medzi nimi prehrabovat, lebo nemas ziaden self respect a uz si robil/-a ovela horsie veci. Po par minutach najdes jednu takmer novu cigu. Vyzera sice, ze ju daco ocuralo. Ale to ta az tak netrapi, kedze ty ju fajcit nebudes.</p>
             <div @click="$emit('setStep', 9); $emit('removeItem', 'ocurana cigareta')" class="choice">Daj ocuranu cigu prevadzkarovi.</div>
         </div>
         <div v-if="step == 8">
             <p>&quot;Chalani, nemate nahodou cigu?&quot;</p>
-            <p>&quot;Nemame kamo. My sme slusne deti a nefajcime. Ale skus sa kuknut pred hernou. Sem-tam niekomu vypadne ciga na zem.&quot;</p>
+            <p>&quot;Nemame kamo. My sme slusne deti a nefajcime. Ale skus sa kuknut pred hernou. Sem tam-tam niekomu vypadne ciga na zem a potom ju ocura.&quot;</p>
             <span @click="$emit('setStep', 10)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 9">
             <p>Vyberes z vrecka ocuranu cigaretu a podas ju chlpatemu prevadzkarovi.</p>
-            <p>&quot;Hm. Nejako divne to voni kamo. Ale jebat. Ako sa volas?&quot;</p>
+            <p>&quot;Hm. Nejako divne to voni kamo, ako keby to niekto ocural. Ale jebat. Ako sa volas?&quot;</p>
             <p>&quot;{{ player.name }}&quot;</p>
             <p>&quot;Dobre {{ player.name }}. Pod za mnou, som zvedavy ci prebijes moje skore.&quot;</p>
             <p>Typek sa postavi od pultu a odomkne miestnost za nim.</p>
@@ -83,7 +83,7 @@
             <div @click="$emit('setStep', 8)" class="choice">Skusis sa spytat chalanov pri Street Fighterovi ci nemaju cigu.</div>
         </div>
         <div v-if="step == 11">
-            <p>Vojdes dnu do tmavej miestnosti. Ma asi tak 3x3 metre. Vsetko smrdi jak ganja. Uprostred miestnosti svieti nablyskany Space Invaders automat.</p>
+            <p>Vojdes dnu do tmavej miestnosti. Ma asi tak 3x3 metre. Vsetko smrdi jak ganja a pot a usny maz a zhorene chlpy. Uprostred miestnosti svieti nabliskany Space Invaders automat.</p>
             <p>&quot;{{ player.name }}, som zvedavy ako si na tom. Moje high score je 110,510.&quot; prihovori sa ti prevadzkar.</p>
             <p>Kamosko. Je to na tebe. Osud vsetkych casovych sfer lezi na tvojich pleciach.</p>
             <div @click="$emit('setStep', 12)" class="choice">HRAJ</div>
@@ -111,7 +111,7 @@
             <span @click="startLevel()" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 17">
-            <p>Dusan si len odpluje a nijako na teba nereaguje.</p>
+            <p>Dusan si len odchrachli a nijako na teba nereaguje.</p>
             <span @click="startLevel()" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 18">
@@ -119,12 +119,12 @@
             <span @click="startLevel()" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 19">
-            <p>Ides na posledny level. Na Dusanovi je vidno, ze je troska nervozny. Zapali si cigu a prisunie sa k tebe blizsie aby ta znervoznoval. Citis jeho pupok na chrbte a jeho smradlavy dych za uchom. Boha jeho. Chytas flashbacky na casy, kedy si ministroval v kostole.</p>
+            <p>Ides na posledny level. Na Dusanovi je vidno, ze je troska nervozny, zapali si cigu a prisunie sa k tebe blizsie aby ta znervoznoval. Citis jeho pupok na chrbte, jeho pazuchove chlpy v uchu a jeho smradlavy dych na zatylku. Boha jeho. Chytas flashbacky na cas kedy si ministroval v kostole a ked ti pan Fararko omylom pokladal jeho fialoveho hada na citanku.</p>
             <span @click="startLevel()" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 20">
-            <p>&quot;Hm. Dal si to. Gratulujem. Si dobry, kamosko. Drzim palce.&quot;</p>
-            <p>Podarilo sa ti zajebat najvyssie high score v Space Invaders. Mas reflexy jak Jedi.</p>
+            <p>&quot;Hm. Dal si to. Gratulujem. Si dobry kamosko. To som fakt necakal. Kazdopadne. Drzim palce.&quot;</p>
+            <p>Podarilo sa ti zajebat najvyssie high score v Space Invaders. Mas reflexy jak tvojka manka ked si jej coroval cigarety z kabelky.</p>
 
             <div v-if="player.finished_chapters.indexOf(2) != -1 && player.finished_chapters.indexOf(3) != -1">
                 <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>
