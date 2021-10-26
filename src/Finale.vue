@@ -1,9 +1,9 @@
 <template>
     <div>
         <div v-show="step == 0">
-            <p>Hned po prichode domov si vybehol do izby. Musis pockat, kym sa doma ukludni situacia, aby si sa vedel vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
+            <p>Hned po prichode domov si vybehol/vybehla do izby. Musis pockat kym sa doma ukludni situacia, aby si sa vedel/-a vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
 
-            <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven sa mozes posledny krat citit jak Solid Snake.</p>
+            <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven, sa mozes posledny krat citit jak Solid Snake.</p>
             <div @click="$emit('setStep', 1); disableMenu(true)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 1">
@@ -15,15 +15,15 @@
             <div @click="$emit('setStep', 1); disableMenu(true)" class="choice">{{ lang.continue }}</div>
         </div>
         <div v-show="step == 3">
-            <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. <span v-if="player.inventory.indexOf('walkman') != -1">Nastavis si opat walkmana. A pustis {{ player.song }}. </span>Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes na Ventursku do Re:Freshu. Citis sa jak Luke Skywalker, ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
+            <p>Stojis pred barakom. Vonku je chladna oktobrova Halloweenska noc. Tekvica uz dohorela. Civi do tmy jak bezdomovci na Bratislavskej vlakovej stanici. Nasadnes na BMXku. <span v-if="player.inventory.indexOf('walkman') != -1">Nastavis si opat walkmana. A pustis {{ player.song }}. </span>Zafuka vietor, zhlboka sa nadychnes a slapnes na pedal. Pedalujes k SAVke do Kulturaku. Citis sa jak Luke Skywalker ked upaloval na X-Wingu zachranit jeho kamosov na Bespin. Namiesto Darth Vadera ta vsak caka nieco ovela lepsie. Dalsi Nightcall! Nemas na vyber kamosko, pridas a ficis jak uragan.</p>
 
             <p>Vies, ze Nightcall bez teba nema zmysel.</p>
             <div class="choice" @click="showMap()">Pozri do mapy.</div>
         </div>
         <div v-show="step == 4">
-            <p>Prichadzas na Ventursku. Kluckujes na bajku cez davy ozratych britskych turistov, sprostuckych futbalovych chuliganov a vychrtle trafo pipky s civavami pod pazuchami. Skoro to najebes do asi 2.5 metroveho bezkrkeho typka s asi najhorsimi kerkami co si kedy videl. Cez jeho pravy biceps ma obrovsku karikaturu fejsu nejakej starej zenskej, hore nad nou je comic sansovy napis &quot;Manka&quot;. Len tak tak stihnes stocit bajk a missnes Manku asi o 2 centimetre.</p>
+            <p>Uz sa blizis. Kluckujes na bajku cez davy ozratych cyberpunkerov, bezdomovcov a pivneho nerda metalistu s desktopom v Ikea taske. Poradne to rozfofrujes a preletis na bajku cez cestu. Vidis len smuhy, grcky, pezot 206 a ukradnute Ivanove auto. Ale iba na sekundu. Potom vsetko zmizne a ty zacujes synthwave, zacitis pivo a naprazdno preglgnes. Si konecne doma. Uz si si myslel/-a, ze tento moment uz nikdy nenastane. Mas pred sebou Nightcall. To miesto, kde stretnes kamosov co si nevidel/-a roky. Kde zbadas chudych typkov v okuliaroch ako nesmelo postavaju okolo baru a stejdzu ale ne preto, ze su perverts ale preto, ze nikto s nimi nechcel ist na Nightcall. A oni aj tak prisli dopice. Lebo vedia, ze toto je akcia, ktora byva len raz za cas. </p>
 
-            <p>Zaflekujes pred Re:Freshom, hodis bajk na zem a vstupis dnu.</p>
+            <p>Zaflekujes pred Kulturakom, hodis bajk na zem a vstupis dnu.</p>
 
             <div @click="$emit('setStep', 100)" class="choice">{{ lang.continue }}</div>
         </div>
@@ -105,7 +105,7 @@
 
             <p>Wsssssplash!</p>
 
-            <p>Zareves na cele pluca &quot;NIGHTCALL DO PICEEEEEEE!!!&quot;</p>
+            <p>Zareves na cele pluca "NIGHTCALL DO PICEEEEEEE!!! KONECNE SOM DOMA KURVAAAA!!!!"&quot;</p>
 
             <p>3000 hromov zaduni vzduchom, ktory voni ako dymostroj a cigaretovy dym. Zrazu sa pred tebou zhmotni Arnold Schwarzenegger v malych cervenych slipkach.</p>
 
@@ -113,14 +113,14 @@
 
             <p>Napne biceps.</p>
 
-            <p>&quot;Gratulujem. Vratil si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas, stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
+            <p>&quot;Gratulujem. Vratil si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas. Stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
 
             <p>Zmurkne na teba.</p>
 
-            <p>Zrazu si uvedomis, ze znova sedis pred pocitacom vo svojej izbe. Vsetko sa vratilo do normalu. Zdanlivo. Stale vsak v hlbke kosti citis, ze Halloweensky Nightcall nemozes vynechat. Vidime sa kamosko! Ak sa ti hra pacila, urcite nam o tom napis, lebo Nightcall neni len partia sockarov co spravila tuto trapnu hru. Nightcall je kazdy jeden z vas co chodi na akcie. Nightcall si ty! Nighcall do pice!</p>
+            <p>Zrazu si uvedomis, ze znova sedis pred pocitacom vo svojej izbe. Vsetko sa vratilo do normalu. Zdanlivo. Stale vsak v hlbke kosti citis, ze Halloweensky Nightcall nemozes vynechat. Vidime sa kamosko! Ak sa ti hra pacila, urcite nam o tom napis, lebo Nightcall neni len partia sockarov co spravila tuto trapnu hru. Nightcall je kazdy jeden z vas co chodi na akcie. Nightcall si ty! Nighcall do pice! </p>
 
-            <p>31 oktobra, Re:Fresh Club na Venturskej, 20.00</p>
-            <p>Kod - {{ code }}</p>
+            <p>30. oktobra, Kulturak Klub, 20.00</p>
+            <!-- <p>Kod - {{ code }}</p> -->
             <div @click="$emit('setStep', 0); $emit('setChapter', 'credits')" class="choice">{{ lang.continue }}</div>
         </div>
     </div>
