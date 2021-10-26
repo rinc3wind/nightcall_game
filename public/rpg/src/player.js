@@ -212,39 +212,39 @@
                 })
             }
 
-            if (x >=72 && x <= 90 && y == 9 && this.game.player.wins <= 3) {
+            if (x >=0 && x <= 999 && y == 2 && this.game.player.wins <= 3) {
                 bus.$emit('start_combat_boss', {
                     char: this.game.player.character
                 })
             }
-            if (x >=72 && x <= 90 && y == 11  && this.game.player.wins <= 4) {
+            if (x >=0 && x <= 999 && y == 4  && this.game.player.wins <= 4) {
                 bus.$emit('start_combat_boss', {
                     char: this.game.player.character
                 })
             }
-            if (x >=72 && x <= 90 && y == 13  && this.game.player.wins <= 5) {
+            if (x >=0 && x <= 999 && y == 6  && this.game.player.wins <= 5) {
                 bus.$emit('start_combat_boss', {
                     char: this.game.player.character
                 })
             }
-            if (x == 7 && y == 12 && this.game.player.wins <= 0) {
-                bus.$emit('start_combat', {
-                    char: this.game.player.character,
-                    enemies: ['Geek', 'Geek', 'Geek']
-                })
-            }
-            if (x == 71 && y == 7  && this.game.player.wins <= 2) {
-                bus.$emit('start_combat', {
-                    char: this.game.player.character,
-                    enemies: ['Najebanec', 'Najebanec']
-                })
-            }
-            if (x == 63 && y == 7  && this.game.player.wins <= 1) {
-                bus.$emit('start_combat', {
-                    char: this.game.player.character,
-                    enemies: ['Vyhadzovac', 'Vyhadzovac']
-                })
-            }
+            // if (x == 7 && y == 12 && this.game.player.wins <= 0) {
+            //     bus.$emit('start_combat', {
+            //         char: this.game.player.character,
+            //         enemies: ['Geek', 'Geek', 'Geek']
+            //     })
+            // }
+            // if (x == 71 && y == 7  && this.game.player.wins <= 2) {
+            //     bus.$emit('start_combat', {
+            //         char: this.game.player.character,
+            //         enemies: ['Najebanec', 'Najebanec']
+            //     })
+            // }
+            // if (x == 63 && y == 7  && this.game.player.wins <= 1) {
+            //     bus.$emit('start_combat', {
+            //         char: this.game.player.character,
+            //         enemies: ['Vyhadzovac', 'Vyhadzovac']
+            //     })
+            // }
 
             if(this.canMoveTo(x, y)){
                 this.moveTo(x, y);

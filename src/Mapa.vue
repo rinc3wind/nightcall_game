@@ -77,7 +77,7 @@
     }
 
     #map_container {
-        background: url(assets/mapa_big.jpg);
+        background: url(assets/mapa_remaster.png);
         width: 100%;
         height: 100%;
         background-size: contain;

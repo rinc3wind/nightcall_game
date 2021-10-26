@@ -84,7 +84,7 @@
         </div>
         <div v-if="step == 104">
             <div v-if="player.char.beers <= 0">
-                Vidis pred sebou bar. Nemas vsak ziadne penaze. Ked vsak barman Szaki zbada, ze ti vytrca z vacku syntak, nacapuje ti pivecko for free.
+                Vidis pred sebou bar. Nemas vsak ziadne penaze. Ked vsak Jazvec zbada, ze ti vytrca z vacku syntak, nacapuje ti pivecko for free.
                 <div @click="$emit('setStep', 101); player.char.beers++" class="choice">{{ lang.continue }}</div>
             </div>
             <div v-else>
@@ -143,8 +143,28 @@
                 game: null,
                 enemies: [],
                 floor1: {
-                    start: { x: 6, y: 15 },
+                    start: { x: 8, y: 16 },
                     layout: [
+                        "##############################################################",
+                        "##..XXXXXXKXXXXXXX............BBBBBBBBBBBBBBBB...............#",
+                        "##..XXXXXXXXXXXXXX............BBBBBBBBBBBBBBBB...............#",
+                        "##..XXXXXXXXXXXXXX............BBBBBBBBBBBBBBBB...............#",
+                        "##..XXXXXXXXXXXXXX...........................................#",
+                        "##..XXXXXXXXXXXXXX...........................................#",
+                        "##...........................................................#",
+                        "##............................####...........................#",
+                        "##............................####....................S......#",
+                        "##.........................................S.................#",
+                        "##......................S....................................#",
+                        "##.................S..............S......S........S..........#",
+                        "##......................S....S...............................#",
+                        "##.....V.V.........................##.......S..........S.....#",
+                        "##.....#.#........S................##........................#",
+                        "##.....#.#.................S.......##.............WWW........#",
+                        "##.....#.#.........................###########################",
+                        "########D############################"
+                    ],
+                    refresh: [
                         "####################################################################################",
                         "##.S..B####################################################W#W######################",
                         "##.S..B####################################################...........###BBBBBBBB###",
@@ -413,7 +433,7 @@
             })
             bus.$on('dialogue', (value) => {
                 if (value == 'bar') this.$emit('setStep', 104)
-                else if (value == 'vyhadzovac') this.$emit('setStep', 105)
+                //else if (value == 'vyhadzovac') this.$emit('setStep', 105)
             })
 
             if (this.game_loaded == true && this.step == 101) {

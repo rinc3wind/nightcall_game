@@ -40,11 +40,11 @@
                     {
                         id: 0,
                         artist: 'Grawlix',
-                        name: 'Arachnidism',
+                        name: 'Dissected',
                         is_playing: false,
                         is_loaded: false,
                         sound: new Howl({
-                            src: ['mp3/ost/arachnidism.mp3'],
+                            src: ['mp3/ost/dissected.wav'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -56,10 +56,10 @@
                     {
                         id: 1,
                         artist: 'Daniel Jackson',
-                        name: 'The Obelisk',
+                        name: 'Fear',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/obelisk.mp3'],
+                            src: ['mp3/ost/fear.wav'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -71,10 +71,10 @@
                     {
                         id: 2,
                         artist: 'Leo Clair',
-                        name: 'Unit AE-35',
+                        name: 'Rage burst',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/unit_ae_35.mp3'],
+                            src: ['mp3/ost/rage_burst.wav'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -85,26 +85,11 @@
                     },
                     {
                         id: 3,
-                        artist: 'Nyctalope',
-                        name: 'Rusty silicone',
-                        is_playing: false,
-                        sound: new Howl({
-                            src: ['mp3/ost/rusty_silicone.mp3'],
-                            onend() {
-                                bus.$emit('nextTrack')
-                            },
-                            onload() {
-                                bus.$emit('trackLoaded', 2)
-                            }
-                        })
-                    },
-                    {
-                        id: 4,
                         artist: 'Grawlix',
-                        name: 'Breakpoint',
+                        name: 'ICE breaker',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/breakpoint.mp3'],
+                            src: ['mp3/ost/ice_breaker.wav'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -114,12 +99,12 @@
                         })
                     },
                     {
-                        id: 5,
+                        id: 4,
                         artist: 'Daniel Jackson',
-                        name: 'Moderny Chlapec',
+                        name: 'Childhood',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/moderny_chlapec.mp3'],
+                            src: ['mp3/ost/childhood.wav'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -129,12 +114,12 @@
                         })
                     },
                     {
-                        id: 6,
+                        id: 5,
                         artist: 'Leo Clair',
-                        name: 'Hirajoshi Interface',
+                        name: 'Memory access',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/hirajoshi.mp3'],
+                            src: ['mp3/ost/memory_access.wav'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -144,27 +129,12 @@
                         })
                     },
                     {
-                        id: 7,
-                        artist: 'Nyctalope',
-                        name: 'Autumn marina',
+                        id: 6,
+                        artist: 'Milcho Malefic',
+                        name: 'Last wish',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/autumn_marina.mp3'],
-                            onend() {
-                                bus.$emit('nextTrack')
-                            },
-                            onload() {
-                                bus.$emit('trackLoaded', 5)
-                            }
-                        })
-                    },
-                    {
-                        id: 8,
-                        artist: 'Grawlix',
-                        name: 'Descent',
-                        is_playing: false,
-                        sound: new Howl({
-                            src: ['mp3/ost/descent.mp3'],
+                            src: ['mp3/ost/last_wish.mp3'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
@@ -174,47 +144,17 @@
                         })
                     },
                     {
-                        id: 9,
-                        artist: 'Daniel Jackson',
-                        name: 'Sticky Spawn of the Stars',
+                        id: 7,
+                        artist: 'Milcho Malefic',
+                        name: 'Love letter',
                         is_playing: false,
                         sound: new Howl({
-                            src: ['mp3/ost/sticky_spawn.mp3'],
+                            src: ['mp3/ost/love_letter.mp3'],
                             onend() {
                                 bus.$emit('nextTrack')
                             },
                             onload() {
                                 bus.$emit('trackLoaded', 7)
-                            }
-                        })
-                    },
-                    {
-                        id: 10,
-                        artist: 'Leo Clair',
-                        name: 'Mars dust',
-                        is_playing: false,
-                        sound: new Howl({
-                            src: ['mp3/ost/mars_dust.mp3'],
-                            onend() {
-                                bus.$emit('nextTrack')
-                            },
-                            onload() {
-                                bus.$emit('trackLoaded', 1)
-                            }
-                        })
-                    },
-                    {
-                        id: 11,
-                        artist: 'Nyctalope',
-                        name: 'Birth of Phoenix',
-                        is_playing: false,
-                        sound: new Howl({
-                            src: ['mp3/ost/birth_of_phoenix.mp3'],
-                            onend() {
-                                bus.$emit('nextTrack')
-                            },
-                            onload() {
-                                bus.$emit('trackLoaded', 8)
                             }
                         })
                     }

@@ -26,6 +26,7 @@
                     <span class="name">Grawlix</span>^500<br><br>
                     <span class="name">Daniel Jackson</span>^500<br><br>
                     <span class="name">Leo Clair</span>^500<br><br>
+                    <span class="name">Milcho Malefic</span>^500<br><br>
                     <span class="name">Nyctalope</span>^500<br><br><br><br>
                     <span class="name">Vdaka za zahranie</span>^500<br><br>
                     `
