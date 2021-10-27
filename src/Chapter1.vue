@@ -82,7 +82,7 @@
             <p> Citis slaninku, vajicka a vonu kavy a cerstveho pomarancove dzusiku. Fajnove rano kamosko. Jak ked si bol maly. Akurat uz si stary. Sucks to be you.</p>
 
             <div v-if="player.family_status_m == true">
-                <p> Vidis tvoju maminu, ktora obracia volske oka. Do toho jej hra Modern Talking - Cheri Cheri Lady. Ked ta zbada ako schadzas po schodoch, hned sa na teba otoci. NAME ako si sa vyspal/-a? Das si vajicka?</p>
+                <p> Vidis tvoju maminu, ktora obracia volske oka. Do toho jej hra Modern Talking - Cheri Cheri Lady. Ked ta zbada ako schadzas po schodoch, hned sa na teba otoci. {{ player.name }} ako si sa vyspal/-a? Das si vajicka?</p>
                 <div class="choice" @click="$emit('setStep', 4)">Ano! Nakladaj!</div>
                 <div class="choice" @click="$emit('setStep', 5)">Neee, chcem kornflejky!</div>
             </div>
