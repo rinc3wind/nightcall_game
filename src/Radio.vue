@@ -157,7 +157,37 @@
                                 bus.$emit('trackLoaded', 7)
                             }
                         })
-                    }
+                    },
+                    {
+                        id: 8,
+                        artist: 'Nyctalope',
+                        name: 'Droid heretic',
+                        is_playing: false,
+                        sound: new Howl({
+                            src: ['mp3/ost/droid_heretic.wav'],
+                            onend() {
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 7)
+                            }
+                        })
+                    },
+                    {
+                        id: 9,
+                        artist: 'Nyctalope',
+                        name: 'Smile in the sunset',
+                        is_playing: false,
+                        sound: new Howl({
+                            src: ['mp3/ost/smile_in_the_sunset.mp3'],
+                            onend() {
+                                bus.$emit('nextTrack')
+                            },
+                            onload() {
+                                bus.$emit('trackLoaded', 7)
+                            }
+                        })
+                    }                                        
                 ],
                 walkman_buttons_offset: {
                     top: '0px'
