@@ -7,7 +7,7 @@
 
             <p>Tatko sa hned na teba otoci.</p>
 
-            <p>&quot;{{ player.name }}, konecne si doma. Kde sa suchces. Uz tu na teba chvilu cakame. Vyrazame na cintorin. Sup sup. Skoc sa hore do izby prezliect, si cely nejaky spinavy.&quot;</p>
+            <p>&quot;{{ player.name }}, konecne si doma. Kde sa suchces. Uz tu na teba chvilu cakame. Vyrazame na cintorin. Sup sup. Skoc sa hore do izby prezliect, si cely/-a nejaky/-a spinavy/-a.&quot;</p>
 
             <p>&quot;Dobre. Idem.&quot;</p>
 
@@ -35,7 +35,7 @@
         <div v-if="step == 2">
             <p>V dialke zbadas obrys kostola a cintorin. Pomaly sa k nemu blizite. Vonku sa riadne ochladilo. Citis to hlavne preto, lebo foter ma styl a ma pootvorene okna na aute. Fuka ti do fejsu chladny vzduch. Neni to nejako extra prijemne, ale si ticho. Rozmyslas stale nad tym, co ti povedal ten tajomny hlas v telefone rano po ranajkach.</p>
 
-            <p>{{ player.name }}! Zahraj Nightcall od Kavinskeho na organe v kostole pri Dubravskom cintorine! Uz si splnil takmer vsetko, toto je predposledna uloha, ktora ti zostava. Potom sa uz len treba nejako dostat do Kulturaku a dal si to. Vratil si casove linie na ich spravne miesto. Najprv vsak musis vymysliet ako sa dostanes do toho kostola.</p>
+            <p>{{ player.name }}! Zahraj Nightcall od Kavinskeho na organe v kostole pri Dubravskom cintorine! Uz si splnil/-a takmer vsetko, toto je predposledna uloha, ktora ti zostava. Potom sa uz len treba nejako dostat do Kulturaku a dal/-a si to. Vratil/-a si casove linie na ich spravne miesto. Najprv vsak musis vymysliet ako sa dostanes do toho kostola.</p>
 
             <p>Tatko zaparkuje pred cintorinom. Mama vystupuje von a ty ich nasledujes.</p>
 
@@ -62,7 +62,7 @@
 
             <p>Zoberes borovicku z babkinho obrovskeho jazyka.</p>
 
-            <p>&quot;Velmi dobre {{ player.name }}. Drzim ci palce. Nech secko dobre dopadne. A nezabudni. Budz neposlusny a rob kokociny. Slusnych ludzi nigdo aj tak nema rad, nudni kokoti. Kedy budes moct byt chuj ked ne teraz? Ver mi, po smrci uz ta nist dobre necaka. Celkovo. Po styricatke uz to ide dolu z kopca. Si pamatam, ze ani dzedovi uz dobre nestal. Ne jak kedysi. Nehehe. Ale to uz zabiham do nepodstatnych detailov.&quot;</p>
+            <p>&quot;Velmi dobre {{ player.name }}. Drzim ci palce. Nech secko dobre dopadne. A nezabudni. Budz neposlusny/-a a rob kokociny. Slusnych ludzi nigdo aj tak nema rad, nudni kokoti. Kedy budes moct byt chuj ked ne teraz? Ver mi, po smrci uz ta nist dobre necaka. Celkovo. Po styricatke uz to ide dolu z kopca. Si pamatam, ze ani dzedovi uz dobre nestal. Ne jak kedysi. Nehehe. Ale to uz zabiham do nepodstatnych detailov.&quot;</p>
 
             <p>Opat oblohu pretne blesk, zaduni hrom a babkina obrovska hlava zmizne. Tvoji rodicia sa tvaria, ako keby nic nevedeli. Zafuka vietor a rozhrnie popadane listy. Zamrazi ta na zatylku od chladu. Sviecky jemne vzplanu a ty stojis nad hrobom svojej babky s 2 litrovou borovickou v ruke. Tatko a mama kukaju furt na hrob, vyzera to tak, ze este sa budu tejto naplnajucej aktivite hodnu chvilu venovat. Co ides robit zatial?</p>
 
@@ -77,21 +77,21 @@
 
             <p>&quot;Ty co tu sces bazmek soplavy?&quot;</p>
 
-            <div @click="$emit('setStep', 6)" class="choice">Dobry vecer ujo. Chcel by som ist do kostola, troska si zahrat na organ.</div>
+            <div @click="$emit('setStep', 6)" class="choice">Dobry vecer ujo. Chcel/-a by som ist do kostola, troska si zahrat na organ.</div>
             <div @click="$emit('setStep', 7)" class="choice">Dobry vecer ujo. Chcem sa ist pomodlit k Jeziskovi, sak dnes je vsechsvatych.</div>
             <div @click="$emit('setStep', 8)" class="choice">Dobry vecer ujo. Ako sa mate?</div>
         </div>
         <div v-if="step == 6">
             <p>Ujo len preguli oci, &quot;Na organe sa hraj doma ty uchylak. Tahaj prec.&quot;</p>
-            <div @click="$emit('setStep', 9)" class="choice">Nechcel som vas urazit ujo, volam sa {{ player.name }} a bol som len zvedavy jaky organ mate vo vnutri, som celkom nadsenec kostolnych nastrojov.</div>
+            <div @click="$emit('setStep', 9)" class="choice">Nechcel som vas urazit ujo, volam sa {{ player.name }} a bol/-a som len zvedavy/-a jaky organ mate vo vnutri, som celkom nadsenec kostolnych nastrojov.</div>
         </div>
         <div v-if="step == 7">
             <p>Ujo len preguli oci,&quot;No urcite, ja mam jeziska v gacoch. Tahaj prec.&quot;</p>
-            <div @click="$emit('setStep', 9)" class="choice">Nechcel som vas urazit ujo, volam sa {{ player.name }} a bol som len zvedavy jaky organ mate vo vnutri, som celkom nadsenec kostolnych nastrojov.</div>
+            <div @click="$emit('setStep', 9)" class="choice">Nechcel som vas urazit ujo, volam sa {{ player.name }} a bol/-a som len zvedavy/-a jaky organ mate vo vnutri, som celkom nadsenec kostolnych nastrojov.</div>
         </div>
         <div v-if="step == 8">
             <p>Ujo sa letmo pousmeje,&quot; Co ci budem hovorit. Sedzim tu jak chuj, zima mi je a cekam na omsu, kedy budem moct zajebat riadne solo na organe. Jak sa volas inac?.&quot;</p>
-            <div @click="$emit('setStep', 9)" class="choice">Volam sa {{ player.name }} a bol som len zvedavy jaky organ mate vo vnutri, som celkom nadsenec kostolnych nastrojov.</div>
+            <div @click="$emit('setStep', 9)" class="choice">Volam sa {{ player.name }} a bol/-a som len zvedavy/-a jaky organ mate vo vnutri, som celkom nadsenec kostolnych nastrojov.</div>
         </div>
         <div v-if="step == 9">
             <p>&quot;V pohodicke nist sa nestalo. Volam sa Jano. Som lokalny organista. Ale seci moji kamosi ma volaju virtuoz Johny. Ked tak na teba kukam, tak vyzeras jak negdo, kto si lubi vypic. Aj ked teda, aby si ma nepochopil/-a zle. Vypadas na 12 ci na kolko ale vidzim ti v ococh, ze nepohrdnes poldecacikom neceho dobreho. Mam pravdu?&quot;</p>
@@ -137,7 +137,7 @@
         <div v-if="step == 16">
             <p>&quot;Fuha! To bolo {{ player.name }}. Paradicka. Dobre sa mi tu s tebu dzemuje, ale cas nas tlaci. Tusim ta negdo hlada.&quot;</p>
             <p>Pocujes z vonku hlas tvojho tatka.</p>
-            <p>&quot;{{ player.name }}! {{ player.name }}! Kde si? Do kostola urcite neisiel, nevymyslaj. Co by tam robil?&quot;</p>
+            <p>&quot;{{ player.name }}! {{ player.name }}! Kde si? Do kostola urcite neisiel/-la, nevymyslaj. Co by tam robil/-a?&quot;</p>
             <p>&quot;Tatko! Som v kostole, idem von!&quot;</p>
             <span @click="$emit('setStep', 17); $emit('pickupItem', {item: 'Arturia JUP-8 V'})" class="choice">{{ lang.continue }}</span>
         </div>
@@ -384,7 +384,7 @@ import { setTimeout } from 'timers';
             },
             cheating_count: function(value) {
                 if (value > 100) {
-                    this.$emit('note', 'Dobre si s tym vyjebal kamosko.')
+                    this.$emit('note', 'Dobre si s tym vyjebal/-a kamosko.')
                     this.cheating_count = 0
                 }
             }

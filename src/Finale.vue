@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-show="step == 0">
-            <p>Hned po prichode domov si vybehol/vybehla do izby. Musis pockat kym sa doma ukludni situacia, aby si sa vedel/-a vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
+            <p>Hned po prichode domov si vybehol/-a do izby. Musis pockat kym sa doma ukludni situacia, aby si sa vedel/-a vysneakovat z domu bez toho, ze ta niekto zbada. Zaciatok party je sice uz o 20:00 ale to vies uz teraz, ze nedas. Ani tatko, ani mama ta urcite vecer do mesta nepustia. Nemaju tucha, ze len a len na tvojich pleciach lezi osud vsetkych casovych sfer. Krista boha. Pockas par hodin a okolo 11 nakuknes von z izby.</p>
 
             <p>Jemne ich pootvoris na malu skaru. Vsade tma a ticho. Vzduch je cisty. Pre istotu si vsak opat nasadis tvoju vernu krabicu a ides sa sneakovat. Keby nahodou. A zaroven, sa mozes posledny krat citit jak Solid Snake.</p>
             <div @click="$emit('setStep', 1); disableMenu(true)" class="choice">{{ lang.continue }}</div>
@@ -101,7 +101,7 @@
             <!-- <div @click="$emit('setStep', 101)" class="choice">{{ lang.continue }}</div> -->
         </div>
         <div v-if="step == 106">
-            <p>Po tom co si vyjebal Kavinskeho, bol chudak z toho tak strasne v prdeli, ze pustil Wild Boys od Duran Duran. Necakal si na nic. Schmatol si prve pivo, ktore si videl v dosahu. Cas sa spomalil. Citis sa jak Neo v Matrixe. Vyhodis pohar do vzduchu. Spenene kvapky letia vzduchom a ty skocis rovno do ich cesty.</p>
+            <p>Po tom co si vyjebal/-a Kavinskeho, bol chudak z toho tak strasne v prdeli, ze pustil Wild Boys od Duran Duran. Necakal/-a si na nic. Schmatol/-a si prve pivo, ktore si videl/-a v dosahu. Cas sa spomalil. Citis sa jak Neo v Matrixe. Vyhodis pohar do vzduchu. Spenene kvapky letia vzduchom a ty skocis rovno do ich cesty.</p>
 
             <p>Wsssssplash!</p>
 
@@ -109,11 +109,11 @@
 
             <p>3000 hromov zaduni vzduchom, ktory voni ako dymostroj a cigaretovy dym. Zrazu sa pred tebou zhmotni Arnold Schwarzenegger v malych cervenych slipkach.</p>
 
-            <p>&quot;{{ player.name }}! Dal si to. Cely cas som ti veril. To ja som pravy hlas a duch Nightcallu.&quot;</p>
+            <p>&quot;{{ player.name }}! Dal/-a si to. Cely cas som ti veril. To ja som pravy hlas a duch Nightcallu.&quot;</p>
 
             <p>Napne biceps.</p>
 
-            <p>&quot;Gratulujem. Vratil si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas. Stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
+            <p>&quot;Gratulujem. Vratil/-a si vsetky casove sfery doporiadku. Vidime sa na party. Nezabudni na seba zajebat ten najlepsi kostym co mas doma. A ked nahodou ziaden nemas. Stale mozes ist v podobnom outfite ako ja dnes.&quot;</p>
 
             <p>Zmurkne na teba.</p>
 

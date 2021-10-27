@@ -38,7 +38,7 @@
             <br>
             Co urobis, kamosko?<br>
             <br>
-            <div class="choice" @click="$emit('setStep', 1)">Idem do kuchyne, sak som hladny more.</div>
+            <div class="choice" @click="$emit('setStep', 1)">Idem do kuchyne, sak som hladny/-a more.</div>
             <div class="choice" @click="$emit('setStep', 2)">Idem do kupelne, najprv hygiena potom jedlo.</div>
         </div>
 
@@ -92,7 +92,7 @@
 
                 <p>{{ player.name }}, musel som utekat do prace. Spravil som ti vsak ranajky. V chladnicke najdes pomarancovy dzus. Pekne sa najedz. Hned jak dojdem z roboty, ideme na hroby. Pride aj tvoja mama. Bud ready a nehraj zase len NESko cely den.</p>
 
-                <p> Ok. To znie celkom fajn. Vrhnes sa na jedlo. Vsetko zozeres ako keby si 100 rokov nejedol.
+                <p> Ok. To znie celkom fajn. Vrhnes sa na jedlo. Vsetko zozeres ako keby si 100 rokov nejedol/-la.
                 </p>
 
                 <div v-if="player.inventory.indexOf('Colgate Herbal') != -1">
@@ -104,11 +104,11 @@
             </div>
         </div>
         <div v-if="step == 4">
-            <p>Mama ti nalozi na stol dve fajnove volske oka, ktore na teba zmurknu jak Pinokio na smirgel. Hned vedla nich je slaninka a opeceny toast. Vsetko zozeres ako keby si 100 rokov nejedol/nejedla. Hned ako dojes, mama ta oboznami s jej planom. Pojdeme na hroby zapalit dnes babke svicku. Chod sa teraz hrat alebo co. Zavolam ta potom. Pojde s nami aj tvoj tatko, len musime pockat kym sa vrati z roboty.&quot;</p>
+            <p>Mama ti nalozi na stol dve fajnove volske oka, ktore na teba zmurknu jak Pinokio na smirgel. Hned vedla nich je slaninka a opeceny toast. Vsetko zozeres ako keby si 100 rokov nejedol/-la. Hned ako dojes, mama ta oboznami s jej planom. Pojdeme na hroby zapalit dnes babke svicku. Chod sa teraz hrat alebo co. Zavolam ta potom. Pojde s nami aj tvoj tatko, len musime pockat kym sa vrati z roboty.&quot;</p>
             <div class="choice" @click="$emit('setStep', 6)">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 5">
-            <p>Krista boha {{ player.name }}. Kornflejky nemame. Prestan vymyslat. Nemas uz 5 rokov. Tu mas vajca a jedz. Mama ti nalozi na stol dve fajnove volske oka, ktore na teba zmurknu jak Pinokio na smirgel. Hned vedla nich je slaninka a opeceny toast. Vsetko zozeres ako keby si 100 rokov nejedol. Hned ako dojes, mama ta oboznami s jej planom. Pojdeme na hroby zapalit dnes babke sviecku. Chod sa teraz hrat alebo co. Zavolam ta potom. Pojde s nami aj tvoj tatko, len musime pockat kym sa vrati z roboty.&quot;</p>
+            <p>Krista boha {{ player.name }}. Kornflejky nemame. Prestan vymyslat. Nemas uz 5 rokov. Tu mas vajca a jedz. Mama ti nalozi na stol dve fajnove volske oka, ktore na teba zmurknu jak Pinokio na smirgel. Hned vedla nich je slaninka a opeceny toast. Vsetko zozeres ako keby si 100 rokov nejedol/-la. Hned ako dojes, mama ta oboznami s jej planom. Pojdeme na hroby zapalit dnes babke sviecku. Chod sa teraz hrat alebo co. Zavolam ta potom. Pojde s nami aj tvoj tatko, len musime pockat kym sa vrati z roboty.&quot;</p>
             <div class="choice" @click="$emit('setStep', 6)">{{ lang.continue }}</div>
         </div>
         <div v-if="step == 6">
@@ -176,14 +176,14 @@ Zahraj Nightcall od Kavinskeho na organe v kostole pri Dubravskom cintorine.</p>
         <div v-if="step == 11">
             <p>Vyberes sa naspat do svojej detskej izby.
                 <span class="choice" @click="$emit('note', 'Plagaty su 3. Uvedomis si, ze prvy krat si jeden prehliadol. Prvy poster je The Thing od Johna Carpentera, na druhom plagate je SW: Empire Strikes Back a na tretom Breakfast Club, z ktoreho na teba zmurka Molly Ringwald.')">Plagatiky</span>
-                stale vysia bez zivota na stenach jak udy starych vyschnutych muzov v saune. Telka a NESko v rohu miestnosti uz na teba pozmurkavaju. Stary obity pracovny stol stoji smutne na styroch kovovych nohach. Co teraz kamosko?</p>
+                stale visia bez zivota na stenach jak udy starych vyschnutych muzov v saune. Telka a NESko v rohu miestnosti uz na teba pozmurkavaju. Stary obity pracovny stol stoji smutne na styroch kovovych nohach. Co teraz kamosko?</p>
             <div class="choice" @click="$emit('setStep', 11.1)">Idem sa hrat NESko</div>
             <div class="choice" @click="$emit('setStep', 11.2)">Prehladam lepsie stol.</div>
         </div>
         <div v-if="step == 11.1">
             <p>Zapnes televizor, NESko a ides. Mas jeden jediny cartridge. Cheetahman II. Co to kurva je? Nikdy v zivote si o tejto hre nepocul. Na covery je nejaky sfetovany gepard. Boha toto bude. Nenechas sa vsak odradit a ides na to.</p>
 
-            <p>Hras 5 minut. Ide ta jebnut. Hras 10 minut. Mas spotene genitalie. Kvapky zelenho potu sa formuju na tvojom hladko oholenom podhambi. Hras 15 minut. Zacinas agresivne stlacat ovladac. Davas 20 minut a na cele ti zacne navierat velka fialova zila. Toto nedavas. Stacilo. Mas chut vsetko rozjebat. Preco by si mal akurat tuto jednu hru? Co si komu spravil? Kto toto nakodil, Andrej Danko?</p>
+            <p>Hras 5 minut. Ide ta jebnut. Hras 10 minut. Mas spotene genitalie. Kvapky zelenho potu sa formuju na tvojom hladko oholenom podhambi. Hras 15 minut. Zacinas agresivne stlacat ovladac. Davas 20 minut a na cele ti zacne navierat velka fialova zila. Toto nedavas. Stacilo. Mas chut vsetko rozjebat. Preco by si mal/-a akurat tuto jednu hru? Co si komu spravil/-a? Kto toto nakodil, Andrej Danko?</p>
 
             <p>Vypinas telku. Vypinas NESko. Toto hrat nebudes.</p>
 
@@ -206,7 +206,7 @@ Zahraj Nightcall od Kavinskeho na organe v kostole pri Dubravskom cintorine.</p>
         <div v-if="step == 11.21">
             <p>Vezmes ju a hned aj rozbalis. Ide o mapu Bratislavy kde su zakruzkovane 4 miesta.</p>
             <p>Arkadova herna &quot;U dojebaneho ovladaca&quot; <br>Detske ihrisko a s fixkou dopisana poznamka:
-                &quot;Dojebat skulaveho Sama&quot; <br>Re:Fresh Club <br>a Bratislavsky mur, ktory predeluje
+                &quot;Dojebat skulaveho Sama&quot; <br>Kulturak <br>a Bratislavsky mur, ktory predeluje
                 Kamenne namestie</p>
 
             <p>Uz vies kam mas ist. Tvoja cesta je jasna. Citis sa jak

@@ -5,7 +5,7 @@
             <span @click="$emit('setStep', 1)" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 1">
-            <p>Cele to je nejake divne. Toto urcite nieje socialisticke Cesko-Slovensko. Nieco je inak. Nehrozi, ze by komousi takymto sposobom prijali imperialisticku kulturu. Kazdopadne. Nestazujes sa a si zvedavy co to bude zac.</p>
+            <p>Cele to je nejake divne. Toto urcite nieje socialisticke Cesko-Slovensko. Nieco je inak. Nehrozi, ze by komousi takymto sposobom prijali imperialisticku kulturu. Kazdopadne. Nestazujes sa a si zvedavy/-a co to bude zac.</p>
 
             <p>Zrazu zbadas v dialke tu vysnivanu budovu. Uz ako decko si snival o tom, ze raz pojdes do poriadnej Arkadovej herne. Najblizsie k tomu, vsak bol ten jeden automat v lokalnom senku so soliterom. Na streche je obrovsky napis
 

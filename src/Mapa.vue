@@ -6,7 +6,7 @@
                 <div @click="mapClicked('domov')" @mouseover="label='Tvoj dom'" @mouseleave="label=''" class="map_marker" id="domov"></div>
                 <div @click="mapClicked('ihrisko')" @mouseover="label='Detske ihrisko'" @mouseleave="label=''" class="map_marker" id="ihrisko"></div>
                 <div @click="mapClicked('mur')" @mouseover="label='K muru'" @mouseleave="label=''" class="map_marker" id="mur"></div>
-                <div @click="mapClicked('refresh')" @mouseover="label='Re:Fresh Club'" @mouseleave="label=''" class="map_marker" id="refresh"></div>
+                <div @click="mapClicked('refresh')" @mouseover="label='Kulturak'" @mouseleave="label=''" class="map_marker" id="refresh"></div>
                 <div @click="mapClicked('cintorin')" @mouseover="label='Cintorin'" @mouseleave="label=''" class="map_marker" id="cintorin"></div>
             </div>
         </div>

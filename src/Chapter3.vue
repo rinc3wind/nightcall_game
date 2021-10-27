@@ -71,7 +71,7 @@
 
             <p>Ides najst ulicku s napojmi.</p>
 
-            <p>Netrva ti to dlho a za par minut narazis na obrovsky regal s rozlicnymi napojmi. Chcel si len 2 litre. Vsetko je vsak minimalne v 3 litrovych flaskach. Pici, sak to ani neunesies. Co si vyberes?</p>
+            <p>Netrva ti to dlho a za par minut narazis na obrovsky regal s rozlicnymi napojmi. Chcel/-a si len 2 litre. Vsetko je vsak minimalne v 3 litrovych flaskach. Pici, sak to ani neunesies. Co si vyberes?</p>
 
             <div @click="$emit('setStep', 8); $emit('pickupItem', {item: '3 litrova Nightcall Cola'})" class="choice">Specialnu verziu Nightcall Coca Coly s velkym telefonom a fialovym pepesom na obale.</div>
             <div @click="$emit('setStep', 8); $emit('pickupItem', {item: '3 litrova Arcade Watch zbrnda'})" class="choice">Zelenu zbrdnu co sa vola Stokarina of Time, v pravom dolnom rohu je logo nejakeho Arcade Watch.</div>
