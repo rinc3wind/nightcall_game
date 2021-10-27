@@ -415,9 +415,10 @@
     input {
         width: 100%;
         background: black;
-        color: greenyellow;
+        color: #0ff;
         font-family: pixel_font;
         font-size: 18px;
+        filter: hue-rotate(270deg);
     }
 
     .choice {
