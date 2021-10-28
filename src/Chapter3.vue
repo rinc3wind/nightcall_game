@@ -49,7 +49,6 @@
             <p>"Prepacte ujo. Ja neviem co ma to popadlo. Zrazu som vas musel ocurat."</p>
             <p>"Nie nie nie! Mam zamiar sikać na ciebie teraz!"</p>
             <p>S hrozou sledujes ako Cyber Dzeremy vytiahne z nohavic velkeho metroveho kablami prerasteneho hada. Dostanes do fejsu taky prud mocu, az ta zdvihne do vzduchu a odhodi ta az na Bratislavsky mur. Ides sa rychle postavit. Cely/-a mokry/-a. Od mocu. Ano od mocu. Skor ako sa vsak stihnes postavit vyskoci na teba dvoj-hlavy potkan, vykusne ti hrtan a zacne donho curat. Game Over. Nabuduce necuraj na bezdomovcov ty chuju. Ked curas na nieco, je velka pravdepodobnost, ze ta to bude chciet ocurat naspat.</p>
-            <span @click="$emit('setStep', 0)" class="choice">{{ lang.continue }}</span>
         </div>        
         <div v-if="step == 4">
             <p>&quot;Paradicka. Moze byc plaski. Na pewno go uzyje. Na. Wez pudelko.</p>

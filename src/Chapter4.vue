@@ -119,12 +119,12 @@
             <span @click="startLevel()" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 19">
-            <p>Ides na posledny level. Na Dusanovi je vidno, ze je troska nervozny, zapali si cigu a prisunie sa k tebe blizsie aby ta znervoznoval. Citis jeho pupok na chrbte, jeho pazuchove chlpy v uchu a jeho smradlavy dych na zatylku. Boha jeho. Chytas flashbacky na cas kedy si ministroval v kostole a ked ti pan Fararko omylom pokladal jeho fialoveho hada na citanku.</p>
+            <p>Ides na posledny level. Na Dusanovi je vidno, ze je troska nervozny, zapali si cigu a prisunie sa k tebe blizsie aby ta znervoznoval. Citis jeho pupok na chrbte, jeho pazuchove chlpy v uchu a jeho smradlavy dych na zatylku. Boha jeho. Chytas flashbacky na cas kedy si ministroval/-a v kostole a ked ti pan Fararko omylom pokladal jeho fialoveho hada na citanku.</p>
             <span @click="startLevel()" class="choice">{{ lang.continue }}</span>
         </div>
         <div v-if="step == 20">
             <p>&quot;Hm. Dal si to. Gratulujem. Si dobry kamosko. To som fakt necakal. Kazdopadne. Drzim palce.&quot;</p>
-            <p>Podarilo sa ti zajebat najvyssie high score v Space Invaders. Mas reflexy jak tvojka manka ked si jej coroval cigarety z kabelky.</p>
+            <p>Podarilo sa ti zajebat najvyssie high score v Space Invaders. Mas reflexy jak tvojka manka ked si jej coroval/-a cigarety z kabelky.</p>
 
             <div v-if="player.finished_chapters.indexOf(2) != -1 && player.finished_chapters.indexOf(3) != -1">
                 <p>&quot;Uz je tolko hodin krista boha. Tatko pride zachvilu domov a pojdete palit babke sviecku. Upaluj domov.&quot;</p>

@@ -3,7 +3,7 @@
         <div v-if="step == 0">
             <p>18:17<br>Bratislava<br>Tvoj Barak</p>
 
-            <p>Ked zaparkujes BMXku pred domov, vonku je uz riadna tma. Vsimnes si fajnovu vyrezanu tekvicu, v ktorej niekto zapalil sviecku. Skeri sa na teba jak Jakubec ked cape penisom po fejse duchodkynam. Fotrov cierny Pontiac je uz zaparkovany pred domom. Otvoris dvere a vojdes do kuchyne. Mama s tatkom uz su obleceni a nachystani na cintorin trip.</p>
+            <p>Ked zaparkujes BMXku pred domov, vonku je uz riadna tma. Vsimnes si fajnovu vyrezanu tekvicu, v ktorej niekto zapalil sviecku. Skeri sa na teba jak Jakubec ked cape penisom po fejse dochodkynam. Fotrov cierny Pontiac je uz zaparkovany pred domom. Otvoris dvere a vojdes do kuchyne. Mama s tatkom uz su obleceni a nachystani na cintorin trip.</p>
 
             <p>Tatko sa hned na teba otoci.</p>
 
@@ -50,7 +50,7 @@
             <div @click="$emit('setStep', 3); $emit('pickupItem', {item: 'borovicka'}); $emit('removeItem', 'kahance');" class="choice">Velke B ako Babka. Alebo Blade Runner.</div>
         </div>
         <div v-if="step == 3">
-            <p>Zlozis kahance jak pan umelec a systematicky zapalis kazdu sviecku.</p>
+            <p>Zlozis kahance jak umelec a systematicky zapalis kazdu sviecku.</p>
 
             <p>Zrazu vidis ako velky blesk pretne oblohu niekde v dialke. DRRRRRRRRRRRBBBBBBB. Zaduni hrom. Nad babkinym hrobom sa zhmotni belasa ektoplazma, ktora postupne zacne naberat kontury babkinho fejsu.</p>
 
